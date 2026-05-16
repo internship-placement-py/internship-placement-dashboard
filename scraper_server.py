@@ -13,8 +13,8 @@ CORS(app)
 
 # --- Configuration ---
 SCRAPER_API_KEY = "af2699f9d75db14ab7f2dc757318a400"
-SUPABASE_URL = "https://rnuuhgiqymukzojiflry.supabase.co"
-SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJudXVoZ2lxeW11a3pvamlmbHJ5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ5NDEzMDUsImV4cCI6MjA5MDUxNzMwNX0.IeKHzPrc4Hlz5_jjHUfy_crdavE38sI-IRkwuO9ES84"
+SUPABASE_URL = "https://nbkihlealvnilurwqlxr.supabase.co"
+SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5ia2lobGVhbHZuaWx1cndxbHhyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg4MDk5NDMsImV4cCI6MjA5NDM4NTk0M30.3ou40xDGY1LzvK-fpbD9RxVwoxCQ3EjMAeLR0pVL188"
 SCRAPER_BASE = "http://api.scraperapi.com"
 
 supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
