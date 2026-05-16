@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self' https: data:; script-src 'self' 'unsafe-inline' https://d3js.org https://cdn.jsdelivr.net https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net https://unpkg.com; img-src 'self' https: data: blob: *; font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net; connect-src 'self' https://*.supabase.co wss://*.supabase.co https://raw.githubusercontent.com; frame-ancestors 'none';">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Internships - Placement Monitor Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css?v=419">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <style>
+        .premium-table td {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .premium-table th {
+            white-space: normal;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    </style>
+    <script src="auth-guard.js"></script>
+</head>
+
+<body>
+    <!-- TOP NAVIGATION BAR -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <a href="https://rru.ac.in/" target="_blank">
+                <img src="https://upload.wikimedia.org/wikipedia/en/b/bc/Rashtriya_Raksha_University_logo.png"
+                    alt="RRU Logo">
+            </a>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="sidebar-link"><i class="bi bi-speedometer2"></i> <span>Dashboard</span></a>
+            <a href="students.html" class="sidebar-link"><i class="bi bi-people-fill"></i> <span>Students</span></a>
+            <a href="internships.html" class="sidebar-link active"><i class="bi bi-person-workspace"></i>
+                <span>Internships</span></a>
+            <a href="field-visits.html" class="sidebar-link"><i class="bi bi-pin-map-fill"></i> <span>Field
+                    Visits</span></a>
+            <a href="industrial-visits.html" class="sidebar-link"><i class="bi bi-buildings-fill"></i> <span>Industrial
+                    Visits</span></a>
+            <a href="placements.html" class="sidebar-link"><i class="bi bi-briefcase-fill"></i>
+                <span>Placements</span></a>
+            <a href="external-jobs.html" class="sidebar-link"><i class="bi bi-globe"></i> <span>Job Offers</span></a>
+            <a href="reports.html" class="sidebar-link"><i class="bi bi-bar-chart-fill"></i> <span>Reports</span></a>
+            <a href="settings.html" class="sidebar-link"><i class="bi bi-gear-fill"></i>
+                <span>Settings</span></a>
+        </nav>
+        <div class="sidebar-footer">
+            <div class="user-profile">
+                <div class="avatar">CD</div>
+                <div class="user-info">
+                    <div class="name">CD PUDUCHERRY CAMPUS</div>
+                    <div class="role">Admin</div>
+                </div>
+                <button id="logoutBtn" class="logout-btn" title="Logout">
+                    <i class="bi bi-box-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="dashboard-layout-container">
+
+        <!-- TOP HEADER ROW -->
+        <div class="top-header-row">
+            <div>
+                <h1>Internships List</h1>
+            </div>
+            <div class="header-actions-unified">
+                <input type="text" id="searchInput" class="search-bar-unified" placeholder="Search internships...">
+                <button class="select-unified"
+                    onclick="document.getElementById('importInternshipModal').style.display='flex'"
+                    style="width: auto; padding: 10px 15px;">
+                    <i class="bi bi-file-earmark-excel"></i> Import
+                </button>
+                <button class="select-unified" onclick="downloadTemplate('internships')" style="width: auto; padding: 10px 15px;">
+                    <i class="bi bi-file-earmark-arrow-down"></i> Template
+                </button>
+                <button class="select-unified" onclick="exportData('internships')"
+                    style="width: auto; padding: 10px 15px;">
+                    <i class="bi bi-download"></i> Export
+                </button>
+                <button class="select-unified" id="addStudentBtn"
+                    style="width: auto; padding: 10px 15px; background: var(--accent-blue);">
+                    + Add Internship
+                </button>
+            </div>
+        </div>
+
+        <div class="widget-panel">
+            <div class="table-container data-table-container" style="overflow-x: hidden;">
+                <table class="premium-table" style="width: 100% !important; table-layout: fixed !important; word-wrap: break-word;">
+                    <thead>
+                        <tr>
+                            <th style="width: 4%;">SR.</th>
+                            <th style="width: 5%;">Year</th>
+                            <th style="width: 7%;">Batch</th>
+                            <th style="width: 13%;" class="no-wrap">Enrolment No(s)</th>
+                            <th style="width: 14%;">Student Name(s)</th>
+                            <th style="width: 11%;">Programme(s)</th>
+                            <th style="width: 14%;">Internship Place</th>
+                            <th style="width: 8%;">Duration</th>
+                            <th style="width: 8%;">City</th>
+                            <th style="width: 7%;">Org Type</th>
+                            <th style="width: 9%;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        <tr>
+                            <td colspan="15" style="text-align:center;padding:40px;opacity:0.5;">Loading
+                                internships...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- PAGINATION CONTROLS -->
+            <div class="pagination-controls"
+                style="margin-top: 20px; display: flex; justify-content: space-between; align-items: center; padding: 0 10px;">
+                <div class="pagination-info" style="font-size: 13px; opacity: 0.6;">
+                    Showing <span id="startIndex">0</span> - <span id="endIndex">0</span> of <span
+                        id="totalItems">0</span> internships
+                </div>
+                <div class="pagination-btns" style="display: flex; gap: 10px;">
+                    <button id="prevPage" class="select-unified" style="padding: 5px 15px; width: auto;"><i
+                            class="bi bi-chevron-left"></i> Prev</button>
+                    <span id="currentPageIndicator"
+                        style="display: flex; align-items: center; font-size: 13px; font-weight: 600; min-width: 60px; justify-content: center;">Page
+                        1</span>
+                    <button id="nextPage" class="select-unified" style="padding: 5px 15px; width: auto;">Next <i
+                            class="bi bi-chevron-right"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- FOOTER -->
+    <footer class="app-footer" style="padding: 40px 0; border-top: 1px solid var(--border); margin-top: 30px;">
+        <div style="display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 40px;">
+            <div>
+                <h3 style="color: var(--navy); font-size: 14px; margin-bottom: 15px;">Rashtriya Raksha University</h3>
+                <p style="font-size: 12px; color: var(--text-muted); line-height: 1.8;">Puducherry Campus, Pondicherry
+                    Institute of Hotel Management & Catering Technology [PIHMCT]<br>Opp To Mahalakshmi Nagar,
+                    Murungapakkam, Puducherry – 605004</p>
+            </div>
+            <div>
+                <h3 style="color: var(--navy); font-size: 14px; margin-bottom: 15px;">Contact</h3>
+                <p style="font-size: 12px; color: var(--text-muted);">Email: ro1.py@rru.ac.in</p>
+                <p style="font-size: 12px; color: var(--text-muted);">Phone: 7305522199</p>
+            </div>
+            <div>
+                <h3 style="color: var(--navy); font-size: 14px; margin-bottom: 15px;">Follow</h3>
+                <p style="font-size: 12px; color: var(--text-muted);"><a href="https://www.instagram.com/rru.puducherrycampus/" target="_blank"
+                        style="color: inherit; text-decoration: none;">Instagram</a></p>
+                <p style="font-size: 12px; color: var(--text-muted);"><a href="https://www.linkedin.com/company/rashtriya-raksha-university-puducherry-campus/posts/?feedView=all" target="_blank"
+                        style="color: inherit; text-decoration: none;">LinkedIn</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Add Internship Modal -->
+    <div id="studentModal" class="modal-overlay">
+        <div class="modal-content" style="max-width: 800px;">
+            <div class="modal-header">
+                <h2>Add Internship Record</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <form id="studentForm">
+                <div id="internModalError" class="alert alert-error"></div>
+
+                <!-- ── INTERNSHIP DETAILS ── -->
+                <div style="margin-bottom: 18px;">
+                    <div class="dynamic-section-header">
+                        <div class="section-icon" style="background: rgba(17,161,213,0.12); color: var(--navy-light);">
+                            <i class="bi bi-briefcase-fill"></i>
+                        </div>
+                        <div>
+                            <span class="section-title" style="color: var(--navy-light);">Internship Details</span>
+                            <span class="section-subtitle">— company, role, duration</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group-row">
+                    <div class="form-group">
+                        <label class="form-label label-blue">Year</label>
+                        <input type="text" id="mi-year" class="form-input input-blue" placeholder="e.g. 2024" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label label-blue">Batch</label>
+                        <input type="text" id="mi-batch" class="form-input input-blue" placeholder="e.g. 2024-25"
+                            required>
+                    </div>
+                </div>
+                
+                <div class="form-group-row">
+                    <div class="form-group">
+                        <label class="form-label label-blue">Internship Place</label>
+                        <input type="text" id="mi-place" class="form-input input-blue" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label label-blue">Duration</label>
+                        <input type="text" id="mi-duration" class="form-input input-blue">
+                    </div>
+                </div>
+                <div class="form-group-row">
+                    <div class="form-group">
+                        <label class="form-label label-blue">City</label>
+                        <input type="text" id="mi-city" class="form-input input-blue">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label label-blue">Org Type</label>
+                        <select id="mi-org-type" class="form-select input-blue">
+                            <option value="Govt.">Govt.</option>
+                            <option value="Pvt.">Pvt.</option>
+                            <option value="NGO">NGO</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="section-divider"></div>
+
+                <!-- ── STUDENT ENTRIES ── -->
+                <div style="margin-bottom: 18px;">
+                    <div class="dynamic-section-header">
+                        <div class="section-icon" style="background: rgba(139,92,246,0.12); color: #8b5cf6;">
+                            <i class="bi bi-people-fill"></i>
+                        </div>
+                        <div>
+                            <span class="section-title" style="color: #8b5cf6;">Student Entries</span>
+                            <span class="section-subtitle">— add multiple students for this internship</span>
+                        </div>
+                    </div>
+
+                    <div class="staff-section-box" id="mi-student-container">
+                        <!-- Student rows injected by JS -->
+                    </div>
+                    <button type="button" class="btn-add-row-staff" onclick="addInternStudentRow()">
+                        <i class="bi bi-plus-circle-fill"></i> Add Student
+                    </button>
+                </div>
+
+                <div class="button-group" style="margin-top: 24px;">
+                    <button type="submit" id="saveStudentBtn" class="btn btn-primary">Save Internship</button>
+                    <button type="button" class="btn btn-secondary close-modal">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Edit Internship Modal -->
+    <div id="editInternshipModal" class="modal-overlay">
+        <div class="modal-content" style="max-width: 800px;">
+            <div class="modal-header">
+                <h2>Edit Internship Record</h2>
+                <button class="close-modal"
+                    onclick="document.getElementById('editInternshipModal').style.display='none'">&times;</button>
+            </div>
+            <form id="editInternshipForm">
+                <input type="hidden" id="ei-id">
+                <div id="editInternModalError" class="alert alert-error"></div>
+
+                <!-- ── INTERNSHIP DETAILS ── -->
+                <div style="margin-bottom: 18px;">
+                    <div class="dynamic-section-header">
+                        <div class="section-icon" style="background: rgba(17,161,213,0.12); color: var(--navy-light);">
+                            <i class="bi bi-briefcase-fill"></i>
+                        </div>
+                        <div>
+                            <span class="section-title" style="color: var(--navy-light);">Internship Details</span>
+                            <span class="section-subtitle">— company, role, duration</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group-row">
+                    <div class="form-group">
+                        <label class="form-label label-blue">Year</label>
+                        <input type="text" id="ei-year" class="form-input input-blue" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label label-blue">Batch</label>
+                        <input type="text" id="ei-batch" class="form-input input-blue" required>
+                    </div>
+                </div>
+                
+                <div class="form-group-row">
+                    <div class="form-group">
+                        <label class="form-label label-blue">Internship Place</label>
+                        <input type="text" id="ei-place" class="form-input input-blue" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label label-blue">Duration</label>
+                        <input type="text" id="ei-duration" class="form-input input-blue">
+                    </div>
+                </div>
+                <div class="form-group-row">
+                    <div class="form-group">
+                        <label class="form-label label-blue">City</label>
+                        <input type="text" id="ei-city" class="form-input input-blue">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label label-blue">Org Type</label>
+                        <select id="ei-org-type" class="form-select input-blue">
+                            <option value="Govt.">Govt.</option>
+                            <option value="Govt./Pvt">Govt./Pvt</option>
+                            <option value="Pvt.">Pvt.</option>
+                            <option value="NGO">NGO</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="section-divider"></div>
+
+                <!-- ── STUDENT ENTRIES ── -->
+                <div style="margin-bottom: 18px;">
+                    <div class="dynamic-section-header">
+                        <div class="section-icon" style="background: rgba(139,92,246,0.12); color: #8b5cf6;">
+                            <i class="bi bi-people-fill"></i>
+                        </div>
+                        <div>
+                            <span class="section-title" style="color: #8b5cf6;">Student Entries</span>
+                            <span class="section-subtitle">— edit student record or add multiple students</span>
+                        </div>
+                    </div>
+
+                    <div class="staff-section-box" id="ei-student-container">
+                        <!-- Student rows injected by JS -->
+                    </div>
+                    <button type="button" class="btn-add-row-staff" onclick="addInternStudentRow('ei')">
+                        <i class="bi bi-plus-circle-fill"></i> Add Student
+                    </button>
+                </div>
+
+                <div class="button-group" style="margin-top: 24px;">
+                    <button type="submit" id="editInternshipSubmitBtn" class="btn btn-primary">Save Changes</button>
+                    <button type="button" class="btn btn-secondary close-modal"
+                        onclick="document.getElementById('editInternshipModal').style.display='none'">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Import Internships Modal -->
+    <div id="importInternshipModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Import Internships from CSV</h2>
+                <button class="close-modal"
+                    onclick="document.getElementById('importInternshipModal').style.display='none'">&times;</button>
+            </div>
+            <div style="padding: 20px;">
+                <p style="margin-bottom: 15px; opacity: 0.8; font-size: 14px;">Upload a CSV file (.csv)
+                    with headers:<br>
+                    <strong>Year, Enrolment No., Programme, Gender, Internship Place, Internship Place 02, Duration,
+                        City, Type of Organization</strong>
+                </p>
+                <form id="importInternshipForm">
+                    <div id="importInternError" style="color:#f87171;font-size:13px;margin-bottom:10px;display:none;">
+                    </div>
+                    <div class="form-group">
+                        <input type="file" id="importInternFile" accept=".csv" required
+                            style="border: 1px dashed #555; padding: 20px; width: 100%; border-radius: 8px; color: white;">
+                    </div>
+                    <div class="modal-buttons" style="margin-top: 20px;">
+                        <button type="button" class="btn btn-secondary" style="margin-right: 10px;" onclick="this.closest('.modal-overlay').style.display='none'">Cancel</button>
+                        <button type="submit" class="btn btn-primary" id="importInternSubmitBtn">Start
+                            Import</button>
+                    </div>
+                </form>
+                <div id="importInternStatus" style="margin-top: 15px; font-size: 14px; display: none;">
+                    <div class="spinner"
+                        style="display: inline-block; width: 15px; height: 15px; border: 2px solid #4ade80; border-top-color: transparent; border-radius: 50%; animation: spin 1s linear infinite;">
+                    </div>
+                    <span style="margin-left: 10px;">Processing file...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="device-tracker.js?v=101"></script>
+<!-- CDN: Supabase JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- CDN: SheetJS for Excel import/export -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <!-- Supabase config (change only this file when moving to a new host) -->
+    <script src="config.js"></script>
+    <script src="supabase-client.js"></script>
+    <script src="api.js?v=500"></script>
+    <script src="security.js?v=400"></script>
+    <script src="script.js?v=17"></script>
+    <script>
+        (function () {
+            const tbody = document.getElementById('tableBody');
+            const searchEl = document.getElementById('searchInput');
+            let data = [];
+            let currentPage = 1;
+            const pageSize = 20;
+
+            async function load() {
+                try {
+                    data = await getInternships() || [];
+                    render(data);
+                } catch (e) {
+                    if (tbody) tbody.innerHTML = `<div style="padding:24px;text-align:center;color:#f87171">${e.message}</div>`;
+                }
+            }
+
+            function esc(s) { return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+
+            // Group internship records by internship_place+year+batch+duration+city+org
+            function groupInternships(list) {
+                const groups = [];
+                const map = new Map();
+                list.forEach(item => {
+                    const key = [
+                        (item.internship_place || '').trim(),
+                        (item.year || '').trim(),
+                        (item.batch || '').trim(),
+                        (item.duration_of_intership || '').trim(),
+                        (item.city_of_intership || '').trim(),
+                        (item.type_of_organization || '').trim()
+                    ].join('||');
+                    if (!map.has(key)) {
+                        map.set(key, { ...item, _students: [], _ids: [] });
+                        groups.push(map.get(key));
+                    }
+                    const g = map.get(key);
+                    g._ids.push(item.id);
+                    g._students.push({
+                        id: item.id,
+                        enrollment_number: item.enrollment_number || '',
+                        student_name: item.student_name || item.name_of_student || '',
+                        programme: item.programme || '',
+                        gender: item.gender || ''
+                    });
+                });
+                return groups;
+            }
+
+            // Escape each item individually, then join with a real HTML <br> or badge
+            function formatStudentCell(students, field, style = '') {
+                return students
+                    .map(s => (s[field] || '').trim())
+                    .filter(Boolean)
+                    .map(v => `<span style="display:block;${style}">${esc(v)}</span>`)
+                    .join('');
+            }
+
+            function render(list) {
+                if (!tbody) return;
+
+                const groups = groupInternships(list);
+                const totalItems = groups.length;
+                const totalPages = Math.ceil(totalItems / pageSize);
+                if (currentPage > totalPages) currentPage = totalPages || 1;
+
+                const start = (currentPage - 1) * pageSize;
+                const end = start + pageSize;
+                const paginatedGroups = groups.slice(start, end);
+
+                // Update pagination info
+                document.getElementById('totalItems').textContent = totalItems;
+                document.getElementById('startIndex').textContent = totalItems === 0 ? 0 : start + 1;
+                document.getElementById('endIndex').textContent = Math.min(end, totalItems);
+                document.getElementById('currentPageIndicator').textContent = `Page ${currentPage} / ${totalPages || 1}`;
+
+                document.getElementById('prevPage').disabled = (currentPage === 1);
+                document.getElementById('nextPage').disabled = (currentPage === totalPages || totalPages === 0);
+
+                if (!totalItems) {
+                    tbody.innerHTML = '<tr><td colspan="9" style="padding:40px;text-align:center;opacity:0.5;">No internships found.</td></tr>';
+                    return;
+                }
+
+                tbody.innerHTML = paginatedGroups.map((grp, i) => `
+                    <tr data-ids="${grp._ids.join(',')}"> 
+                        <td style="text-align:center;">${start + i + 1}</td>
+                        <td><span style="display:inline-block;background:rgba(129,140,248,0.12);color:#818cf8;border:1px solid rgba(129,140,248,0.3);border-radius:4px;font-size:11px;font-weight:700;padding:2px 8px;">${esc(grp.year || '—')}</span></td>
+                        <td style="word-break:break-word;white-space:normal;"><span style="display:inline-block;background:rgba(251,191,36,0.12);color:#fbbf24;border:1px solid rgba(251,191,36,0.3);border-radius:4px;font-size:11px;font-weight:600;padding:2px 8px;">${esc(grp.batch || '—')}</span></td>
+                        <td style="font-family:monospace;font-size:12px;color:var(--text-white);">${formatStudentCell(grp._students, 'enrollment_number', 'white-space:nowrap;margin-bottom:2px;')}</td>
+                        <td style="font-weight:600;">${formatStudentCell(grp._students, 'student_name', 'margin-bottom:2px;')}</td>
+                        <td>${[...new Set(grp._students.map(s => (s.programme || '').trim()).filter(Boolean))].map(v => `<span style="display:inline-block;background:rgba(99,179,237,0.15);color:#63b3ed;border-radius:4px;padding:2px 8px;margin:2px 0;font-size:11px;">${esc(v)}</span>`).join('')}</td>
+                        <td style="word-break:break-word;white-space:normal;color:var(--navy-light);font-weight:600;" title="${esc(grp.internship_place || grp.internship_place_01)}">${esc(grp.internship_place || grp.internship_place_01 || '—')}</td>
+                        <td title="${esc(grp.duration_of_intership || grp.duration_of_intership_01)}"><span style="display:inline-block;background:rgba(34,211,238,0.1);color:#22d3ee;border-radius:4px;font-size:11px;font-weight:600;padding:2px 7px;">${esc(grp.duration_of_intership || grp.duration_of_intership_01 || '—')}</span></td>
+                        <td title="${esc(grp.city_of_intership || grp.city_of_intership_01)}">${esc(grp.city_of_intership || grp.city_of_intership_01 || '—')}</td>
+                        <td title="${esc(grp.type_of_organization)}"><span class="status-pill ${String(grp.type_of_organization || '').toLowerCase().includes('gov') ? 'placed' : 'not-placed'}" style="font-size:10px;padding:2px 8px;">${esc(grp.type_of_organization || '—')}</span></td>
+                        <td>
+                            <div style="display:flex;gap:4px;justify-content:center;">
+                                <button class="action-icon btn-edit-intern" data-ids="${grp._ids.join(',')}" title="Edit"><i class="bi bi-pencil-square"></i></button>
+                                <button class="action-icon btn-del-intern" data-ids="${grp._ids.join(',')}" title="Delete"><i class="bi bi-trash"></i></button>
+                            </div>
+                        </td>
+                    </tr>`
+                ).join('');
+
+                // Pagination listeners
+                document.getElementById('prevPage').onclick = () => { if (currentPage > 1) { currentPage--; render(list); } };
+                document.getElementById('nextPage').onclick = () => { if (currentPage < totalPages) { currentPage++; render(list); } };
+
+                tbody.querySelectorAll('.btn-edit-intern').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const targetBtn = e.target.closest('.btn-edit-intern');
+                        const ids = targetBtn.dataset.ids.split(',').map(Number);
+                        const items = data.filter(x => ids.includes(x.id));
+                        if (!items.length) return;
+                        const primary = items[0];
+
+                        // Store all IDs for the group on the hidden field (comma-separated)
+                        document.getElementById('ei-id').value = ids.join(',');
+                        document.getElementById('ei-year').value = primary.year || '';
+                        document.getElementById('ei-batch').value = primary.batch || '';
+                        document.getElementById('ei-place').value = primary.internship_place || primary.internship_place_01 || '';
+                        document.getElementById('ei-duration').value = primary.duration_of_intership || primary.duration_of_intership_01 || '';
+                        document.getElementById('ei-city').value = primary.city_of_intership || primary.city_of_intership_01 || '';
+                        document.getElementById('ei-org-type').value = primary.type_of_organization || 'Govt.';
+
+                        // Populate all students in the group
+                        const container = document.getElementById('ei-student-container');
+                        container.innerHTML = '';
+                        items.forEach(item => {
+                            addInternStudentRow('ei');
+                            const rows = container.querySelectorAll('.prog-row');
+                            const row = rows[rows.length - 1];
+                            row.dataset.existingId = item.id;
+                            row.querySelector('.intern-enrolment').value = item.enrollment_number || '';
+                            row.querySelector('.intern-name').value = item.student_name || item.name_of_student || '';
+                            row.querySelector('.intern-prog').value = item.programme || '';
+                            row.querySelector('.intern-gender').value = item.gender || 'Male';
+                        });
+
+                        document.getElementById('editInternshipModal').style.display = 'flex';
+                    });
+                });
+
+                tbody.querySelectorAll('.btn-del-intern').forEach(btn => {
+                    btn.addEventListener('click', async (e) => {
+                        const targetBtn = e.target.closest('.btn-del-intern');
+                        const ids = [...new Set(targetBtn.dataset.ids.split(','))].filter(Boolean);
+                        const count = ids.length;
+                        if (!confirm(`Delete this internship group (${count} student record${count > 1 ? 's' : ''})?`)) return;
+                        try {
+                            await Promise.all(ids.map(id => deleteInternship(id)));
+                            load();
+                        } catch (err) { alert('Delete failed: ' + err.message); }
+                    });
+                });
+            }
+
+            if (searchEl) searchEl.addEventListener('input', () => {
+                const q = searchEl.value.toLowerCase();
+                render(data.filter(i =>
+                    (i.student_name || i.name_of_student || '').toLowerCase().includes(q) ||
+                    (i.enrollment_number || '').toLowerCase().includes(q) ||
+                    (i.internship_place || '').toLowerCase().includes(q)
+                ));
+            });
+
+            // Initialization handled by initInternshipsPage() at the bottom.
+
+            // Modal triggers
+            document.getElementById('addStudentBtn').addEventListener('click', () => {
+                const modal = document.getElementById('studentModal');
+                if (modal) modal.style.display = 'flex';
+                document.getElementById('internModalError').style.display = 'none';
+                document.getElementById('mi-student-container').innerHTML = '';
+                addInternStudentRow();
+            });
+
+            document.querySelectorAll('.close-modal').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const modal = document.getElementById('studentModal');
+                    if (modal) modal.style.display = 'none';
+                });
+            });
+
+            window.addInternStudentRow = function(prefix = 'mi') {
+                const container = document.getElementById(prefix + '-student-container');
+                if (!container) return;
+                const row = document.createElement('div');
+                row.className = 'prog-row';
+                row.style.gridTemplateColumns = '1.2fr 1.5fr 1fr 100px auto';
+                row.innerHTML = `
+                    <div class="form-group" style="margin-bottom:0;">
+                        <input type="text" class="form-input-count intern-enrolment" placeholder="Enrolment No." required>
+                    </div>
+                    <div class="form-group" style="margin-bottom:0;">
+                        <input type="text" class="form-input-count intern-name" placeholder="Student Name" required>
+                    </div>
+                    <div class="form-group" style="margin-bottom:0;">
+                        <input type="text" class="form-input-count intern-prog" placeholder="Programme" required>
+                    </div>
+                    <div class="form-group" style="margin-bottom:0;">
+                        <select class="form-select-prog intern-gender" required>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <button type="button" class="btn-remove-row" style="margin-bottom: 2px;" onclick="this.closest('.prog-row').remove()">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                `;
+                container.appendChild(row);
+            };
+
+            function collectInternStudentRows(prefix = 'mi') {
+                const container = document.getElementById(prefix + '-student-container');
+                if (!container) return [];
+                const rows = container.querySelectorAll('.prog-row');
+                const students = [];
+                rows.forEach(row => {
+                    const enrolment = row.querySelector('.intern-enrolment').value;
+                    const name = row.querySelector('.intern-name').value;
+                    const prog = row.querySelector('.intern-prog').value;
+                    const gender = row.querySelector('.intern-gender').value;
+                    if (enrolment && name && prog) {
+                        students.push({
+                            existingId: row.dataset.existingId || null,
+                            enrollment_number: enrolment,
+                            student_name: name,
+                            programme: prog,
+                            gender
+                        });
+                    }
+                });
+                return students;
+            }
+
+            // Save btn
+            document.getElementById('studentForm').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const errEl = document.getElementById('internModalError');
+                const btn = document.getElementById('saveStudentBtn');
+                if (errEl) errEl.style.display = 'none';
+
+                const students = collectInternStudentRows();
+                if (students.length === 0) {
+                    if (errEl) { errEl.textContent = 'Please add at least one student entry.'; errEl.style.display = 'block'; }
+                    return;
+                }
+
+                btn.disabled = true; btn.textContent = 'Saving…';
+
+                try {
+                    const basePayload = {
+                        year: document.getElementById('mi-year').value,
+                        batch: document.getElementById('mi-batch').value,
+                                                                        internship_place: document.getElementById('mi-place').value,
+                        duration_of_intership: document.getElementById('mi-duration').value || '',
+                        city_of_intership: document.getElementById('mi-city').value || '',
+                        type_of_organization: document.getElementById('mi-org-type').value || ''
+                    };
+
+                    const payloads = students.map(st => {
+                        const { existingId, ...rest } = st;
+                        return { ...basePayload, ...rest };
+                    });
+
+                    await createInternship(payloads);
+
+                    const modal = document.getElementById('studentModal');
+                    if (modal) modal.style.display = 'none';
+                    document.getElementById('studentForm').reset();
+                    document.getElementById('mi-student-container').innerHTML = ''; // Clear rows
+                    load();
+                } catch (err) {
+                    if (errEl) { 
+                        let msg = err.message;
+                        if (msg.includes('foreign key constraint')) {
+                            msg = 'Error: The Student Enrollment Number you entered does not exist. Please register the student in the "Students" page first.';
+                        }
+                        errEl.textContent = msg; 
+                        errEl.style.display = 'block'; 
+                    }
+                } finally {
+                    btn.disabled = false; btn.textContent = 'Save Internship';
+                }
+            });
+
+            // Edit submit
+            document.getElementById('editInternshipForm').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const idsRaw = document.getElementById('ei-id').value;
+                const originalIds = idsRaw.split(',').map(Number).filter(Boolean);
+                const errEl = document.getElementById('editInternModalError');
+                const btn = document.getElementById('editInternshipSubmitBtn');
+                if (errEl) errEl.style.display = 'none';
+
+                const students = collectInternStudentRows('ei');
+                if (students.length === 0) {
+                    if (errEl) { errEl.textContent = 'Please add at least one student entry.'; errEl.style.display = 'block'; }
+                    return;
+                }
+
+                btn.disabled = true; btn.textContent = 'Saving…';
+
+                try {
+                    const basePayload = {
+                        year: document.getElementById('ei-year').value,
+                        batch: document.getElementById('ei-batch').value,
+                        internship_place: document.getElementById('ei-place').value,
+                        duration_of_intership: document.getElementById('ei-duration').value || '',
+                        city_of_intership: document.getElementById('ei-city').value || '',
+                        type_of_organization: document.getElementById('ei-org-type').value || ''
+                    };
+
+                    const updatedIds = [];
+
+                    for (const student of students) {
+                        const { existingId, ...studentData } = student;
+                        const payload = { ...basePayload, ...studentData };
+                        if (existingId) {
+                            // Update existing record
+                            await updateInternship(existingId, payload);
+                            updatedIds.push(Number(existingId));
+                        } else {
+                            // Create new record for a newly added student
+                            await createInternship(payload);
+                        }
+                    }
+
+                    // Delete any original records that were removed from the form
+                    const removedIds = originalIds.filter(id => !updatedIds.includes(id));
+                    if (removedIds.length > 0) {
+                        await Promise.all(removedIds.map(id => deleteInternship(id)));
+                    }
+
+                    document.getElementById('editInternshipModal').style.display = 'none';
+                    load();
+                } catch (err) {
+                    if (errEl) {
+                        let msg = err.message;
+                        if (msg.includes('foreign key constraint')) {
+                            msg = 'Error: Enrollment Number does not exist in the Students table. Please add the student first.';
+                        }
+                        errEl.textContent = msg;
+                        errEl.style.display = 'block';
+                    }
+                } finally {
+                    btn.disabled = false; btn.textContent = 'Save Changes';
+                }
+            });
+
+            // Import Handling
+            document.getElementById('importInternshipForm').addEventListener('submit', async e => {
+                e.preventDefault();
+                const fileInput = document.getElementById('importInternFile');
+                const errEl = document.getElementById('importInternError');
+                const statusEl = document.getElementById('importInternStatus');
+                const btn = document.getElementById('importInternSubmitBtn');
+
+                if (!fileInput.files.length) return;
+
+                errEl.style.display = 'none';
+                statusEl.style.display = 'block';
+                btn.disabled = true;
+
+                const formData = new FormData();
+                formData.append('file', fileInput.files[0]);
+
+                try {
+                    const res = await importInternships(formData);
+                    alert(res.message || 'Import successful!');
+                    document.getElementById('importInternshipModal').style.display = 'none';
+                    fileInput.value = '';
+                    load();
+                } catch (err) {
+                    errEl.textContent = err.message;
+                    errEl.style.display = 'block';
+                } finally {
+                    statusEl.style.display = 'none';
+                    btn.disabled = false;
+                }
+            });
+            // Init: guard against double DOMContentLoaded
+            function initInternshipsPage() {
+                load();
+                subscribeAllChanges(() => {
+                    // console.log('[Realtime] Refreshing internship list...');
+                    load();
+                });
+            }
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', initInternshipsPage);
+            } else {
+                initInternshipsPage();
+            }
+        })();
+    </script>
+</body>
+
+</html>

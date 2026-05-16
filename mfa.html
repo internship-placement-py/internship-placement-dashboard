@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self' https:; script-src 'self' 'unsafe-inline' https://d3js.org https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; img-src 'self' https: data:; font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net; frame-ancestors 'none';">
+    <title>MFA Verification — Placement Monitor Dashboard</title>
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: Segoe UI, sans-serif; }
+
+        body {
+            height: 100vh;
+            background: #162337;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            display: flex;
+            width: 900px;
+            height: 540px;
+            background: #111f33;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.6);
+        }
+
+        .left {
+            flex: 1;
+            background: linear-gradient(160deg, #0b1a2a, #07121e);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            padding: 40px;
+        }
+
+        .logo { width: 140px; margin-bottom: 8px; }
+
+        .left h1 {
+            font-size: 28px;
+            color: #ffffff;
+            margin: 0;
+            white-space: nowrap;
+        }
+
+        .left p { font-size: 14px; margin-top: 5px;             opacity: 1; }
+
+        .right {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 44px 50px;
+            background: #0f2236;
+        }
+
+        .right h2 { color: white; margin-bottom: 20px; text-align: center; }
+
+        .input-box { margin-bottom: 16px; }
+        .input-box input {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            background: #1b344d;
+            color: white;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+        .input-box input:hover { transform: translateY(-3px); box-shadow: 0 6px 15px rgba(0,0,0,0.4); }
+        .input-box input:focus { transform: translateY(-3px); box-shadow: 0 0 8px rgba(255,140,0,0.6); }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #ff8c00;
+            border: none;
+            border-radius: 6px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        button:hover { transform: translateY(-3px); box-shadow: 0 0 12px rgba(255,140,0,0.7); background: #ffa733; }
+        button:active { transform: translateY(1px); }
+        button:disabled { opacity: 0.5; cursor: not-allowed; transform: none !important; box-shadow: none !important; }
+
+        .extra { margin-top: 14px; display: flex; justify-content: center; font-size: 13px; }
+        .extra a { color: #ffffff; text-decoration: none; }
+
+        .error-msg {
+            background: rgba(239,68,68,0.15);
+            border: 1px solid rgba(239,68,68,0.5);
+            color: #ffffff;
+            padding: 10px 14px;
+            border-radius: 6px;
+            font-size: 13px;
+            margin-bottom: 14px;
+            display: none;
+        }
+        .error-msg.show { display: block; }
+
+        /* ── Countdown Timer ────────────────────────── */
+        .otp-meta {
+            text-align: center;
+            margin-bottom: 18px;
+        }
+        .otp-hint {
+            color: #888;
+            font-size: 12px;
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+        .otp-hint span { color: #ffffff; }
+
+        .countdown-ring {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .countdown-timer {
+            font-size: 26px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            color: #ffffff;
+            transition: color 0.3s;
+        }
+        .countdown-timer.warning { color: #f59e0b; }
+        .countdown-timer.expired { color: #ef4444; }
+        .countdown-label {
+            font-size: 11px;
+            color: #555;
+            margin-top: 2px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* progress bar under timer */
+        .countdown-bar-wrap {
+            width: 100%;
+            height: 3px;
+            background: #1b344d;
+            border-radius: 2px;
+            margin-bottom: 16px;
+            overflow: hidden;
+        }
+        .countdown-bar {
+            height: 100%;
+            background: #ff8c00;
+            border-radius: 2px;
+            transition: width 1s linear, background 0.3s;
+            width: 100%;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="left">
+            <a href="https://rru.ac.in/" target="_blank">
+                <img src="https://rise.rru.ac.in/img/home-9/hero/RRU-Logo.png" class="logo">
+            </a>
+            <h1>Placement Monitor Dashboard</h1>
+            <p>Future Leaders and Security Intelligence</p>
+        </div>
+
+        <div class="right">
+
+            <h2>🔐 MFA Verification</h2>
+
+            <div class="otp-meta">
+                <div class="otp-hint" id="otpHint">OTPs have been sent to your registered email and mobile.</div>
+                <!-- countdown -->
+                <div class="countdown-ring">
+                    <div class="countdown-timer" id="countdownDisplay">5:00</div>
+                    <div class="countdown-label">OTP expires in</div>
+                </div>
+            </div>
+
+            <div class="countdown-bar-wrap">
+                <div class="countdown-bar" id="countdownBar"></div>
+            </div>
+
+            <form id="mfaForm">
+                <div id="errorMsg" class="error-msg"></div>
+
+                <div class="input-box">
+                    <input type="text" id="emailOtp" placeholder="Enter OTP / Access Code" required
+                           autocomplete="off" maxlength="6" inputmode="numeric">
+                </div>
+
+                <button type="submit" class="mfa-submit-btn" id="verifyBtn">Verify &amp; Login</button>
+
+                <div class="extra">
+                    <a href="index.html">← Back to Login</a>
+                </div>
+            </form>
+
+        </div>
+
+    </div>
+
+        <!-- CDN: Supabase JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- CDN: SheetJS for Excel import/export -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <!-- Supabase config (change only this file when moving to a new host) -->
+    <script src="config.js"></script>
+    <script src="supabase-client.js"></script>
+    <script src="api.js?v=400"></script>
+    <script src="security.js?v=400"></script>
+    <script>
+        // ── OTP expiry countdown (5 minutes) ──────────────────────────────────
+        const OTP_SECONDS = 300;
+        let remaining = OTP_SECONDS;
+        let countdownInterval = null;
+
+        const display  = document.getElementById('countdownDisplay');
+        const bar      = document.getElementById('countdownBar');
+        const verifyBtn = document.getElementById('verifyBtn');
+        const errorMsg  = document.getElementById('errorMsg');
+        const otpHint   = document.getElementById('otpHint');
+
+        function formatTime(s) {
+            const m = Math.floor(s / 60);
+            const sec = s % 60;
+            return `${m}:${sec.toString().padStart(2, '0')}`;
+        }
+
+        function startCountdown() {
+            display.textContent = formatTime(remaining);
+            bar.style.width = '100%';
+
+            countdownInterval = setInterval(() => {
+                remaining--;
+                const pct = (remaining / OTP_SECONDS) * 100;
+                display.textContent = formatTime(remaining);
+                bar.style.width = pct + '%';
+
+                if (remaining <= 60) {
+                    display.classList.remove('warning');
+                    display.classList.add(remaining > 0 ? 'warning' : 'expired');
+                    bar.style.background = remaining > 0 ? '#f59e0b' : '#ef4444';
+                }
+
+                if (remaining <= 0) {
+                    clearInterval(countdownInterval);
+                    display.textContent = '0:00';
+                    display.classList.add('expired');
+                    bar.style.width = '0%';
+                    verifyBtn.disabled = true;
+                    errorMsg.textContent = 'OTP has expired. Please go back and log in again.';
+                    errorMsg.classList.add('show');
+                }
+            }, 1000);
+        }
+
+        startCountdown();
+
+        // ── Show masked email/mobile hint ─────────────────────────────────────
+        const emailHint = localStorage.getItem('mfa_pending_email');
+        if (emailHint) {
+            otpHint.innerHTML = `OTP sent to:<br><span>📧 ${emailHint}</span>`;
+        } else {
+            // No pending 2FA session — send back to login
+            window.location.href = 'index.html';
+        }
+
+        document.getElementById('mfaForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const otp = document.getElementById('emailOtp').value.trim();
+
+            errorMsg.classList.remove('show');
+
+            if (!otp) {
+                errorMsg.textContent = 'Please enter the OTP.';
+                errorMsg.classList.add('show');
+                return;
+            }
+
+            verifyBtn.disabled = true;
+            verifyBtn.textContent = 'Verifying...';
+
+            try {
+                await apiVerifyRealOtp(otp);
+                clearInterval(countdownInterval);
+                window.location.href = 'dashboard.html';
+            } catch (err) {
+                errorMsg.textContent = err.message || 'Verification failed. Try again.';
+                errorMsg.classList.add('show');
+                verifyBtn.disabled = remaining <= 0;
+                verifyBtn.textContent = 'Verify & Login';
+            }
+        });
+    </script>
+
+</body>
+</html>

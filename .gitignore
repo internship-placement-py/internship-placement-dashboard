@@ -1,0 +1,5 @@
+.DS_Store
+.vscode/
+placement_db.sqlite
+node_modules/
+.git_backup/

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OSINT Job Aggregator</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- UI Icons -->
+    <link rel="stylesheet" href="styles.css?v=419">
+    <link rel="stylesheet" href="external-jobs.css?v=405">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <script src="auth-guard.js"></script>
+</head>
+
+<body>
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <a href="https://rru.ac.in/" target="_blank">
+                <img src="https://upload.wikimedia.org/wikipedia/en/b/bc/Rashtriya_Raksha_University_logo.png"
+                    alt="RRU Logo">
+            </a>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="sidebar-link"><i class="bi bi-speedometer2"></i> <span>Dashboard</span></a>
+            <a href="students.html" class="sidebar-link"><i class="bi bi-people-fill"></i> <span>Students</span></a>
+            <a href="internships.html" class="sidebar-link"><i class="bi bi-person-workspace"></i>
+                <span>Internships</span></a>
+            <a href="field-visits.html" class="sidebar-link"><i class="bi bi-pin-map-fill"></i> <span>Field
+                    Visits</span></a>
+            <a href="industrial-visits.html" class="sidebar-link"><i class="bi bi-buildings-fill"></i> <span>Industrial
+                    Visits</span></a>
+            <a href="placements.html" class="sidebar-link"><i class="bi bi-briefcase-fill"></i>
+                <span>Placements</span></a>
+            <a href="external-jobs.html" class="sidebar-link active"><i class="bi bi-globe"></i> <span>Job
+                    Offers</span></a>
+            <a href="reports.html" class="sidebar-link"><i class="bi bi-bar-chart-fill"></i> <span>Reports</span></a>
+            <a href="settings.html" class="sidebar-link"><i class="bi bi-gear-fill"></i>
+                <span>Settings</span></a>
+        </nav>
+        <div class="sidebar-footer">
+            <div class="user-profile">
+                <div class="avatar">CD</div>
+                <div class="user-info">
+                    <div class="name">CD PUDUCHERRY CAMPUS</div>
+                    <div class="role">Admin</div>
+                </div>
+                <button id="logoutBtn" class="logout-btn" title="Logout">
+                    <i class="bi bi-box-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+    </aside>
+
+    <div class="container">
+        <!-- Main Content Area -->
+        <div class="main-content dashboard-layout-container">
+            <!-- TOP HEADER ROW -->
+            <div class="top-header-row">
+                <div>
+                    <h1>OSINT Job Aggregator</h1>
+                    <div class="subtitle">Global Intelligence Gathering & Opportunity Feed</div>
+                </div>
+                <div class="header-actions-unified">
+                    <input type="text" id="jobSearch" class="search-bar-unified" style="width: 300px;"
+                        placeholder="Search roles, companies, keywords...">
+                    <button id="refreshBtn" class="select-unified" style="width: auto; padding: 10px 15px;">
+                        <i class="bi bi-arrow-clockwise"></i> Refresh
+                    </button>
+                    <button class="select-unified"
+                        style="width: auto; padding: 10px 15px; background: var(--accent-blue);">
+                        <i class="bi bi-bell"></i> Alerts
+                    </button>
+                </div>
+            </div>
+
+            <div class="widget-panel" style="min-height: 80vh;">
+                <!-- Internal Job Filters (Modern Tabs) -->
+                <div class="domain-tabs"
+                    style="display: flex; gap: 10px; margin-bottom: 25px; border-bottom: 1px solid var(--border-color); padding-bottom: 15px; overflow-x: auto;">
+                    <button class="job-filter-tab active" data-filter="">All Channels</button>
+                    <button class="job-filter-tab" data-filter="Internship">Internships</button>
+                    <button class="job-filter-tab" data-filter="Fresher">Full-Time</button>
+                    <span style="color: var(--text-dim); margin: 0 10px; align-self: center;">| Domains:</span>
+                    <button class="job-filter-tab" data-filter="Cyber Security">Cyber</button>
+                    <button class="job-filter-tab" data-filter="Digital Forensics">Forensics</button>
+                    <button class="job-filter-tab" data-filter="Intelligence">Intelligence</button>
+                </div>
+
+                <section class="feed-header">
+                    <div class="feed-info">
+                        <h2 id="feedTitle" style="color:white; font-size: 1.1rem; margin-bottom: 5px;">Active
+                            Opportunities
+                        </h2>
+                        <p id="feedStats" style="color:var(--text-dim); font-size: 0.9rem;">Gathering intelligence
+                            feed...
+                        </p>
+                    </div>
+                    <div class="platform-filter">
+                        <button class="chip active" data-platform="">All Platforms</button>
+                        <button class="chip" data-platform="LinkedIn"><i class="bi bi-linkedin"></i> LinkedIn</button>
+                        <button class="chip" data-platform="Naukri">Naukri</button>
+                        <button class="chip" data-platform="Internshala">Internshala</button>
+                        <button class="chip" data-platform="Indeed">Indeed</button>
+                        <button class="chip govt-chip" data-platform="Govt Portal"><i class="bi bi-bank"></i> Govt
+                            Portal</button>
+                    </div>
+                </section>
+
+                <!-- Job Grid -->
+                <div class="job-grid" id="jobGrid" style="margin-top: 25px;">
+                    <!-- Loading State -->
+                    <div class="skeleton-card"></div>
+                    <div class="skeleton-card"></div>
+                    <div class="skeleton-card"></div>
+                </div>
+
+                <!-- Empty State (Hidden) -->
+                <div id="emptyState" class="empty-state"
+                    style="display: none; padding: 60px; text-align: center; flex-direction: column; align-items: center; gap: 15px;">
+                    <i class="bi bi-search-heart" style="font-size: 3rem; opacity: 0.2;"></i>
+                    <h3>No intelligence match found</h3>
+                    <p style="color: var(--text-dim);">Try adjusting your filters or refine your keywords.</p>
+                </div>
+            </div>
+
+            <!-- FOOTER -->
+            <footer class="app-footer" style="padding: 40px 0; border-top: 1px solid var(--border); margin-top: 30px;">
+                <div style="display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 40px;">
+                    <div>
+                        <h3 style="color: var(--navy); font-size: 14px; margin-bottom: 15px;">Rashtriya Raksha
+                            University</h3>
+                        <p style="font-size: 12px; color: var(--text-muted); line-height: 1.8;">Puducherry Campus,
+                            Pondicherry
+                            Institute of Hotel Management & Catering Technology [PIHMCT]<br>Opp To Mahalakshmi Nagar,
+                            Murungapakkam, Puducherry – 605004</p>
+                    </div>
+                    <div>
+                        <h3 style="color: var(--navy); font-size: 14px; margin-bottom: 15px;">Contact</h3>
+                        <p style="font-size: 12px; color: var(--text-muted);">Email: ro1.py@rru.ac.in</p>
+                        <p style="font-size: 12px; color: var(--text-muted);">Phone: 7305522199</p>
+                    </div>
+                    <div>
+                        <h3 style="color: var(--navy); font-size: 14px; margin-bottom: 15px;">Follow</h3>
+                        <p style="font-size: 12px; color: var(--text-muted);"><a href="https://www.instagram.com/rru.puducherrycampus/" target="_blank"
+                                style="color: inherit; text-decoration: none;">Instagram</a></p>
+                        <p style="font-size: 12px; color: var(--text-muted);"><a href="https://www.linkedin.com/company/rashtriya-raksha-university-puducherry-campus/posts/?feedView=all" target="_blank"
+                                style="color: inherit; text-decoration: none;">LinkedIn</a></p>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="device-tracker.js?v=101"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="config.js"></script>
+    <script src="supabase-client.js"></script>
+    <script src="api.js?v=400"></script>
+    <script src="security.js?v=400"></script>
+    <script src="external-jobs.js?v=6"></script>
+</body>
+
+</html>

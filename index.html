@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login — Placement Monitor Dashboard</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Segoe UI, sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            background: #162337;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* MAIN CONTAINER */
+
+        .container {
+            display: flex;
+            width: 900px;
+            height: 500px;
+            background: #111f33;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.6);
+        }
+
+        /* LEFT SIDE */
+
+        .left {
+            flex: 1;
+            background: linear-gradient(160deg, #0b1a2a, #07121e);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            padding: 40px;
+        }
+
+        .logo {
+            width: 140px;
+            margin-bottom: 8px;
+        }
+
+        .left h1 {
+            font-size: 28px;
+            color: #ffffff;
+            margin: 0;
+            white-space: nowrap;
+        }
+
+        .left p {
+            font-size: 14px;
+            margin-top: 5px;
+            opacity: 1;
+        }
+
+        /* RIGHT SIDE */
+
+        .right {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 50px;
+            background: #0f2236;
+        }
+
+        .right h2 {
+            color: white;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        /* INPUT BOX */
+
+        .input-box {
+            margin-bottom: 20px;
+        }
+
+        .input-box input {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            background: #1b344d;
+            color: white;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        /* INPUT HOVER EFFECT */
+
+        .input-box input:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+        }
+
+        .input-box input:focus {
+            transform: translateY(-4px);
+            box-shadow: 0 0 8px rgba(255, 140, 0, 0.6);
+        }
+
+        /* LOGIN BUTTON */
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #ff8c00;
+            border: none;
+            border-radius: 6px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 0 12px rgba(255, 140, 0, 0.7);
+            background: #ffa733;
+        }
+
+        button:active {
+            transform: translateY(1px);
+        }
+
+        /* EXTRA LINKS */
+
+        .extra {
+            margin-top: 15px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+        }
+
+        .extra a {
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+        /* ERROR / STATUS */
+        .error-msg {
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid rgba(239, 68, 68, 0.5);
+            color: #ffffff;
+            padding: 10px 14px;
+            border-radius: 6px;
+            font-size: 13px;
+            margin-bottom: 16px;
+            display: none;
+        }
+
+        .error-msg.show {
+            display: block;
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="left">
+
+            <a href="https://rru.ac.in/" target="_blank">
+                <img src="https://rise.rru.ac.in/img/home-9/hero/RRU-Logo.png" class="logo">
+            </a>
+
+            <h1>Placement Monitor Dashboard</h1>
+
+            <p>Future Leaders and Security Intelligence</p>
+
+        </div>
+
+
+        <div class="right">
+
+            <h2 id="formTitle">Login</h2>
+
+            <!-- ── Mode Toggle ── -->
+            <div style="display:flex; background:#0d1e2e; border-radius:8px; margin-bottom:20px; padding:4px;">
+                <button type="button" id="tabPassword" onclick="switchTab('password')"
+                    style="flex:1; padding:8px; border:none; border-radius:6px; font-size:13px; font-weight:600; cursor:pointer; background:#ff8c00; color:#fff; transition:all 0.2s;">
+                    Username &amp; Password
+                </button>
+                <button type="button" id="tabOtp" onclick="switchTab('otp')"
+                    style="flex:1; padding:8px; border:none; border-radius:6px; font-size:13px; font-weight:600; cursor:pointer; background:transparent; color:#888; transition:all 0.2s;">
+                    Email OTP
+                </button>
+            </div>
+
+            <form id="loginForm">
+                <div id="errorMsg" class="error-msg"></div>
+
+                <!-- Password login fields -->
+                <div id="passwordFields">
+                    <div class="input-box">
+                        <input type="text" id="username" placeholder="Username (e.g. CD PY)" autocomplete="username">
+                    </div>
+                    <div class="input-box">
+                        <input type="password" id="password" placeholder="Password" autocomplete="current-password">
+                    </div>
+                    <button type="submit" id="loginBtn">Login</button>
+                </div>
+
+                <!-- OTP login fields -->
+                <div id="otpFields" style="display:none;">
+                    <div class="input-box">
+                        <input type="email" id="email" placeholder="Registered Email Address" autocomplete="email">
+                    </div>
+                    <button type="submit" id="otpBtn">Send OTP</button>
+                    <div class="extra" style="margin-top:12px;">
+                        <span style="color:#aaa;font-size:12px;">A 6-digit OTP will be sent to your inbox.</span>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+
+    </div>
+
+    <!-- CDN: Supabase JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- CDN: SheetJS for Excel import/export -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <!-- Supabase config -->
+    <script src="config.js"></script>
+    <script src="supabase-client.js"></script>
+    <script src="security.js"></script>
+    <script src="api.js?v=501"></script>
+    <script>
+        // If already logged in, redirect to dashboard
+        if (localStorage.getItem('pd_user')) {
+            window.location.href = 'dashboard.html';
+        }
+
+        let currentTab = 'password';
+
+        function switchTab(tab) {
+            currentTab = tab;
+            const isPassword = tab === 'password';
+            document.getElementById('passwordFields').style.display = isPassword ? 'block' : 'none';
+            document.getElementById('otpFields').style.display = isPassword ? 'none' : 'block';
+            document.getElementById('formTitle').textContent = isPassword ? 'Login' : 'Login with OTP';
+            document.getElementById('tabPassword').style.background = isPassword ? '#ff8c00' : 'transparent';
+            document.getElementById('tabPassword').style.color = isPassword ? '#fff' : '#888';
+            document.getElementById('tabOtp').style.background = isPassword ? 'transparent' : '#ff8c00';
+            document.getElementById('tabOtp').style.color = isPassword ? '#888' : '#fff';
+            document.getElementById('errorMsg').classList.remove('show');
+        }
+
+        document.getElementById('loginForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const errorMsg = document.getElementById('errorMsg');
+            errorMsg.classList.remove('show');
+
+            // Rate limit check
+            if (typeof isLoginLockedOut === 'function') {
+                const lockout = isLoginLockedOut();
+                if (lockout.locked) {
+                    errorMsg.textContent = `Too many failed attempts. Locked out for ${Math.ceil(lockout.remainingMs / 60000)} more minutes.`;
+                    errorMsg.classList.add('show');
+                    return;
+                }
+            }
+
+            if (currentTab === 'password') {
+                // ── Username + Password Login ───────────────────
+                const username = document.getElementById('username').value.trim();
+                const password = document.getElementById('password').value;
+                const btn = document.getElementById('loginBtn');
+
+                if (!username || !password) {
+                    errorMsg.textContent = 'Please enter your username and password.';
+                    errorMsg.classList.add('show');
+                    return;
+                }
+
+                btn.disabled = true;
+                btn.textContent = 'Logging in…';
+
+                try {
+                    await apiLoginWithPassword(username, password);
+                    if (typeof clearLoginAttempts === 'function') clearLoginAttempts();
+                    window.location.href = 'dashboard.html';
+                } catch (err) {
+                    if (typeof recordLoginAttempt === 'function') {
+                        const r = recordLoginAttempt();
+                        errorMsg.textContent = r.locked
+                            ? 'Too many failed attempts. Locked out for 15 minutes.'
+                            : `${err.message || 'Login failed.'} (${r.attemptsLeft} attempts left)`;
+                    } else {
+                        errorMsg.textContent = err.message || 'Login failed.';
+                    }
+                    errorMsg.classList.add('show');
+                    btn.disabled = false;
+                    btn.textContent = 'Login';
+                }
+
+            } else {
+                // ── Email OTP Login ─────────────────────────────
+                const email = document.getElementById('email').value.trim();
+                const btn = document.getElementById('otpBtn');
+
+                if (!email) {
+                    errorMsg.textContent = 'Please enter your email address.';
+                    errorMsg.classList.add('show');
+                    return;
+                }
+
+                btn.disabled = true;
+                btn.textContent = 'Sending OTP…';
+
+                try {
+                    await apiSendOtp(email);
+                    if (typeof clearLoginAttempts === 'function') clearLoginAttempts();
+                    window.location.href = 'mfa.html';
+                } catch (err) {
+                    if (typeof recordLoginAttempt === 'function') {
+                        const r = recordLoginAttempt();
+                        errorMsg.textContent = r.locked
+                            ? 'Too many failed attempts. Locked out for 15 minutes.'
+                            : `${err.message || 'Failed to send OTP.'} (${r.attemptsLeft} attempts left)`;
+                    } else {
+                        errorMsg.textContent = err.message || 'Failed to send OTP.';
+                    }
+                    errorMsg.classList.add('show');
+                    btn.disabled = false;
+                    btn.textContent = 'Send OTP';
+                }
+            }
+        });
+    </script>
+
+</body>
+
+</html>

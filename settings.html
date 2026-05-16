@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self' https: data:; script-src 'self' 'unsafe-inline' https://d3js.org https://cdn.jsdelivr.net https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net https://unpkg.com; img-src 'self' https: data: blob: *; font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net; connect-src 'self' https://*.supabase.co wss://*.supabase.co https://raw.githubusercontent.com https://api.ipify.org https://api64.ipify.org; frame-ancestors 'none';">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - Placement Monitor Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css?v=419">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <script src="auth-guard.js"></script>
+</head>
+
+<body>
+        <aside class="sidebar">
+        <div class="sidebar-header">
+            <a href="https://rru.ac.in/" target="_blank">
+                <img src="https://upload.wikimedia.org/wikipedia/en/b/bc/Rashtriya_Raksha_University_logo.png"
+                    alt="RRU Logo">
+            </a>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="sidebar-link"><i class="bi bi-speedometer2"></i> <span>Dashboard</span></a>
+            <a href="students.html" class="sidebar-link"><i class="bi bi-people-fill"></i> <span>Students</span></a>
+            <a href="internships.html" class="sidebar-link"><i class="bi bi-person-workspace"></i> <span>Internships</span></a>
+            <a href="field-visits.html" class="sidebar-link"><i class="bi bi-pin-map-fill"></i> <span>Field Visits</span></a>
+            <a href="industrial-visits.html" class="sidebar-link"><i class="bi bi-buildings-fill"></i> <span>Industrial Visits</span></a>
+            <a href="placements.html" class="sidebar-link"><i class="bi bi-briefcase-fill"></i> <span>Placements</span></a>
+            <a href="external-jobs.html" class="sidebar-link"><i class="bi bi-globe"></i> <span>Job Offers</span></a>
+            <a href="reports.html" class="sidebar-link"><i class="bi bi-bar-chart-fill"></i> <span>Reports</span></a>
+            <a href="settings.html" class="sidebar-link active"><i class="bi bi-gear-fill"></i> <span>Settings</span></a>
+        </nav>
+        <div class="sidebar-footer">
+            <div class="user-profile">
+                <div class="avatar">CD</div>
+                <div class="user-info">
+                    <div class="name">CD PUDUCHERRY CAMPUS</div>
+                    <div class="role">Admin</div>
+                </div>
+                <button id="logoutBtn" class="logout-btn" title="Logout">
+                    <i class="bi bi-box-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+    </aside>
+
+    <div class="container">
+        <!-- Main Content -->
+        <div class="main-content dashboard-layout-container">
+            <!-- TOP HEADER ROW -->
+            <div class="top-header-row">
+                <div>
+                    <h1>System Settings</h1>
+                </div>
+                <div class="header-actions-unified">
+                    <input type="text" class="search-bar-unified" placeholder="Search settings...">
+                    <button class="select-unified" onclick="location.reload()" style="width: auto; padding: 10px 15px;">
+                        <i class="bi bi-arrow-clockwise"></i> Refresh
+                    </button>
+                </div>
+            </div>
+
+            <div class="widget-panel">
+
+                <!-- Settings Container -->
+                <div class="settings-container">
+                    <!-- Settings Navigation -->
+                    <div class="settings-nav">
+                        <div class="settings-option active" data-target="admin-profile"
+                            onclick="switchTab('admin-profile')">
+                            👤 Admin Profile
+                        </div>
+                        <div class="settings-option" data-target="admin-password" onclick="switchTab('admin-password')">
+                            🔐 Change Password
+                        </div>
+                        <div class="settings-option" data-target="student-password"
+                            onclick="switchTab('student-password')">
+                            🎓 Student Passwords
+                        </div>
+                        <div class="settings-option" data-target="notifications" onclick="switchTab('notifications')">
+                            🔔 Notifications
+                        </div>
+                        <div class="settings-option" data-target="security" onclick="switchTab('security')">
+                            🛡️ Security Settings
+                        </div>
+                    </div>
+
+                    <!-- Settings Content -->
+                    <div class="settings-content-wrapper">
+
+                        <!-- Admin Profile -->
+                        <div id="admin-profile" class="settings-content active">
+                            <div class="settings-card">
+                                <div class="profile-header">
+                                    <div class="profile-avatar">A</div>
+                                    <div class="profile-info">
+                                        <h2>Campus Director PY</h2>
+                                        <p>Admin User</p>
+                                        <p>campusdirector@rru.ac.in</p>
+                                    </div>
+                                </div>
+
+                                <div class="alert alert-success" id="profileAlert"></div>
+
+                                <div class="card-title">Personal Information</div>
+
+                                <div class="form-group-row">
+                                    <div class="form-group">
+                                        <label class="form-label">First Name</label>
+                                        <input type="text" class="form-input" id="firstName" value="Campus Director"
+                                            placeholder="Enter first name">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Last Name</label>
+                                        <input type="text" class="form-input" id="lastName" value="G"
+                                            placeholder="Enter last name">
+                                    </div>
+                                </div>
+
+                                <div class="form-group-row">
+                                    <div class="form-group">
+                                        <label class="form-label">Email Address</label>
+                                        <input type="email" class="form-input" id="email" value="campusdirector@rru.ac.in"
+                                            placeholder="Enter email">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Phone Number</label>
+                                        <input type="tel" class="form-input" id="phone" value="+91 9876543210"
+                                            placeholder="Enter phone number">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label">Department</label>
+                                    <input type="text" class="form-input" value="Academic Affairs" disabled>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label">Role</label>
+                                    <input type="text" class="form-input" value="Administrator" disabled>
+                                </div>
+
+                                <div class="button-group">
+                                    <button class="btn btn-primary" onclick="updateProfile()">Save Changes</button>
+                                    <button class="btn btn-secondary" onclick="resetProfileForm()">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Admin Password Change -->
+                        <div id="admin-password" class="settings-content">
+                            <div class="settings-card">
+                                <div class="card-title">Change Your Password</div>
+
+                                <div class="alert alert-success" id="passwordAlert"></div>
+
+                                <div class="form-group">
+                                    <label class="form-label">Current Password</label>
+                                    <input type="password" class="form-input" id="currentPassword"
+                                        placeholder="Enter current password">
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label">New Password</label>
+                                    <input type="password" class="form-input" id="newPassword"
+                                        placeholder="Enter new password" oninput="checkPasswordStrength()">
+                                    <div class="password-strength" id="strengthIndicator">
+                                        <div class="strength-bar"></div>
+                                        <div class="strength-bar"></div>
+                                        <div class="strength-bar"></div>
+                                    </div>
+                                    <div class="strength-text" id="strengthText">Password strength: Weak</div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label">Confirm Password</label>
+                                    <input type="password" class="form-input" id="confirmPassword"
+                                        placeholder="Confirm new password">
+                                </div>
+
+                                <div
+                                    style="background-color: rgba(107, 114, 128, 0.1); border: 1px solid #4b5563; border-radius: 6px; padding: 15px; margin-bottom: 20px; font-size: 13px; color: #aaa; line-height: 1.6;">
+                                    <strong style="color: #fff; display: block; margin-bottom: 8px;">Password
+                                        Requirements:</strong>
+                                    ✓ Minimum 8 characters<br>
+                                    ✓ At least one uppercase letter<br>
+                                    ✓ At least one number<br>
+                                    ✓ At least one special character (!@#$%^&*)
+                                </div>
+
+                                <div class="button-group">
+                                    <button class="btn btn-primary" onclick="updateAdminPassword()">Change
+                                        Password</button>
+                                    <button class="btn btn-secondary" onclick="resetPasswordForm()">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Reset Student Password -->
+                        <div id="student-password" class="settings-content">
+                            <div class="settings-card">
+                                <div class="card-title">Reset Student Password</div>
+                                <p style="color: #888; font-size: 13px; margin-bottom: 20px;">Select a student and set a
+                                    new
+                                    temporary password for them.</p>
+
+                                <div class="alert alert-success" id="studentPasswordAlert"></div>
+
+                                <div class="form-group">
+                                    <label class="form-label">Select Student</label>
+                                    <select class="form-select" id="studentSelect" onchange="loadStudentDetails()">
+                                        <option value="">-- Select a student --</option>
+
+                                    </select>
+                                </div>
+
+                                <div id="studentDetails" style="display: none;">
+                                    <div
+                                        style="background-color: #252b4a; padding: 15px; border-radius: 6px; margin-bottom: 20px;">
+                                        <div style="margin-bottom: 10px;">
+                                            <span style="color: #888; font-size: 12px;">Name:</span>
+                                            <span style="color: #fff; font-weight: 600; display: block;"
+                                                id="studentName"></span>
+                                        </div>
+                                        <div style="margin-bottom: 10px;">
+                                            <span style="color: #888; font-size: 12px;">Enrollment Number:</span>
+                                            <span style="color: #fff; font-weight: 600; display: block;"
+                                                id="studentEnrollment"></span>
+                                        </div>
+                                        <div>
+                                            <span style="color: #888; font-size: 12px;">Email:</span>
+                                            <span style="color: #fff; font-weight: 600; display: block;"
+                                                id="studentEmail"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="form-label">New Temporary Password</label>
+                                        <input type="text" class="form-input" id="tempPassword"
+                                            placeholder="Enter temporary password (will be sent to student)">
+                                    </div>
+
+                                    <div
+                                        style="background-color: rgba(107, 114, 128, 0.1); border: 1px solid #4b5563; border-radius: 6px; padding: 15px; margin-bottom: 20px; font-size: 13px; color: #aaa;">
+                                        <strong style="color: #fff; display: block; margin-bottom: 8px;">ℹ️
+                                            Note:</strong>
+                                        The student will receive the temporary password via email and will be required
+                                        to
+                                        change it on first login.
+                                    </div>
+
+                                    <div style="margin-bottom: 20px;">
+                                        <label
+                                            style="display: flex; align-items: center; gap: 10px; color: #aaa; font-size: 13px; cursor: pointer;">
+                                            <input type="checkbox" id="sendEmail" checked
+                                                style="width: 16px; height: 16px; cursor: pointer;">
+                                            Send temporary password via email
+                                        </label>
+                                    </div>
+
+                                    <div class="button-group">
+                                        <button class="btn btn-primary" onclick="resetStudentPassword(event)">Reset
+                                            Password</button>
+                                        <button class="btn btn-secondary" onclick="clearStudentForm()">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Notifications -->
+                        <div id="notifications" class="settings-content">
+                            <div class="settings-card">
+                                <div class="card-title">Notification Preferences</div>
+
+                                <div
+                                    style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #2a2f4a;">
+                                    <div
+                                        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                                        <div>
+                                            <div style="color: #fff; font-weight: 600; margin-bottom: 5px;">Email
+                                                Notifications</div>
+                                            <div style="color: #888; font-size: 13px;">Receive email for important
+                                                updates
+                                            </div>
+                                        </div>
+                                        <input type="checkbox" checked
+                                            style="width: 18px; height: 18px; cursor: pointer;">
+                                    </div>
+                                </div>
+
+                                <div
+                                    style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #2a2f4a;">
+                                    <div
+                                        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                                        <div>
+                                            <div style="color: #fff; font-weight: 600; margin-bottom: 5px;">Placement
+                                                Updates</div>
+                                            <div style="color: #888; font-size: 13px;">Get notified about new placements
+                                            </div>
+                                        </div>
+                                        <input type="checkbox" checked
+                                            style="width: 18px; height: 18px; cursor: pointer;">
+                                    </div>
+                                </div>
+
+                                <div
+                                    style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #2a2f4a;">
+                                    <div
+                                        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                                        <div>
+                                            <div style="color: #fff; font-weight: 600; margin-bottom: 5px;">Company
+                                                Updates
+                                            </div>
+                                            <div style="color: #888; font-size: 13px;">Notifications about new company
+                                                registrations</div>
+                                        </div>
+                                        <input type="checkbox" checked
+                                            style="width: 18px; height: 18px; cursor: pointer;">
+                                    </div>
+                                </div>
+
+                                <div style="margin-bottom: 20px;">
+                                    <div
+                                        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                                        <div>
+                                            <div style="color: #fff; font-weight: 600; margin-bottom: 5px;">Weekly
+                                                Reports
+                                            </div>
+                                            <div style="color: #888; font-size: 13px;">Receive weekly placement reports
+                                            </div>
+                                        </div>
+                                        <input type="checkbox" style="width: 18px; height: 18px; cursor: pointer;">
+                                    </div>
+                                </div>
+
+                                <div class="button-group">
+                                    <button class="btn btn-primary" onclick="updateNotifications()">Save
+                                        Preferences</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Security -->
+                        <div id="security" class="settings-content">
+                            <div class="settings-card">
+                                <div class="card-title">Security Settings</div>
+
+                                <div
+                                    style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #2a2f4a;">
+                                    <div
+                                        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                                        <div>
+                                            <div style="color: #fff; font-weight: 600; margin-bottom: 5px;">Two-Factor
+                                                Authentication</div>
+                                            <div style="color: #888; font-size: 13px;">Add an extra layer of security to
+                                                your account</div>
+                                        </div>
+                                        <button id="twoFaBtn" class="btn btn-secondary"
+                                            onclick="enableTwoFA()">Enable</button>
+                                    </div>
+                                </div>
+
+                                <div
+                                    style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #2a2f4a;">
+                                    <div style="color: #fff; font-weight: 600; margin-bottom: 15px;">Active Sessions
+                                    </div>
+                                    <div id="activeSessionsContainer">
+                                        <div style="padding: 20px; text-align: center; opacity: 0.5; font-size: 13px;">
+                                            <i class="bi bi-arrow-clockwise spin"
+                                                style="display: block; font-size: 20px; margin-bottom: 10px;"></i>
+                                            Checking system integrity...
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <div style="color: #fff; font-weight: 600; margin-bottom: 15px;">Danger Zone</div>
+                                    <button class="btn btn-danger" onclick="openDeleteAccount()">Delete Account</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- FOOTER -->
+                            <footer class="app-footer"
+                style="padding: 40px 0; border-top: 1px solid var(--border); margin-top: 30px;">
+                <div style="display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 40px;">
+                    <div>
+                        <h3 style="color: var(--navy); font-size: 14px; margin-bottom: 15px;">Rashtriya Raksha University</h3>
+                        <p style="font-size: 12px; color: var(--text-muted); line-height: 1.8;">Puducherry Campus, Pondicherry
+                            Institute of Hotel Management & Catering Technology [PIHMCT]<br>Opp To Mahalakshmi Nagar,
+                            Murungapakkam, Puducherry – 605004</p>
+                    </div>
+                    <div>
+                        <h3 style="color: var(--navy); font-size: 14px; margin-bottom: 15px;">Contact</h3>
+                        <p style="font-size: 12px; color: var(--text-muted);">Email: ro1.py@rru.ac.in</p>
+                        <p style="font-size: 12px; color: var(--text-muted);">Phone: 7305522199</p>
+                    </div>
+                    <div>
+                        <h3 style="color: var(--navy); font-size: 14px; margin-bottom: 15px;">Follow</h3>
+                        <p style="font-size: 12px; color: var(--text-muted);"><a href="https://www.instagram.com/rru.puducherrycampus/" target="_blank"
+                                style="color: inherit; text-decoration: none;">Instagram</a></p>
+                        <p style="font-size: 12px; color: var(--text-muted);"><a href="https://www.linkedin.com/company/rashtriya-raksha-university-puducherry-campus/posts/?feedView=all" target="_blank"
+                                style="color: inherit; text-decoration: none;">LinkedIn</a></p>
+                    </div>
+                </div>
+            </footer>
+        </div><!-- /.main-content -->
+    </div><!-- /.container -->
+
+            <script src="device-tracker.js?v=101"></script>
+<!-- CDN: Supabase JS -->
+            <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+            <!-- CDN: SheetJS for Excel import/export -->
+            <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+            <!-- Supabase config (change only this file when moving to a new host) -->
+            <script src="config.js"></script>
+    <script src="supabase-client.js"></script>
+            <script src="api.js?v=400"></script>
+            <script src="security.js?v=400"></script>
+            <script src="script.js?v=17"></script>
+            <script>
+                // ─── Device Session Tracking & Display ────────────────────────────────────
+
+                function timeAgo(ts) {
+                    const diff  = Date.now() - ts;
+                    const mins  = Math.floor(diff / 60000);
+                    const hours = Math.floor(diff / 3600000);
+                    const days  = Math.floor(diff / 86400000);
+                    if (mins  < 2)  return 'Just now';
+                    if (mins  < 60) return `${mins} minute${mins > 1 ? 's' : ''} ago`;
+                    if (hours < 24) return `${hours} hour${hours > 1 ? 's' : ''} ago`;
+                    if (days  < 30) return `${days} day${days > 1 ? 's' : ''} ago`;
+                    return new Date(ts).toLocaleDateString();
+                }
+
+                function parseBrowserFull(ua) {
+                    const edgeVer    = ua.match(/Edg\/([\d.]+)/);
+                    const chromeVer  = ua.match(/Chrome\/([\d.]+)/);
+                    const ffVer      = ua.match(/Firefox\/([\d.]+)/);
+                    const safariVer  = ua.match(/Version\/([\d.]+)/);
+                    if (edgeVer)   return `Microsoft Edge ${edgeVer[1].split('.')[0]}`;
+                    if (/OPR\//.test(ua)) return 'Opera';
+                    if (chromeVer) return `Chrome ${chromeVer[1].split('.')[0]}`;
+                    if (ffVer)     return `Firefox ${ffVer[1].split('.')[0]}`;
+                    if (safariVer) return `Safari ${safariVer[1].split('.')[0]}`;
+                    return 'Browser';
+                }
+
+                function parseOSFull(ua) {
+                    if (/Windows NT 10/i.test(ua))           return 'Windows 10/11';
+                    if (/Windows NT 6\.3/i.test(ua))         return 'Windows 8.1';
+                    if (/Windows/i.test(ua))                  return 'Windows';
+                    const iosM = ua.match(/iPhone OS ([\d_]+)/i);
+                    if (iosM)                                  return `iOS ${iosM[1].replace(/_/g,'.')}`;
+                    if (/iPad/i.test(ua))                     return 'iPadOS';
+                    const andM = ua.match(/Android ([\d.]+)/i);
+                    if (andM)                                  return `Android ${andM[1]}`;
+                    const macM = ua.match(/Mac OS X ([\d_]+)/i);
+                    if (macM)                                  return `macOS ${macM[1].replace(/_/g,'.')}`;
+                    if (/Linux/i.test(ua))                    return 'Linux';
+                    return 'Desktop';
+                }
+
+                function buildDeviceCard(session, isCurrent) {
+                    const borderColor = isCurrent ? '#4ade80' : '#334155';
+                    const badge       = isCurrent
+                        ? `<span style="background:rgba(74,222,128,0.12);color:#4ade80;padding:4px 8px;border-radius:4px;font-size:11px;font-weight:800;letter-spacing:.5px;white-space:nowrap;">CURRENT SESSION</span>`
+                        : `<button onclick="revokeSession('${session.machineId}')" class="btn btn-secondary" style="padding:4px 12px;font-size:11px;">Revoke</button>`;
+
+                    const macLabel  = isCurrent ? 'Machine ID (browser fingerprint)' : 'Machine ID';
+                    const ipDisplay = session.ip || 'Unavailable';
+
+                    return `
+                    <div id="device-${session.machineId}" style="background:var(--bg-panel);padding:15px;border-radius:8px;margin-bottom:12px;border-left:3px solid ${borderColor};transition:opacity .3s;">
+                        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;">
+                            <div style="min-width:0;">
+                                <div style="color:#fff;font-weight:600;font-size:14px;margin-bottom:6px;">
+                                    <i class="bi bi-display" style="margin-right:6px;color:#38bdf8;"></i>${session.browser} on ${session.os}
+                                </div>
+                                <div style="display:grid;grid-template-columns:auto 1fr;gap:3px 10px;font-size:12px;">
+                                    <span style="color:#64748b;white-space:nowrap;">IP Address</span>
+                                    <span id="${isCurrent ? 'sessionIpDisplay' : ''}" style="color:#e2e8f0;font-family:monospace;">${isCurrent ? 'Fetching…' : ipDisplay}</span>
+
+                                    <span style="color:#64748b;white-space:nowrap;">${macLabel}</span>
+                                    <span style="color:#818cf8;font-family:monospace;font-weight:700;word-break:break-all;">${session.machineId}</span>
+
+                                    <span style="color:#64748b;white-space:nowrap;">Last Active</span>
+                                    <span style="color:#94a3b8;">${isCurrent ? 'Just now' : timeAgo(session.ts)}</span>
+
+                                    <span style="color:#64748b;white-space:nowrap;">Last Page</span>
+                                    <span style="color:#94a3b8;">${session.page || '—'}</span>
+                                </div>
+                                <div style="margin-top:8px;font-size:10px;color:#4b5563;font-style:italic;">
+                                    ⓘ Browser security prevents access to hardware MAC addresses. Machine ID is a stable per-device fingerprint.
+                                </div>
+                            </div>
+                            ${badge}
+                        </div>
+                    </div>`;
+                }
+
+                window.revokeSession = function(machineId) {
+                    if (!confirm('Remove this device from history?')) return;
+                    try {
+                        let sessions = JSON.parse(localStorage.getItem('pd_device_sessions') || '[]');
+                        sessions = sessions.filter(s => s.machineId !== machineId);
+                        localStorage.setItem('pd_device_sessions', JSON.stringify(sessions));
+                    } catch(_) {}
+                    const el = document.getElementById('device-' + machineId);
+                    if (el) { el.style.opacity = '0'; setTimeout(() => el.remove(), 300); }
+                };
+
+                async function loadActiveSessions() {
+                    const container = document.getElementById('activeSessionsContainer');
+                    if (!container) return;
+
+                    // ── Identify current device ──────────────────────────────────────────
+                    const ua         = navigator.userAgent;
+                    const browser    = parseBrowserFull(ua);
+                    const os         = parseOSFull(ua);
+                    let   machineId  = localStorage.getItem('pd_machine_id');
+                    if (!machineId) {
+                        const hex = () => Math.floor(Math.random()*0xFFFF).toString(16).toUpperCase().padStart(4,'0');
+                        machineId = `${hex()}-${hex()}-${hex()}`;
+                        localStorage.setItem('pd_machine_id', machineId);
+                    }
+
+                    const currentSession = {
+                        browser, os, machineId,
+                        ip: 'Fetching…',
+                        page: window.location.pathname.split('/').pop() || 'settings',
+                        ts: Date.now()
+                    };
+
+                    // ── Render immediately with loading state ────────────────────────────
+                    const allSessions  = JSON.parse(localStorage.getItem('pd_device_sessions') || '[]');
+                    const pastSessions = allSessions.filter(s => s.machineId !== machineId);
+
+                    container.innerHTML =
+                        buildDeviceCard(currentSession, true) +
+                        (pastSessions.length
+                            ? `<div style="color:#475569;font-size:11px;text-transform:uppercase;letter-spacing:1px;margin:18px 0 10px;">Recent Devices</div>` +
+                              pastSessions.map(s => buildDeviceCard(s, false)).join('')
+                            : `<div style="color:#4b5563;font-size:13px;text-align:center;padding:20px;opacity:.6;">No other devices recorded yet — visit the dashboard from another device or browser to see them here.</div>`
+                        );
+
+                    // ── Fetch real IP asynchronously ─────────────────────────────────────
+                    const ipEl = document.getElementById('sessionIpDisplay');
+                    let ip = null;
+
+                    // Check cache first
+                    try {
+                        const cached = JSON.parse(localStorage.getItem('pd_last_ip') || 'null');
+                        if (cached && Date.now() - cached.ts < 5 * 60 * 1000) ip = cached.ip;
+                    } catch(_) {}
+
+                    if (!ip) {
+                        for (const url of ['https://api.ipify.org?format=json','https://api64.ipify.org?format=json']) {
+                            try {
+                                const r = await fetch(url, { signal: AbortSignal.timeout(5000) });
+                                const d = await r.json();
+                                if (d.ip) { ip = d.ip; break; }
+                            } catch(e) { console.warn('IP fetch:', e.message); }
+                        }
+                        if (ip) {
+                            try { localStorage.setItem('pd_last_ip', JSON.stringify({ ip, ts: Date.now() })); } catch(_) {}
+                        }
+                    }
+
+                    const resolvedIp = ip || 'Unavailable';
+                    if (ipEl) ipEl.textContent = resolvedIp;
+
+                    // Also persist updated record with resolved IP via tracker if available
+                    if (window.PD_Tracker) {
+                        window.PD_Tracker.recordDevice().catch(() => {});
+                    }
+                }
+
+                document.addEventListener('DOMContentLoaded', () => {
+                    // Only run if the security tab is visible or on load
+                    loadActiveSessions();
+                });
+            </script>
+</body>
+
+</html>

@@ -1,0 +1,16 @@
+{
+  "name": "placement-dashboard",
+  "version": "1.0.0",
+  "description": "Premium Placement Dashboard with OSINT Job Scraper",
+  "scripts": {
+    "dev": "concurrently \"npm run frontend\" \"npm run scraper\"",
+    "frontend": "vite",
+    "scraper": "source scraper_env/bin/activate && python3 scraper_server.py",
+    "install-py": "pip install -r requirements.txt",
+    "setup-env": "python3 -m venv scraper_env && npm run install-py"
+  },
+  "devDependencies": {
+    "vite": "^5.0.0",
+    "concurrently": "^8.2.0"
+  }
+}
