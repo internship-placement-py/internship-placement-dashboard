@@ -3,3 +3,8 @@
 placement_db.sqlite
 node_modules/
 .git_backup/
+scraper_env/
+scratch/
+*_temp.csv
+test_scrape.py
+fix-scraper.py
