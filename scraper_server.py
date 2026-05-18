@@ -274,7 +274,7 @@ def scrape_jobs():
 
     print("\n=== Starting Concurrent Scrape ===")
     
-    with concurrent.futures.ThreadPoolExecutor(max_workers=20) as executor:
+    with concurrent.futures.ThreadPoolExecutor(max_workers=3) as executor:
         futures = []
         for d in DOMAINS:
             futures.append(executor.submit(scrape_internshala, d))
@@ -312,39 +312,7 @@ def scrape_jobs():
     print(f"Valid after dedup+filter: {len(valid)}")
 
     if not valid:
-        print("[WARN] No valid jobs scraped (possibly ScraperAPI 403). Using fallback mock data.")
-        valid = [
-            {
-                "title": "Cyber Security Analyst", "company": "TechDefend Solutions",
-                "platform": "Indeed", "domain": "Cyber Security",
-                "location": "Bangalore", "job_type": "Full Time",
-                "experience": "1-3 Years", "apply_link": "https://indeed.com/mock-cyber"
-            },
-            {
-                "title": "Digital Forensics Investigator", "company": "Cyber Intelligence Wing",
-                "platform": "Govt Portal", "domain": "Digital Forensics",
-                "location": "Delhi", "job_type": "Full Time",
-                "experience": "Freshers", "apply_link": "https://nciipc.gov.in/mock"
-            },
-            {
-                "title": "Corporate Security Manager", "company": "Global FinTech Corp",
-                "platform": "Naukri", "domain": "Corporate Security",
-                "location": "Mumbai", "job_type": "Full Time",
-                "experience": "3-5 Years", "apply_link": "https://naukri.com/mock-corp"
-            },
-            {
-                "title": "Security Consultant (Criminology)", "company": "Risk Advisory Group",
-                "platform": "LinkedIn", "domain": "Criminology",
-                "location": "Remote", "job_type": "Contract",
-                "experience": "Freshers", "apply_link": "https://linkedin.com/mock-crim"
-            },
-            {
-                "title": "Physical Security Officer", "company": "SecureFacilities Ltd",
-                "platform": "Indeed", "domain": "Physical Security",
-                "location": "Chennai", "job_type": "Full Time",
-                "experience": "2+ Years", "apply_link": "https://indeed.com/mock-phys"
-            }
-        ]
+        return jsonify({"success": False, "message": "No valid jobs scraped."}), 200
 
     # ── Step 1: Add Deadlines to Valid Jobs ──
     for j in valid:

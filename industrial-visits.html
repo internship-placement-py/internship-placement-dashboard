@@ -409,6 +409,21 @@
                 return null;
             }
 
+            function parseCustomDate(dateStr) {
+                if (!dateStr) return 0;
+                // Handle DD.MM.YYYY or DD/MM/YYYY
+                const parts = dateStr.split(/[.\-/]/);
+                if (parts.length === 3) {
+                    if (parts[2].length === 4) {
+                        return new Date(parts[2], parts[1] - 1, parts[0]).getTime();
+                    } else if (parts[0].length === 4) {
+                        return new Date(parts[0], parts[1] - 1, parts[2]).getTime();
+                    }
+                }
+                const parsed = Date.parse(dateStr);
+                return isNaN(parsed) ? 0 : parsed;
+            }
+
             // ── DYNAMIC ROW HELPERS ──────────────────────────────────────────────
             window.addIVProgramRow = function (prefix, prog = '', count = '') {
                 const container = document.getElementById(prefix + '-program-container');
@@ -509,13 +524,19 @@
 
             function render(list) {
                 if (!tbody) return;
-                const totalItems = list.length;
+
+                // Sort descending by visit_date
+                const sortedList = [...list].sort((a, b) => {
+                    return parseCustomDate(b.visit_date) - parseCustomDate(a.visit_date);
+                });
+
+                const totalItems = sortedList.length;
                 const totalPages = Math.ceil(totalItems / pageSize);
                 if (currentPage > totalPages) currentPage = totalPages || 1;
 
                 const start = (currentPage - 1) * pageSize;
                 const end = start + pageSize;
-                const paginatedItems = list.slice(start, end);
+                const paginatedItems = sortedList.slice(start, end);
 
                 document.getElementById('totalItems').textContent = totalItems;
                 document.getElementById('startIndex').textContent = totalItems === 0 ? 0 : start + 1;

@@ -411,14 +411,22 @@
         function renderPlacements(list) {
             if (!tbody) return;
 
-            const totalItems = list.length;
+            // Sort placements descending by batch, then by id
+            const sortedList = [...list].sort((a, b) => {
+                const yrA = parseInt(a.batch) || 0;
+                const yrB = parseInt(b.batch) || 0;
+                if (yrB !== yrA) return yrB - yrA;
+                return b.id - a.id;
+            });
+
+            const totalItems = sortedList.length;
             const totalPages = Math.ceil(totalItems / pageSize);
             if (currentPage > totalPages) currentPage = totalPages || 1;
             if (currentPage < 1) currentPage = 1;
 
             const start = (currentPage - 1) * pageSize;
             const end = start + pageSize;
-            const paginatedItems = list.slice(start, end);
+            const paginatedItems = sortedList.slice(start, end);
 
             // Update pagination info
             document.getElementById('totalItems').textContent = totalItems;

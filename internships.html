@@ -455,6 +455,15 @@
                 if (!tbody) return;
 
                 const groups = groupInternships(list);
+                
+                // Sort descending by year, then internship_place
+                groups.sort((a, b) => {
+                    const yrA = parseInt(a.year) || 0;
+                    const yrB = parseInt(b.year) || 0;
+                    if (yrB !== yrA) return yrB - yrA;
+                    return (String(b.internship_place || "")).localeCompare(String(a.internship_place || ""));
+                });
+
                 const totalItems = groups.length;
                 const totalPages = Math.ceil(totalItems / pageSize);
                 if (currentPage > totalPages) currentPage = totalPages || 1;

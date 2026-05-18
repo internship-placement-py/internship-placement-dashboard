@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 // FETCH JOBS FROM SUPABASE
 async function fetchJobs() {
     const grid = document.getElementById('jobGrid');
-    
+
     // Show loading state
     grid.innerHTML = '<div class="skeleton-card"></div><div class="skeleton-card"></div><div class="skeleton-card"></div>';
 
@@ -29,7 +29,7 @@ async function fetchJobs() {
         // Use shared client from supabase-client.js
         if (window._sb) {
             let query = window._sb.from('jobs').select('*').order('created_at', { ascending: false });
-            
+
             // Apply filtering
             if (filters.domain) query = query.eq('domain', filters.domain);
             if (filters.jobType) query = query.eq('job_type', filters.jobType);
@@ -40,7 +40,7 @@ async function fetchJobs() {
 
             const { data, error } = await query;
             if (error) throw error;
-            
+
             currentJobs = data || [];
         } else {
             console.error("Supabase client not initialized.");
@@ -55,7 +55,7 @@ async function fetchJobs() {
         currentJobs = [];
         renderJobs(currentJobs);
         updateStats();
-        
+
         const grid = document.getElementById('jobGrid');
         if (grid) {
             grid.insertAdjacentHTML('afterbegin', `<div class="error-state" style="grid-column:1/-1;padding:15px;background:rgba(245,158,11,0.1);border-radius:8px;color:var(--accent-orange);margin-bottom:20px;border:1px solid rgba(245,158,11,0.2);display:flex;align-items:center;gap:12px;">
@@ -89,7 +89,7 @@ if (!document.getElementById('deadlineStyles')) {
 function renderJobs(jobs) {
     const grid = document.getElementById('jobGrid');
     const empty = document.getElementById('emptyState');
-    
+
     // Search filtering (local client-side)
     let filtered = jobs.filter(j => {
         const searchText = (j.title + j.company + (j.description || "")).toLowerCase();
@@ -140,7 +140,7 @@ function renderJobs(jobs) {
     empty.style.display = 'none';
     grid.innerHTML = displayList.map(job => {
         const isGovt = job.platform === 'Govt Portal';
-        
+
         let expireClass = '';
         if (cappedExpired.includes(job)) expireClass = 'expired';
         else if (cappedClosingSoon.includes(job)) expireClass = 'closing-soon';
@@ -185,7 +185,7 @@ function renderJobs(jobs) {
 function updateStats() {
     const feedStats = document.getElementById('feedStats');
     if (!feedStats) return;
-    
+
     const count = currentJobs.length;
     let label = 'Intelligence & Security';
     if (filters.sector === 'Govt') label = 'Government Sector';
@@ -245,16 +245,15 @@ function setupEventListeners() {
     document.getElementById('refreshBtn').addEventListener('click', async () => {
         const btn = document.getElementById('refreshBtn');
         const originalHtml = btn.innerHTML;
-        
+
         btn.disabled = true;
         btn.innerHTML = '<i class="bi bi-hourglass-split"></i> Intelligence Gathering...';
-        
+
         try {
-            // Call the local Python scraper server
             const res = await fetch('http://localhost:3000/api/jobs/scrape', { method: 'POST' });
             if (!res.ok) {
                 console.error("Scraper server returned an error.");
-                alert("Scraper service error or unreachable. Is scraper_server.py running on port 3000?");
+                // Failing silently to avoid intrusive alerts, but still refreshing from DB
             } else {
                 console.log("Scraping complete!");
             }
@@ -264,11 +263,22 @@ function setupEventListeners() {
             
         } catch (e) {
             console.error("Failed to connect to scraper server", e);
-            alert("Could not connect to the local scraper service. Ensure `python3 scraper_server.py` is running in your terminal.");
+            // Failing silently to avoid intrusive alerts
         } finally {
             btn.disabled = false;
             btn.innerHTML = originalHtml;
         }
+    });
+}
+
+// UTILITIES
+function formatDate(isoString) {
+    if (!isoString) return 'Recently';
+    const date = new Date(isoString);
+    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+}
+
+
     });
 }
 
