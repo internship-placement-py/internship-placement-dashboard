@@ -17,57 +17,77 @@
 
     <title>Dashboard — Placement Monitor</title>
 
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+    <!-- Google Font -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
 
     <!-- Main CSS -->
     <link rel="stylesheet" href="styles.css?v=419">
 
     <!-- Bootstrap Icons -->
-    <link rel="stylesheet"
+    <link
+        rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 
     <!-- Leaflet CSS -->
-    <link rel="stylesheet"
+    <link
+        rel="stylesheet"
         href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 
+    <!-- Leaflet JS -->
+    <script
+        src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+    </script>
+
+    <!-- Leaflet Heat -->
+    <script
+        src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js">
+    </script>
+
+    <!-- Map Styling -->
     <style>
         #india-city-map {
             height: 600px;
             width: 100%;
-            background: var(--bg-dark);
+            background: #0b1220;
             border-radius: 12px;
             overflow: hidden;
         }
 
-        .leaflet-popup-content-wrapper,
-        .leaflet-popup-tip {
+        /* Dark popup */
+        .dark-map-popup .leaflet-popup-content-wrapper {
             background: #111827;
             color: #f8fafc;
+            border: 1px solid rgba(255, 255, 255, 0.08);
         }
 
-        .leaflet-popup-content {
-            margin: 12px;
+        .dark-map-popup .leaflet-popup-tip {
+            background: #111827;
         }
 
-        .leaflet-control-attribution {
-            font-size: 9px;
+        .dark-map-popup .leaflet-popup-close-button {
+            color: #ffffff !important;
         }
     </style>
 
     <!-- Authentication -->
     <script src="auth-guard.js"></script>
+
 </head>
 
 <body>
 
+    <!-- ============================= -->
     <!-- SIDEBAR -->
+    <!-- ============================= -->
+
     <aside class="sidebar">
 
         <div class="sidebar-header">
             <a href="https://rru.ac.in/" target="_blank">
-                <img src="https://upload.wikimedia.org/wikipedia/en/b/bc/Rashtriya_Raksha_University_logo.png"
+                <img
+                    src="https://upload.wikimedia.org/wikipedia/en/b/bc/Rashtriya_Raksha_University_logo.png"
                     alt="RRU Logo">
             </a>
         </div>
@@ -125,17 +145,27 @@
 
             <div class="user-profile">
 
-                <div class="avatar">CD</div>
-
-                <div class="user-info">
-                    <div class="name">CD PUDUCHERRY CAMPUS</div>
-                    <div class="role">Admin</div>
+                <div class="avatar">
+                    CD
                 </div>
 
-                <button id="logoutBtn"
+                <div class="user-info">
+                    <div class="name">
+                        CD PUDUCHERRY CAMPUS
+                    </div>
+
+                    <div class="role">
+                        Admin
+                    </div>
+                </div>
+
+                <button
+                    id="logoutBtn"
                     class="logout-btn"
                     title="Logout">
+
                     <i class="bi bi-box-arrow-right"></i>
+
                 </button>
 
             </div>
@@ -145,34 +175,65 @@
     </aside>
 
 
+    <!-- ============================= -->
     <!-- MAIN CONTAINER -->
+    <!-- ============================= -->
+
     <div class="container">
 
         <div class="main-content dashboard-layout-container">
 
 
+            <!-- ============================= -->
             <!-- TOP HEADER -->
+            <!-- ============================= -->
+
             <div class="top-header-row">
 
                 <div>
-                    <h1>Internship & Placement Monitor Dashboard</h1>
+
+                    <h1>
+                        Internship & Placement Monitor Dashboard
+                    </h1>
 
                     <div class="subtitle">
                         Future Leaders and Security Intelligence
                     </div>
+
                 </div>
+
 
                 <div class="header-actions-unified">
 
-                    <select id="dashboardProgrammeFilter"
+                    <div style="position: relative;"></div>
+
+                    <select
+                        id="dashboardProgrammeFilter"
                         class="select-unified">
 
-                        <option value="">All Programmes</option>
-                        <option value="BACPA">BACPA</option>
-                        <option value="BCPS">BCPS</option>
-                        <option value="MCRM">MCRM</option>
-                        <option value="PGDSCIM">PGDSCIM</option>
-                        <option value="PGDCSDF">PGDCSDF</option>
+                        <option value="">
+                            All Programmes
+                        </option>
+
+                        <option value="BACPA">
+                            BACPA
+                        </option>
+
+                        <option value="BCPS">
+                            BCPS
+                        </option>
+
+                        <option value="MCRM">
+                            MCRM
+                        </option>
+
+                        <option value="PGDSCIM">
+                            PGDSCIM
+                        </option>
+
+                        <option value="PGDCSDF">
+                            PGDCSDF
+                        </option>
 
                     </select>
 
@@ -181,31 +242,51 @@
             </div>
 
 
+            <!-- ============================= -->
             <!-- STATISTICS -->
+            <!-- ============================= -->
+
             <div class="stats-grid-4">
 
+
+                <!-- Total Students -->
+
                 <div class="stat-card">
+
                     <div class="stat-icon">
-                        <i class="bi bi-people"
-                            style="color: white;"></i>
+                        <i
+                            class="bi bi-people"
+                            style="color: white;">
+                        </i>
                     </div>
 
                     <div class="stat-label">
                         Total Students
                     </div>
 
-                    <div class="stat-value"
-                        id="stat-total">-</div>
+                    <div
+                        class="stat-value"
+                        id="stat-total">
+
+                        -
+
+                    </div>
+
                 </div>
 
 
+                <!-- Placed Students -->
+
                 <div class="stat-card">
 
-                    <div class="stat-icon"
+                    <div
+                        class="stat-icon"
                         style="background: var(--accent-green);">
 
-                        <i class="bi bi-check-square"
-                            style="color: white;"></i>
+                        <i
+                            class="bi bi-check-square"
+                            style="color: white;">
+                        </i>
 
                     </div>
 
@@ -213,10 +294,16 @@
                         Placed Students
                     </div>
 
-                    <div class="stat-value"
-                        id="stat-placed">-</div>
+                    <div
+                        class="stat-value"
+                        id="stat-placed">
 
-                    <div id="stat-placed-pct"
+                        -
+
+                    </div>
+
+                    <div
+                        id="stat-placed-pct"
                         style="font-size: 10px; opacity: 0.7; margin-top: 2px;">
 
                         Rate: -%
@@ -226,13 +313,18 @@
                 </div>
 
 
+                <!-- Internships -->
+
                 <div class="stat-card">
 
-                    <div class="stat-icon"
+                    <div
+                        class="stat-icon"
                         style="background: var(--accent-blue);">
 
-                        <i class="bi bi-clipboard-pulse"
-                            style="color: white;"></i>
+                        <i
+                            class="bi bi-clipboard-pulse"
+                            style="color: white;">
+                        </i>
 
                     </div>
 
@@ -240,19 +332,29 @@
                         Internships
                     </div>
 
-                    <div class="stat-value"
-                        id="stat-internships">-</div>
+                    <div
+                        class="stat-value"
+                        id="stat-internships">
+
+                        -
+
+                    </div>
 
                 </div>
 
 
+                <!-- Field Visits -->
+
                 <div class="stat-card">
 
-                    <div class="stat-icon"
+                    <div
+                        class="stat-icon"
                         style="background: var(--accent-orange);">
 
-                        <i class="bi bi-pin-map"
-                            style="color: white;"></i>
+                        <i
+                            class="bi bi-pin-map"
+                            style="color: white;">
+                        </i>
 
                     </div>
 
@@ -260,19 +362,29 @@
                         Field Visits
                     </div>
 
-                    <div class="stat-value"
-                        id="stat-field">-</div>
+                    <div
+                        class="stat-value"
+                        id="stat-field">
+
+                        -
+
+                    </div>
 
                 </div>
 
 
+                <!-- Industrial Visits -->
+
                 <div class="stat-card">
 
-                    <div class="stat-icon"
+                    <div
+                        class="stat-icon"
                         style="background: #f59e0b;">
 
-                        <i class="bi bi-buildings"
-                            style="color: white;"></i>
+                        <i
+                            class="bi bi-buildings"
+                            style="color: white;">
+                        </i>
 
                     </div>
 
@@ -280,55 +392,111 @@
                         Industrial Visits
                     </div>
 
-                    <div class="stat-value"
-                        id="stat-industrial">-</div>
+                    <div
+                        class="stat-value"
+                        id="stat-industrial">
+
+                        -
+
+                    </div>
 
                 </div>
 
             </div>
 
 
-            <!-- GEOGRAPHIC MAP -->
-            <div class="widget-panel"
+            <!-- ============================= -->
+            <!-- INDIA MAP -->
+            <!-- ============================= -->
+
+            <div
+                class="widget-panel"
                 style="min-height: 700px;">
 
-                <h3>Geographic Intelligence (India)</h3>
+                <h3>
+                    Geographic Intelligence (India)
+                </h3>
 
                 <div id="india-city-map"></div>
 
 
-                <!-- LEGEND -->
-                <div style="
-                    display: flex;
-                    gap: 20px;
-                    margin-top: 20px;
-                    font-size: 12px;
-                    color: var(--text-dim);
-                    flex-wrap: wrap;
-                ">
+                <!-- MAP LEGEND -->
 
-                    <div style="display:flex;align-items:center;gap:8px;">
-                        <i class="bi bi-circle-fill"
-                            style="color:#22c55e;"></i>
+                <div
+                    style="
+                        display: flex;
+                        gap: 20px;
+                        margin-top: 20px;
+                        font-size: 12px;
+                        color: var(--text-dim);
+                    ">
+
+
+                    <div
+                        style="
+                            display: flex;
+                            align-items: center;
+                            gap: 8px;
+                        ">
+
+                        <i
+                            class="bi bi-circle-fill"
+                            style="color: #22c55e;">
+                        </i>
+
                         Placements
+
                     </div>
 
-                    <div style="display:flex;align-items:center;gap:8px;">
-                        <i class="bi bi-circle-fill"
-                            style="color:#3b82f6;"></i>
+
+                    <div
+                        style="
+                            display: flex;
+                            align-items: center;
+                            gap: 8px;
+                        ">
+
+                        <i
+                            class="bi bi-circle-fill"
+                            style="color: #3b82f6;">
+                        </i>
+
                         Internships
+
                     </div>
 
-                    <div style="display:flex;align-items:center;gap:8px;">
-                        <i class="bi bi-circle-fill"
-                            style="color:#ef4444;"></i>
+
+                    <div
+                        style="
+                            display: flex;
+                            align-items: center;
+                            gap: 8px;
+                        ">
+
+                        <i
+                            class="bi bi-circle-fill"
+                            style="color: #ef4444;">
+                        </i>
+
                         Field Visits
+
                     </div>
 
-                    <div style="display:flex;align-items:center;gap:8px;">
-                        <i class="bi bi-circle-fill"
-                            style="color:#f59e0b;"></i>
+
+                    <div
+                        style="
+                            display: flex;
+                            align-items: center;
+                            gap: 8px;
+                        ">
+
+                        <i
+                            class="bi bi-circle-fill"
+                            style="color: #f59e0b;">
+                        </i>
+
                         Industrial Visits
+
                     </div>
 
                 </div>
@@ -336,23 +504,35 @@
             </div>
 
 
+            <!-- ============================= -->
             <!-- RECENT PLACEMENTS -->
+            <!-- ============================= -->
+
             <div class="widget-panel">
 
-                <h3>Recent Placements</h3>
+                <h3>
+                    Recent Placements
+                </h3>
 
-                <div style="overflow-x:auto;">
+                <div style="overflow-x: auto;">
 
-                    <div style="
-                        display:grid;
-                        grid-template-columns:60px 2fr 1.5fr 1.5fr 1fr 1fr;
-                        padding:12px 16px;
-                        border-bottom:2px solid var(--border);
-                        font-weight:600;
-                        color:var(--text-muted);
-                        font-size:11px;
-                        text-transform:uppercase;
-                    ">
+                    <div
+                        style="
+                            display: grid;
+                            grid-template-columns:
+                                60px
+                                2fr
+                                1.5fr
+                                1.5fr
+                                1fr
+                                1fr;
+                            padding: 12px 16px;
+                            border-bottom: 2px solid var(--border);
+                            font-weight: 600;
+                            color: var(--text-muted);
+                            font-size: 11px;
+                            text-transform: uppercase;
+                        ">
 
                         <div>SR. NO.</div>
                         <div>STUDENT NAME</div>
@@ -363,14 +543,18 @@
 
                     </div>
 
+
                     <div id="recentPlacementsBody">
 
-                        <div style="
-                            padding:20px;
-                            text-align:center;
-                            opacity:0.5;
-                        ">
+                        <div
+                            style="
+                                padding: 20px;
+                                text-align: center;
+                                opacity: 0.5;
+                            ">
+
                             Loading placements...
+
                         </div>
 
                     </div>
@@ -380,33 +564,55 @@
             </div>
 
 
+            <!-- ============================= -->
             <!-- RECENT INTERNSHIPS -->
+            <!-- ============================= -->
+
             <div class="widget-panel">
 
-                <h3>Recent Internships</h3>
+                <h3>
+                    Recent Internships
+                </h3>
 
-                <div style="overflow-x:auto;">
 
-                    <div class="recent-table-header"
+                <div style="overflow-x: auto;">
+
+                    <div
+                        class="recent-table-header"
                         style="
-                        display:grid;
-                        grid-template-columns:60px 2fr 2fr 1fr 1fr 1fr;
-                        padding:12px 16px;
-                        background:var(--bg-hover);
-                        border-bottom:1px solid var(--border);
-                        font-size:11px;
-                        text-transform:uppercase;
-                        color:var(--text-muted);
-                        border-radius:8px 8px 0 0;
-                    ">
+                            display: grid;
+                            grid-template-columns:
+                                60px
+                                2fr
+                                2fr
+                                1fr
+                                1fr
+                                1fr;
+
+                            padding: 12px 16px;
+                            background: var(--bg-hover);
+                            border-bottom: 1px solid var(--border);
+                            font-size: 11px;
+                            text-transform: uppercase;
+                            color: var(--text-muted);
+                            border-radius: 8px 8px 0 0;
+                        ">
 
                         <div>S.NO.</div>
+
                         <div>STUDENT NAME</div>
-                        <div style="color:var(--accent-blue);">
+
+                        <div
+                            style="color: var(--accent-blue);">
+
                             INTERNSHIP PLACE
+
                         </div>
+
                         <div>YEAR</div>
+
                         <div>BATCH</div>
+
                         <div>DURATION</div>
 
                     </div>
@@ -414,12 +620,15 @@
 
                     <div id="recentInternshipsBody">
 
-                        <div style="
-                            padding:20px;
-                            text-align:center;
-                            opacity:0.5;
-                        ">
+                        <div
+                            style="
+                                padding: 20px;
+                                text-align: center;
+                                opacity: 0.5;
+                            ">
+
                             Loading internships...
+
                         </div>
 
                     </div>
@@ -429,42 +638,57 @@
             </div>
 
 
+            <!-- ============================= -->
             <!-- FOOTER -->
-            <footer class="app-footer"
+            <!-- ============================= -->
+
+            <footer
+                class="app-footer"
                 style="
-                    padding:40px 0;
-                    border-top:1px solid var(--border);
-                    margin-top:30px;
+                    padding: 40px 0;
+                    border-top: 1px solid var(--border);
+                    margin-top: 30px;
                 ">
 
-                <div style="
-                    display:grid;
-                    grid-template-columns:1.5fr 1fr 1fr;
-                    gap:40px;
-                ">
+                <div
+                    style="
+                        display: grid;
+                        grid-template-columns: 1.5fr 1fr 1fr;
+                        gap: 40px;
+                    ">
+
 
                     <div>
 
-                        <h3 style="
-                            color:var(--navy);
-                            font-size:14px;
-                            margin-bottom:15px;
-                        ">
+                        <h3
+                            style="
+                                color: var(--navy);
+                                font-size: 14px;
+                                margin-bottom: 15px;
+                            ">
+
                             Rashtriya Raksha University
+
                         </h3>
 
-                        <p style="
-                            font-size:12px;
-                            color:var(--text-muted);
-                            line-height:1.8;
-                        ">
+
+                        <p
+                            style="
+                                font-size: 12px;
+                                color: var(--text-muted);
+                                line-height: 1.8;
+                            ">
+
                             Puducherry Campus,
                             Pondicherry Institute of Hotel Management &
-                            Catering Technology [PIHMCT]<br>
+                            Catering Technology [PIHMCT]
+
+                            <br>
 
                             Opp To Mahalakshmi Nagar,
                             Murungapakkam,
                             Puducherry – 605004
+
                         </p>
 
                     </div>
@@ -472,26 +696,37 @@
 
                     <div>
 
-                        <h3 style="
-                            color:var(--navy);
-                            font-size:14px;
-                            margin-bottom:15px;
-                        ">
+                        <h3
+                            style="
+                                color: var(--navy);
+                                font-size: 14px;
+                                margin-bottom: 15px;
+                            ">
+
                             Contact
+
                         </h3>
 
-                        <p style="
-                            font-size:12px;
-                            color:var(--text-muted);
-                        ">
+
+                        <p
+                            style="
+                                font-size: 12px;
+                                color: var(--text-muted);
+                            ">
+
                             Email: ro1.py@rru.ac.in
+
                         </p>
 
-                        <p style="
-                            font-size:12px;
-                            color:var(--text-muted);
-                        ">
+
+                        <p
+                            style="
+                                font-size: 12px;
+                                color: var(--text-muted);
+                            ">
+
                             Phone: 7305522199
+
                         </p>
 
                     </div>
@@ -499,40 +734,57 @@
 
                     <div>
 
-                        <h3 style="
-                            color:var(--navy);
-                            font-size:14px;
-                            margin-bottom:15px;
-                        ">
+                        <h3
+                            style="
+                                color: var(--navy);
+                                font-size: 14px;
+                                margin-bottom: 15px;
+                            ">
+
                             Follow
+
                         </h3>
 
-                        <p style="
-                            font-size:12px;
-                            color:var(--text-muted);
-                        ">
-                            <a href="https://www.instagram.com/rru.puducherrycampus/"
+
+                        <p
+                            style="
+                                font-size: 12px;
+                                color: var(--text-muted);
+                            ">
+
+                            <a
+                                href="https://www.instagram.com/rru.puducherrycampus/"
                                 target="_blank"
                                 style="
-                                    color:inherit;
-                                    text-decoration:none;
+                                    color: inherit;
+                                    text-decoration: none;
                                 ">
+
                                 Instagram
+
                             </a>
+
                         </p>
 
-                        <p style="
-                            font-size:12px;
-                            color:var(--text-muted);
-                        ">
-                            <a href="https://www.linkedin.com/company/rashtriya-raksha-university-puducherry-campus/posts/?feedView=all"
+
+                        <p
+                            style="
+                                font-size: 12px;
+                                color: var(--text-muted);
+                            ">
+
+                            <a
+                                href="https://www.linkedin.com/company/rashtriya-raksha-university-puducherry-campus/posts/?feedView=all"
                                 target="_blank"
                                 style="
-                                    color:inherit;
-                                    text-decoration:none;
+                                    color: inherit;
+                                    text-decoration: none;
                                 ">
+
                                 LinkedIn
+
                             </a>
+
                         </p>
 
                     </div>
@@ -541,18 +793,17 @@
 
             </footer>
 
+
         </div>
 
     </div>
 
 
-    <!-- JAVASCRIPT LIBRARIES -->
+    <!-- ============================= -->
+    <!-- EXTERNAL JAVASCRIPT -->
+    <!-- ============================= -->
 
-    <!-- Leaflet -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
-    <!-- Leaflet Heat -->
-    <script src="https://cdn.jsdelivr.net/npm/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
+    <script src="device-tracker.js?v=101"></script>
 
     <!-- Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -560,21 +811,23 @@
     <!-- SheetJS -->
     <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 
+    <!-- Application Files -->
+    <script src="config.js"></script>
+    <script src="supabase-client.js"></script>
+    <script src="api.js?v=501"></script>
+    <script src="security.js?v=400"></script>
+
     <!-- D3 -->
     <script src="https://d3js.org/d3.v7.min.js"></script>
 
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <!-- YOUR PROJECT FILES -->
-    <script src="device-tracker.js?v=101"></script>
-    <script src="config.js"></script>
-    <script src="supabase-client.js"></script>
-    <script src="api.js?v=501"></script>
-    <script src="security.js?v=400"></script>
 
+    <!-- ============================= -->
+    <!-- DASHBOARD JAVASCRIPT -->
+    <!-- ============================= -->
 
-    <!-- MAIN DASHBOARD SCRIPT -->
     <script>
 
         let _deptChartInstance = null;
@@ -586,25 +839,25 @@
         let _heatLayer = null;
 
 
-        // XSS PROTECTION
+        // ==========================================
+        // ESCAPE HTML
+        // ==========================================
+
         const esc = (s) =>
             String(s || '')
                 .replace(/&/g, '&amp;')
                 .replace(/</g, '&lt;')
-                .replace(/>/g, '&gt;')
-                .replace(/"/g, '&quot;')
-                .replace(/'/g, '&#039;');
+                .replace(/>/g, '&gt;');
 
 
-        /*
-        ==========================================================
-        CITY COORDINATES
-        ==========================================================
-        */
+        // ==========================================
+        // CITY COORDINATES
+        // ==========================================
 
         const CITY_COORDS = {
 
-            // GUJARAT
+            // Gujarat
+
             'Ahmedabad': [23.0225, 72.5714],
             'Gandhinagar': [23.2156, 72.6369],
             'Lavad': [23.1952, 72.9304],
@@ -640,148 +893,232 @@
             'Lunawada': [23.1311, 73.6190],
             'Chhota Udepur': [22.3108, 74.0091],
             'Kheda': [22.7523, 72.6841],
-            'Himmatnagar': [23.5979, 72.9649],
+            'Himmatnagar': [23.5973, 72.9649],
             'Gujarat': [22.2587, 71.1924],
 
 
-            // MAJOR INDIAN CITIES
+            // Major Cities
+
             'Mumbai': [19.0760, 72.8777],
+
             'Bengaluru': [12.9716, 77.5946],
             'Bangalore': [12.9716, 77.5946],
             'Banglore': [12.9716, 77.5946],
+
             'Delhi': [28.6139, 77.2090],
             'New Delhi': [28.6139, 77.2090],
+
             'Chennai': [13.0827, 80.2707],
+
             'Hyderabad': [17.3850, 78.4867],
+
             'Kolkata': [22.5726, 88.3639],
+
             'Pune': [18.5204, 73.8567],
+
             'Jaipur': [26.9124, 75.7873],
+
             'Lucknow': [26.8467, 80.9462],
+
             'Bhopal': [23.2599, 77.4126],
+
             'Indore': [22.7196, 75.8577],
+
             'Patna': [25.5941, 85.1376],
+
             'Ranchi': [23.3441, 85.3096],
+
             'Raipur': [21.2514, 81.6296],
+
             'Bhubaneswar': [20.2961, 85.8245],
+
             'Chandigarh': [30.7333, 76.7794],
+
             'Dehradun': [30.3165, 78.0322],
+
             'Shimla': [31.1048, 77.1734],
+
             'Srinagar': [34.0837, 74.7973],
+
             'Jammu': [32.7266, 74.8570],
+
             'Guwahati': [26.1445, 91.7362],
+
             'Thiruvananthapuram': [8.5241, 76.9366],
+
             'Trivandrum': [8.5241, 76.9366],
+
             'Panaji': [15.4909, 73.8278],
+
             'Agartala': [23.8315, 91.2868],
+
             'Aizawl': [23.7271, 92.7176],
+
             'Imphal': [24.8170, 93.9368],
+
             'Kohima': [25.6747, 94.1100],
+
             'Shillong': [25.5788, 91.8933],
+
             'Itanagar': [27.0844, 93.6053],
+
             'Gangtok': [27.3314, 88.6138],
+
             'Leh': [34.1526, 77.5771],
 
             'Puducherry': [11.9416, 79.8083],
+
             'Pondicherry': [11.9416, 79.8083],
+
             'Yanam': [16.7333, 82.2167],
 
 
-            // STATES
+            // States
+
             'Kerala': [10.8505, 76.2711],
-            'Maharashtra': [19.7515, 75.7139],
+
             'Maharastra': [19.7515, 75.7139],
-            'Odisha': [20.9517, 85.0985],
+
+            'Maharashtra': [19.7515, 75.7139],
+
             'Odissa': [20.9517, 85.0985],
 
+            'Odisha': [20.9517, 85.0985],
 
-            // INDUSTRIAL AND TECHNOLOGY HUBS
+
+            // Tech and Industrial Hubs
+
             'Gurgaon': [28.4595, 77.0266],
+
             'Gurugram': [28.4595, 77.0266],
+
             'Noida': [28.5355, 77.3910],
+
             'Nagpur': [21.1458, 79.0882],
+
             'Nashik': [19.9975, 73.7898],
+
             'Kochi': [9.9312, 76.2673],
+
             'Cochin': [9.9312, 76.2673],
+
             'Visakhapatnam': [17.6868, 83.2185],
+
             'Vizag': [17.6868, 83.2185],
+
             'Coimbatore': [11.0168, 76.9558],
+
             'Madurai': [9.9252, 78.1198],
+
             'Vijayawada': [16.5062, 80.6480],
+
             'Mysore': [12.2958, 76.6394],
+
             'Mangalore': [12.9141, 74.8560],
+
             'Kozhikode': [11.2588, 75.7804],
+
             'Jamshedpur': [22.8046, 86.2029],
+
             'Dhanbad': [23.7957, 86.4304],
+
             'Jabalpur': [23.1815, 79.9864],
+
             'Gwalior': [26.2183, 78.1828],
+
             'Jodhpur': [26.2389, 73.0243],
+
             'Udaipur': [24.5854, 73.7125],
+
             'Allahabad': [25.4358, 81.8463],
+
             'Prayagraj': [25.4358, 81.8463],
+
             'Varanasi': [25.3176, 82.9739],
+
             'Kanpur': [26.4499, 80.3319],
+
             'Agra': [27.1767, 78.0081],
+
             'Meerut': [28.9845, 77.7064],
+
             'Ludhiana': [30.9010, 75.8573],
+
             'Amritsar': [31.6340, 74.8723],
+
             'Jalandhar': [31.3260, 75.5762],
 
-
-            // TAMIL NADU
             'Kanchipuram': [12.8342, 79.7036],
+
             'Malaipattu': [12.9231, 80.0152],
-            'Tiruchirappalli': [10.7905, 78.7047],
-            'Trichy': [10.7905, 78.7047],
-            'Salem': [11.6643, 78.1460],
-            'Erode': [11.3410, 77.7172],
-            'Vellore': [12.9165, 79.1325],
-            'Thanjavur': [10.7870, 79.1378],
-            'Thoothukudi': [8.7642, 78.1348],
-            'Tuticorin': [8.7642, 78.1348],
-            'Tirunelveli': [8.7139, 77.7567],
-            'Kanyakumari': [8.0883, 77.5385],
-            'Hosur': [12.7409, 77.8253],
 
 
-            // UNION TERRITORIES
+            // UT and Other Locations
+
             'Port Blair': [11.6234, 92.7265],
+
             'Silvassa': [20.2765, 73.0083],
+
             'Daman': [20.3974, 72.8328],
+
             'Diu': [20.7144, 70.9822],
+
             'Kavaratti': [10.5667, 72.6417],
 
             'Tripura': [23.9408, 91.9882],
+
             'Assam': [26.2006, 92.9376],
+
             'Mizoram': [23.1645, 92.9376],
+
             'Nagaland': [26.1584, 94.5624],
-            'Arunachal Pradesh': [28.2180, 94.7278]
+
+            'Arunachal Pradesh': [28.2180, 94.7278],
+
+            'Tiruchirappalli': [10.7905, 78.7047],
+
+            'Trichy': [10.7905, 78.7047],
+
+            'Salem': [11.6643, 78.1460],
+
+            'Erode': [11.3410, 77.7172],
+
+            'Vellore': [12.9165, 79.1325],
+
+            'Thanjavur': [10.7870, 79.1378],
+
+            'Thoothukudi': [8.7642, 78.1348],
+
+            'Tuticorin': [8.7642, 78.1348],
+
+            'Tirunelveli': [8.7139, 77.7567],
+
+            'Kanyakumari': [8.0883, 77.5385],
+
+            'Hosur': [12.7409, 77.8253]
 
         };
 
 
-        /*
-        ==========================================================
-        NORMALIZE CITY NAMES
-        ==========================================================
-        */
+        // ==========================================
+        // NORMALIZE COORDINATES
+        // ==========================================
 
         const COORDS_NORM = {};
 
 
         function prenormalizeCoords() {
 
-            Object.keys(CITY_COORDS).forEach(city => {
+            Object.keys(CITY_COORDS).forEach(k => {
 
-                const normalized =
-                    city.toLowerCase().trim();
+                const normalized = k.toLowerCase();
 
                 COORDS_NORM[normalized] =
-                    CITY_COORDS[city];
+                    CITY_COORDS[k];
 
                 COORDS_NORM[
                     normalized.replace(/\s+/g, '')
-                ] =
-                    CITY_COORDS[city];
+                ] = CITY_COORDS[k];
 
             });
 
@@ -791,45 +1128,38 @@
         prenormalizeCoords();
 
 
-        /*
-        ==========================================================
-        LOAD DASHBOARD DATA
-        ==========================================================
-        */
+        // ==========================================
+        // LOAD DASHBOARD DATA
+        // ==========================================
 
         async function loadDashboardData(prog = '') {
 
             const dataTasks = [
 
-                getStats(prog)
-                    .catch(e => {
-                        console.warn('Stats failed:', e);
-                        return null;
-                    }),
+                getStats(prog).catch(e => {
+                    console.warn('Stats failed', e);
+                    return null;
+                }),
 
-                getPlacements(prog)
-                    .catch(e => {
-                        console.warn('Placements failed:', e);
-                        return [];
-                    }),
+                getPlacements(prog).catch(e => {
+                    console.warn('Placements failed', e);
+                    return [];
+                }),
 
-                getInternships(prog)
-                    .catch(e => {
-                        console.warn('Internships failed:', e);
-                        return [];
-                    }),
+                getInternships(prog).catch(e => {
+                    console.warn('Internships failed', e);
+                    return [];
+                }),
 
-                getYearlyTrend(prog)
-                    .catch(e => {
-                        console.warn('Trend failed:', e);
-                        return null;
-                    }),
+                getYearlyTrend(prog).catch(e => {
+                    console.warn('Trend failed', e);
+                    return null;
+                }),
 
-                getDeptStats(prog)
-                    .catch(e => {
-                        console.warn('Department stats failed:', e);
-                        return [];
-                    })
+                getDeptStats(prog).catch(e => {
+                    console.warn('Dept stats failed', e);
+                    return [];
+                })
 
             ];
 
@@ -843,29 +1173,26 @@
             ] = await Promise.all(dataTasks);
 
 
-            /*
-            ======================================================
-            UPDATE STATISTICS
-            ======================================================
-            */
+            // ==========================================
+            // UPDATE STATISTICS
+            // ==========================================
 
             if (stats) {
 
                 let totalStudents =
-                    stats.total_students || 0;
+                    stats.total_students;
 
 
                 if (totalStudents === 0) {
 
                     const uniqueIds = new Set([
+                        ...(placements || []).map(
+                            x => x.enrollment_number || x.id
+                        ),
 
-                        ...(placements || [])
-                            .map(x =>
-                                x.enrollment_number || x.id),
-
-                        ...(internships || [])
-                            .map(x =>
-                                x.enrollment_number || x.id)
+                        ...(internships || []).map(
+                            x => x.enrollment_number || x.id
+                        )
 
                     ].filter(Boolean));
 
@@ -876,34 +1203,37 @@
                 }
 
 
-                const totalElement =
+                const statTotal =
                     document.getElementById('stat-total');
 
-                if (totalElement) {
-                    totalElement.textContent =
-                        totalStudents;
-                }
-
-
-                const placedElement =
+                const statPlaced =
                     document.getElementById('stat-placed');
 
-                if (placedElement) {
-                    placedElement.textContent =
-                        stats.placed_students || 0;
-                }
-
-
-                const percentageElement =
+                const statPlacedPct =
                     document.getElementById('stat-placed-pct');
 
-                if (percentageElement) {
 
-                    percentageElement.textContent =
-                        `Rate: ${stats.placement_rate || 0}% (${stats.placement_batch || '—'})`;
+                if (statTotal) {
+                    statTotal.textContent =
+                        totalStudents || '0';
+                }
+
+
+                if (statPlaced) {
+                    statPlaced.textContent =
+                        stats.placed_students || '0';
+                }
+
+
+                if (statPlacedPct) {
+
+                    statPlacedPct.textContent =
+                        `Rate: ${stats.placement_rate}% (${stats.placement_batch})`;
 
                 }
 
+
+                // Unique Internship Count
 
                 const groupedInternships =
                     new Set();
@@ -933,46 +1263,46 @@
                 });
 
 
-                const internshipElement =
+                const statInternships =
                     document.getElementById('stat-internships');
 
-                if (internshipElement) {
 
-                    internshipElement.textContent =
-                        groupedInternships.size || 0;
+                if (statInternships) {
+
+                    statInternships.textContent =
+                        groupedInternships.size || '0';
 
                 }
 
 
-                const fieldElement =
+                const statField =
                     document.getElementById('stat-field');
 
-                if (fieldElement) {
+                const statIndustrial =
+                    document.getElementById('stat-industrial');
 
-                    fieldElement.textContent =
-                        stats.total_field_visits || 0;
+
+                if (statField) {
+
+                    statField.textContent =
+                        stats.total_field_visits || '0';
 
                 }
 
 
-                const industrialElement =
-                    document.getElementById('stat-industrial');
+                if (statIndustrial) {
 
-                if (industrialElement) {
-
-                    industrialElement.textContent =
-                        stats.total_industrial_visits || 0;
+                    statIndustrial.textContent =
+                        stats.total_industrial_visits || '0';
 
                 }
 
             }
 
 
-            /*
-            ======================================================
-            RECENT PLACEMENTS
-            ======================================================
-            */
+            // ==========================================
+            // RECENT PLACEMENTS
+            // ==========================================
 
             const rpBody =
                 document.getElementById(
@@ -982,19 +1312,22 @@
 
             if (rpBody) {
 
-                if (!placements || !placements.length) {
+                if (!placements.length) {
 
-                    rpBody.innerHTML = `
-                        <div style="
-                            padding:40px;
-                            text-align:center;
-                            opacity:0.5;
-                        ">
+                    rpBody.innerHTML =
+                        `
+                        <div
+                            style="
+                                padding:40px;
+                                text-align:center;
+                                opacity:0.5;
+                            ">
                             No placements found.
                         </div>
-                    `;
+                        `;
 
-                } else {
+                }
+                else {
 
                     const recent =
                         [...placements]
@@ -1008,12 +1341,16 @@
                                         a.created_at || 0
                                     );
 
-                                if (da !== 0)
+
+                                if (da !== 0) {
                                     return da;
+                                }
+
 
                                 return (
-                                    (b.id || 0) -
-                                    (a.id || 0)
+                                    b.id || 0
+                                ) - (
+                                    a.id || 0
                                 );
 
                             })
@@ -1021,92 +1358,131 @@
 
 
                     rpBody.innerHTML =
-                        recent.map((p, index) => `
+                        recent.map((p, i) => `
 
-                        <div class="table-row"
+                        <div
+                            class="table-row"
                             style="
                                 display:grid;
                                 grid-template-columns:
-                                60px 2fr 1.5fr 1.5fr 1fr 1fr;
+                                    60px
+                                    2fr
+                                    1.5fr
+                                    1.5fr
+                                    1fr
+                                    1fr;
+
                                 padding:12px 16px;
                                 border-bottom:
-                                1px solid var(--border-light);
+                                    1px solid var(--border-light);
+
                                 align-items:center;
                                 font-size:13px;
                             ">
 
-                            <div style="color:var(--text-muted);">
-                                ${String(index + 1).padStart(2, '0')}
+                            <div
+                                style="
+                                    color:
+                                        var(--text-muted);
+                                ">
+
+                                ${String(i + 1).padStart(2, '0')}
+
                             </div>
 
-                            <div style="
-                                font-weight:600;
-                                color:var(--navy);
-                            ">
+
+                            <div
+                                style="
+                                    font-weight:600;
+                                    color:var(--navy);
+                                ">
+
                                 ${esc(
                                     p.name ||
                                     p.student_name ||
                                     '—'
                                 )}
+
                             </div>
 
-                            <div style="
-                                color:var(--accent-green);
-                            ">
+
+                            <div
+                                style="
+                                    color:
+                                        var(--accent-green);
+                                ">
+
                                 ${esc(
                                     p.company ||
                                     p.company_name ||
                                     '—'
                                 )}
+
                             </div>
 
-                            <div style="
-                                color:var(--text-secondary);
-                            ">
+
+                            <div
+                                style="
+                                    color:
+                                        var(--text-secondary);
+                                ">
+
                                 ${esc(
                                     p.role ||
                                     p.remarks ||
                                     '—'
                                 )}
+
                             </div>
 
-                            <div style="
-                                color:var(--text-muted);
-                                font-size:11px;
-                            ">
+
+                            <div
+                                style="
+                                    color:
+                                        var(--text-muted);
+                                    font-size:11px;
+                                ">
+
                                 ${esc(
                                     p.batch ||
-                                    (p.created_at || '').split('-')[0] ||
+                                    (
+                                        p.created_at ||
+                                        ''
+                                    ).split('-')[0] ||
                                     '—'
                                 )}
+
                             </div>
 
-                            <div style="
-                                font-weight:600;
-                                color:var(--accent-green);
-                            ">
+
+                            <div
+                                style="
+                                    font-weight:600;
+                                    color:
+                                        var(--accent-green);
+                                ">
+
                                 ${esc(
                                     p.salary ||
                                     p.ctc ||
                                     p.package ||
                                     '—'
                                 )}
+
                             </div>
 
                         </div>
 
-                    `).join('');
+                        `).join('');
 
                 }
 
             }
 
 
-            /*
-            ======================================================
-            RECENT INTERNSHIPS
-            ======================================================
-            */
+            // ==========================================
+            // RECENT INTERNSHIPS
+            // ==========================================
 
             const riBody =
                 document.getElementById(
@@ -1116,19 +1492,22 @@
 
             if (riBody) {
 
-                if (!internships || !internships.length) {
+                if (!internships.length) {
 
-                    riBody.innerHTML = `
-                        <div style="
-                            padding:40px;
-                            text-align:center;
-                            opacity:0.5;
-                        ">
+                    riBody.innerHTML =
+                        `
+                        <div
+                            style="
+                                padding:40px;
+                                text-align:center;
+                                opacity:0.5;
+                            ">
                             No internships found.
                         </div>
-                    `;
+                        `;
 
-                } else {
+                }
+                else {
 
                     const recent =
                         [...internships]
@@ -1140,12 +1519,16 @@
                                 const yb =
                                     parseInt(b.year || 0);
 
-                                if (yb !== ya)
+
+                                if (yb !== ya) {
                                     return yb - ya;
+                                }
+
 
                                 return (
-                                    (b.id || 0) -
-                                    (a.id || 0)
+                                    b.id || 0
+                                ) - (
+                                    a.id || 0
                                 );
 
                             })
@@ -1153,115 +1536,160 @@
 
 
                     riBody.innerHTML =
-                        recent.map((item, index) => `
+                        recent.map((item, i) => `
 
-                        <div class="table-row"
+                        <div
+                            class="table-row"
                             style="
                                 display:grid;
+
                                 grid-template-columns:
-                                60px 2fr 2fr 1fr 1fr 1fr;
+                                    60px
+                                    2fr
+                                    2fr
+                                    1fr
+                                    1fr
+                                    1fr;
+
                                 padding:12px 16px;
+
                                 border-bottom:
-                                1px solid var(--border-light);
+                                    1px solid var(--border-light);
+
                                 align-items:center;
+
                                 font-size:13px;
                             ">
 
-                            <div style="
-                                color:var(--text-muted);
-                            ">
-                                ${String(index + 1).padStart(2, '0')}
+
+                            <div
+                                style="
+                                    color:
+                                        var(--text-muted);
+                                ">
+
+                                ${String(i + 1).padStart(2, '0')}
+
                             </div>
 
-                            <div style="
-                                font-weight:600;
-                                color:var(--navy);
-                            ">
+
+                            <div
+                                style="
+                                    font-weight:600;
+                                    color:var(--navy);
+                                ">
+
                                 ${esc(
                                     item.name_of_student ||
                                     item.student_name ||
                                     '—'
                                 )}
+
                             </div>
 
-                            <div style="
-                                color:var(--accent-blue);
-                            ">
+
+                            <div
+                                style="
+                                    color:
+                                        var(--accent-blue);
+                                ">
+
                                 ${esc(
                                     item.internship_place_01 ||
                                     item.internship_place ||
                                     '—'
                                 )}
+
                             </div>
 
-                            <div style="
-                                color:var(--text-muted);
-                                font-size:11px;
-                            ">
-                                ${esc(String(item.year || '—'))}
+
+                            <div
+                                style="
+                                    color:
+                                        var(--text-muted);
+
+                                    font-size:11px;
+                                ">
+
+                                ${esc(
+                                    String(
+                                        item.year || '—'
+                                    )
+                                )}
+
                             </div>
 
-                            <div style="
-                                color:var(--accent-orange);
-                                font-size:11px;
-                            ">
-                                ${esc(item.batch || '—')}
+
+                            <div
+                                style="
+                                    color:
+                                        var(--accent-orange);
+
+                                    font-size:11px;
+                                ">
+
+                                ${esc(
+                                    item.batch || '—'
+                                )}
+
                             </div>
 
-                            <div style="
-                                color:var(--text-muted);
-                                font-size:11px;
-                            ">
+
+                            <div
+                                style="
+                                    color:
+                                        var(--text-muted);
+
+                                    font-size:11px;
+                                ">
+
                                 ${esc(
                                     item.duration_of_intership_01 ||
                                     item.duration_of_internship_01 ||
                                     item.duration_of_intership ||
                                     '—'
                                 )}
+
                             </div>
 
                         </div>
 
-                    `).join('');
+                        `).join('');
 
                 }
 
             }
 
 
-            /*
-            ======================================================
-            INITIALIZE MAP
-            ======================================================
-            */
+            // ==========================================
+            // INITIALIZE MAP
+            // ==========================================
 
             initCityMap(prog);
 
 
-            /*
-            ======================================================
-            OPTIONAL HEATMAP CONTAINER
-            ======================================================
-            */
+            // ==========================================
+            // OPTIONAL HEATMAP
+            // ==========================================
 
             const heatContainer =
                 document.getElementById(
                     'heatmap-container'
                 );
 
+
             if (heatContainer) {
+
                 initPlacementHeatmap(prog);
+
             }
 
         }
 
 
-        /*
-        ==========================================================
-        INDIA CITY MAP
-        NO API KEY REQUIRED
-        ==========================================================
-        */
+        // ==========================================
+        // INDIA DARK MAP
+        // ==========================================
 
         async function initCityMap(prog = '') {
 
@@ -1271,11 +1699,9 @@
             ];
 
 
-            /*
-            ======================================================
-            CREATE MAP
-            ======================================================
-            */
+            // ==========================================
+            // CREATE MAP ONCE
+            // ==========================================
 
             if (!_map) {
 
@@ -1285,15 +1711,13 @@
 
                         zoomControl: true,
 
-                        attributionControl: true,
+                        attributionControl: false,
 
                         maxBounds: indiaBounds,
 
                         maxBoundsViscosity: 1.0,
 
                         minZoom: 3.5,
-
-                        maxZoom: 19,
 
                         zoomSnap: 0.1,
 
@@ -1303,51 +1727,49 @@
                 );
 
 
-                _map.fitBounds(
-                    indiaBounds,
-                    {
-                        padding: [10, 10]
-                    }
-                );
-
-
-                /*
-                ==================================================
-                FREE OPENSTREETMAP TILES
-                NO API KEY
-                ==================================================
-                */
+                // ==========================================
+                // DARK MAP - NO API KEY REQUIRED
+                // ==========================================
 
                 L.tileLayer(
-                    'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                    'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
                     {
 
-                        maxZoom: 19,
+                        subdomains: 'abcd',
+
+                        maxZoom: 20,
 
                         attribution:
-                            '&copy; OpenStreetMap contributors'
+                            '&copy; OpenStreetMap contributors &copy; CARTO'
 
                     }
                 ).addTo(_map);
 
 
-                /*
-                ==================================================
-                LOAD INDIA GEOJSON BOUNDARY
-                ==================================================
-                */
+                // ==========================================
+                // ADD MARKER GROUP
+                // ==========================================
+
+                _markers.addTo(_map);
+
+
+                // ==========================================
+                // LOAD INDIA GEOJSON BOUNDARY
+                // ==========================================
 
                 fetch('in.json')
 
-                    .then(response => {
+                    .then(res => {
 
-                        if (!response.ok) {
+                        if (!res.ok) {
+
                             throw new Error(
                                 'Unable to load in.json'
                             );
+
                         }
 
-                        return response.json();
+                        return res.json();
 
                     })
 
@@ -1358,11 +1780,17 @@
                             {
 
                                 style: {
-                                    color: '#60a5fa',
+
+                                    color: '#64748b',
+
                                     weight: 1.2,
-                                    opacity: 0.65,
-                                    fillColor: 'transparent',
-                                    fillOpacity: 0
+
+                                    opacity: 0.7,
+
+                                    fillColor: '#111827',
+
+                                    fillOpacity: 0.08
+
                                 },
 
                                 interactive: false
@@ -1375,12 +1803,16 @@
                     .catch(err => {
 
                         console.error(
-                            'India GeoJSON Error:',
+                            'Map Boundary Fetch Error:',
                             err
                         );
 
                     });
 
+
+                // ==========================================
+                // FIT INDIA IN MAP
+                // ==========================================
 
                 setTimeout(() => {
 
@@ -1393,23 +1825,30 @@
                         }
                     );
 
-                }, 500);
+                }, 200);
+
+
+                setTimeout(() => {
+
+                    _map.invalidateSize();
+
+                }, 700);
 
             }
 
 
-            /*
-            ======================================================
-            CLEAR OLD DATA
-            ======================================================
-            */
+            // ==========================================
+            // CLEAR OLD DATA
+            // ==========================================
 
             _markers.clearLayers();
 
 
             if (_heatLayer) {
 
-                _map.removeLayer(_heatLayer);
+                _map.removeLayer(
+                    _heatLayer
+                );
 
                 _heatLayer = null;
 
@@ -1418,11 +1857,9 @@
 
             try {
 
-                /*
-                ==================================================
-                GET DATA FROM SUPABASE
-                ==================================================
-                */
+                // ==========================================
+                // GET DATA FROM SUPABASE
+                // ==========================================
 
                 const results =
                     await Promise.all([
@@ -1446,75 +1883,95 @@
                     ]);
 
 
-                let placements =
+                results.forEach(
+                    (result, index) => {
+
+                        if (result.error) {
+
+                            console.error(
+                                `Map data query ${index} error:`,
+                                result.error
+                            );
+
+                        }
+
+                    }
+                );
+
+
+                let p =
                     results[0].data || [];
 
-                let internships =
+                let i =
                     results[1].data || [];
 
-                let fieldVisits =
+                let f =
                     results[2].data || [];
 
-                let industrialVisits =
+                let iv =
                     results[3].data || [];
 
 
-                /*
-                ==================================================
-                FILTER BY PROGRAMME
-                ==================================================
-                */
+                // ==========================================
+                // PROGRAMME FILTER
+                // ==========================================
 
                 if (prog) {
 
-                    const programme =
+                    const pTrim =
                         prog.trim().toLowerCase();
 
 
-                    const filterProgramme =
-                        list => {
+                    const filterMap =
+                        (list) => {
 
-                            return list.filter(item => {
+                            return list.filter(d => {
 
-                                const value =
-                                    item.programme ||
-                                    item.programme_name ||
-                                    item.course ||
-                                    item.program_name ||
-                                    '';
+                                const programme = (
 
-                                return value
-                                    .toLowerCase()
-                                    .includes(programme);
+                                    d.programme ||
+
+                                    d.programme_name ||
+
+                                    d.course ||
+
+                                    d.program_name ||
+
+                                    ''
+
+                                ).toLowerCase();
+
+
+                                return programme.includes(
+                                    pTrim
+                                );
 
                             });
 
                         };
 
 
-                    placements =
-                        filterProgramme(placements);
+                    p = filterMap(p);
 
-                    internships =
-                        filterProgramme(internships);
+                    i = filterMap(i);
 
-                    fieldVisits =
-                        filterProgramme(fieldVisits);
+                    f = filterMap(f);
 
-                    industrialVisits =
-                        filterProgramme(industrialVisits);
+                    iv = filterMap(iv);
 
                 }
 
 
+                // ==========================================
+                // HEATMAP POINTS
+                // ==========================================
+
                 const allPoints = [];
 
 
-                /*
-                ==================================================
-                PROCESS EACH DATA CATEGORY
-                ==================================================
-                */
+                // ==========================================
+                // PROCESS LOCATIONS
+                // ==========================================
 
                 const processList =
                     (list, color, type) => {
@@ -1522,35 +1979,42 @@
                         const groups = {};
 
 
-                        /*
-                        GROUP RECORDS BY CITY
-                        */
-
                         list.forEach(item => {
 
-                            let rawCity =
-                                (
-                                    item.city ||
-                                    item.city_of_intership ||
-                                    item.city_of_intership_01 ||
-                                    item.location ||
-                                    ''
-                                )
+                            let rawCity = (
+
+                                item.city ||
+
+                                item.city_of_intership ||
+
+                                item.city_of_intership_01 ||
+
+                                item.location ||
+
+                                ''
+
+                            )
                                 .split(',')[0]
                                 .trim();
 
 
-                            if (!rawCity) return;
+                            if (!rawCity) {
+                                return;
+                            }
 
 
                             const normalized =
-                                rawCity
-                                    .toLowerCase()
-                                    .trim();
+                                rawCity.toLowerCase();
 
 
                             const coords =
-                                COORDS_NORM[normalized] ||
+
+                                COORDS_NORM[
+                                    normalized
+                                ]
+
+                                ||
+
                                 COORDS_NORM[
                                     normalized.replace(
                                         /\s+/g,
@@ -1562,8 +2026,7 @@
                             if (!coords) {
 
                                 console.warn(
-                                    'Coordinates not found:',
-                                    rawCity
+                                    `Coordinates not found for ${rawCity}`
                                 );
 
                                 return;
@@ -1575,9 +2038,9 @@
 
                                 groups[normalized] = {
 
-                                    rawCity: rawCity,
+                                    rawCity,
 
-                                    coords: coords,
+                                    coords,
 
                                     items: []
 
@@ -1586,22 +2049,23 @@
                             }
 
 
-                            groups[normalized]
-                                .items
-                                .push(item);
+                            groups[normalized].items.push(
+                                item
+                            );
 
                         });
 
 
-                        /*
-                        CREATE MARKERS
-                        */
+                        // ======================================
+                        // CREATE MARKERS
+                        // ======================================
 
-                        Object.keys(groups)
-                            .forEach(key => {
+                        Object.keys(groups).forEach(
+                            normalized => {
 
                                 const group =
-                                    groups[key];
+                                    groups[normalized];
+
 
                                 const rawCity =
                                     group.rawCity;
@@ -1620,17 +2084,13 @@
                                     coords[1];
 
 
-                                /*
-                                OFFSET DIFFERENT TYPES
-                                SO THEY DON'T OVERLAP
-                                */
+                                // Small offsets so markers
+                                // at the same location are visible
 
-                                if (
-                                    type === 'Placement'
-                                ) {
+                                if (type === 'Placement') {
 
-                                    lat += 0.03;
-                                    lng += 0.03;
+                                    lat += 0.02;
+                                    lng += 0.02;
 
                                 }
 
@@ -1638,8 +2098,8 @@
                                     type === 'Internship'
                                 ) {
 
-                                    lat -= 0.03;
-                                    lng -= 0.03;
+                                    lat -= 0.02;
+                                    lng -= 0.02;
 
                                 }
 
@@ -1647,8 +2107,8 @@
                                     type === 'Field Visit'
                                 ) {
 
-                                    lat += 0.03;
-                                    lng -= 0.03;
+                                    lat += 0.02;
+                                    lng -= 0.02;
 
                                 }
 
@@ -1656,92 +2116,159 @@
                                     type === 'Industrial Visit'
                                 ) {
 
-                                    lat -= 0.03;
-                                    lng += 0.03;
+                                    lat -= 0.02;
+                                    lng += 0.02;
 
                                 }
 
 
-                                /*
-                                HEATMAP POINTS
-                                */
+                                // ==================================
+                                // HEATMAP POINTS
+                                // ==================================
 
                                 items.forEach(() => {
 
                                     allPoints.push([
+
                                         lat,
+
                                         lng,
-                                        0.5
+
+                                        0.4
+
                                     ]);
 
                                 });
 
 
-                                /*
-                                GET UNIQUE LABELS
-                                */
+                                // ==================================
+                                // POPUP LABELS
+                                // ==================================
 
-                                const labels =
-                                    [
-                                        ...new Set(
+                                const labels = [
 
-                                            items.map(item => {
+                                    ...new Set(
 
-                                                if (
-                                                    type ===
-                                                    'Internship'
-                                                ) {
+                                        items.map(item => {
 
-                                                    return (
-                                                        item.internship_place_01 ||
-                                                        item.internship_place ||
-                                                        item.company ||
-                                                        'Record'
-                                                    );
-
-                                                }
-
+                                            if (
+                                                type ===
+                                                'Placement'
+                                            ) {
 
                                                 return (
-                                                    item.student_name ||
-                                                    item.name ||
-                                                    item.name_of_student ||
-                                                    item.field_visited ||
-                                                    item.organization_name ||
+
                                                     item.company ||
+
+                                                    item.company_name ||
+
+                                                    item.student_name ||
+
+                                                    item.name ||
+
                                                     'Record'
+
                                                 );
 
-                                            })
+                                            }
 
-                                        )
-                                    ];
+
+                                            if (
+                                                type ===
+                                                'Internship'
+                                            ) {
+
+                                                return (
+
+                                                    item.internship_place_01 ||
+
+                                                    item.internship_place ||
+
+                                                    item.company ||
+
+                                                    'Record'
+
+                                                );
+
+                                            }
+
+
+                                            if (
+                                                type ===
+                                                'Field Visit'
+                                            ) {
+
+                                                return (
+
+                                                    item.field_visited ||
+
+                                                    item.organization_name ||
+
+                                                    item.student_name ||
+
+                                                    item.name ||
+
+                                                    'Record'
+
+                                                );
+
+                                            }
+
+
+                                            return (
+
+                                                item.organization_name ||
+
+                                                item.company ||
+
+                                                item.name_of_industry ||
+
+                                                item.name ||
+
+                                                'Record'
+
+                                            );
+
+                                        })
+
+                                    )
+
+                                ];
 
 
                                 const labelTitle =
+
                                     type === 'Internship'
-                                        ? 'Companies'
+
+                                        ? 'Companies / Organizations'
+
                                         : 'Records';
 
 
                                 const labelsHtml =
+
                                     labels.map(label => `
 
-                                        <div style="
-                                            margin-bottom:4px;
-                                            padding-bottom:4px;
-                                            border-bottom:
-                                            1px solid rgba(255,255,255,0.1);
-                                        ">
+                                        <div
+                                            style="
+                                                margin-bottom:4px;
+                                                padding-bottom:4px;
+                                                border-bottom:
+                                                    1px solid
+                                                    rgba(255,255,255,0.08);
+                                            ">
+
                                             • ${esc(label)}
+
                                         </div>
 
-                                    `).join('');
+                                    `)
+                                    .join('');
 
 
-                                /*
-                                CREATE MARKER
-                                */
+                                // ==================================
+                                // CREATE MARKER
+                                // ==================================
 
                                 L.circleMarker(
                                     [lat, lng],
@@ -1750,10 +2277,10 @@
                                         radius:
                                             Math.min(
                                                 5 +
-                                                Math.log(
-                                                    items.length + 1
-                                                ) * 3,
-                                                15
+                                                Math.sqrt(
+                                                    items.length
+                                                ),
+                                                14
                                             ),
 
                                         fillColor: color,
@@ -1762,146 +2289,191 @@
 
                                         weight: 1.5,
 
+                                        opacity: 1,
+
                                         fillOpacity: 0.95
 
                                     }
                                 )
 
                                     .bindPopup(
-
                                         `
-                                        <div style="
-                                            font-family:
-                                            Inter, sans-serif;
-                                            min-width:180px;
-                                        ">
 
-                                            <div style="
-                                                font-size:10px;
-                                                text-transform:uppercase;
-                                                letter-spacing:1px;
-                                                color:#94a3b8;
-                                                font-weight:600;
-                                                margin-bottom:5px;
-                                            ">
-                                                ${type}s (${items.length})
-                                            </div>
+                                        <div
+                                            style="
+                                                font-family:
+                                                    Inter,
+                                                    sans-serif;
 
-                                            <div style="
-                                                font-size:16px;
-                                                font-weight:700;
-                                                color:${color};
-                                                margin-bottom:10px;
-                                            ">
-                                                ${esc(rawCity)}
-                                            </div>
+                                                min-width:180px;
 
-                                            <div style="
-                                                font-size:10px;
-                                                text-transform:uppercase;
-                                                color:#94a3b8;
-                                                font-weight:600;
-                                                margin-bottom:6px;
-                                            ">
-                                                ${labelTitle}
-                                            </div>
-
-                                            <div style="
-                                                max-height:150px;
-                                                overflow-y:auto;
-                                                font-size:12px;
                                                 color:#f8fafc;
-                                                line-height:1.5;
                                             ">
+
+
+                                            <div
+                                                style="
+                                                    font-size:10px;
+
+                                                    text-transform:
+                                                        uppercase;
+
+                                                    letter-spacing:
+                                                        0.8px;
+
+                                                    color:#94a3b8;
+
+                                                    font-weight:700;
+
+                                                    margin-bottom:4px;
+                                                ">
+
+                                                ${esc(type)}S
+                                                (${items.length})
+
+                                            </div>
+
+
+                                            <div
+                                                style="
+                                                    font-size:16px;
+
+                                                    font-weight:700;
+
+                                                    color:${color};
+
+                                                    margin-bottom:10px;
+                                                ">
+
+                                                ${esc(rawCity)}
+
+                                            </div>
+
+
+                                            <div
+                                                style="
+                                                    font-size:10px;
+
+                                                    text-transform:
+                                                        uppercase;
+
+                                                    color:#64748b;
+
+                                                    font-weight:700;
+
+                                                    margin-bottom:6px;
+                                                ">
+
+                                                ${labelTitle}
+
+                                            </div>
+
+
+                                            <div
+                                                style="
+                                                    max-height:150px;
+
+                                                    overflow-y:auto;
+
+                                                    font-size:12px;
+
+                                                    color:#e2e8f0;
+
+                                                    line-height:1.5;
+                                                ">
+
                                                 ${labelsHtml}
+
                                             </div>
 
                                         </div>
+
                                         `,
-
                                         {
-                                            maxWidth: 350
-                                        }
 
+                                            maxWidth: 320,
+
+                                            className:
+                                                'dark-map-popup'
+
+                                        }
                                     )
 
                                     .addTo(_markers);
 
-                            });
+                            }
+                        );
 
                     };
 
 
-                /*
-                ==================================================
-                ADD ALL FOUR TYPES
-                ==================================================
-                */
+                // ==========================================
+                // PROCESS ALL DATA TYPES
+                // ==========================================
 
+                // GREEN
                 processList(
-                    placements,
+                    p,
                     '#22c55e',
                     'Placement'
                 );
 
+
+                // BLUE
                 processList(
-                    internships,
+                    i,
                     '#3b82f6',
                     'Internship'
                 );
 
+
+                // RED
                 processList(
-                    fieldVisits,
+                    f,
                     '#ef4444',
                     'Field Visit'
                 );
 
+
+                // ORANGE
                 processList(
-                    industrialVisits,
+                    iv,
                     '#f59e0b',
                     'Industrial Visit'
                 );
 
 
-                /*
-                ==================================================
-                ADD MARKERS
-                ==================================================
-                */
+                // ==========================================
+                // ADD HEATMAP
+                // ==========================================
 
-                _markers.addTo(_map);
-
-
-                /*
-                ==================================================
-                ADD HEATMAP
-                ==================================================
-                */
-
-                if (
-                    allPoints.length > 0 &&
-                    typeof L.heatLayer === 'function'
-                ) {
+                if (allPoints.length > 0) {
 
                     _heatLayer =
                         L.heatLayer(
                             allPoints,
                             {
 
-                                radius: 25,
+                                radius: 22,
 
-                                blur: 20,
+                                blur: 18,
 
                                 maxZoom: 10,
 
                                 minOpacity: 0.25,
 
                                 gradient: {
+
                                     0.2: 'blue',
+
                                     0.4: 'cyan',
+
                                     0.6: 'lime',
+
                                     0.8: 'yellow',
+
                                     1.0: 'red'
+
                                 }
 
                             }
@@ -1911,14 +2483,19 @@
                 }
 
 
+                // Bring markers above heatmap
+
+                _markers.bringToFront();
+
+
                 setTimeout(() => {
 
                     _map.invalidateSize();
 
-                }, 200);
-
+                }, 100);
 
             }
+
             catch (err) {
 
                 console.error(
@@ -1931,11 +2508,9 @@
         }
 
 
-        /*
-        ==========================================================
-        OPTIONAL ACTIVITY HEATMAP
-        ==========================================================
-        */
+        // ==========================================
+        // ACTIVITY HEATMAP
+        // ==========================================
 
         async function initPlacementHeatmap(prog = '') {
 
@@ -1945,7 +2520,9 @@
                 );
 
 
-            if (!container) return;
+            if (!container) {
+                return;
+            }
 
 
             container.innerHTML = '';
@@ -1991,21 +2568,25 @@
 
             const allData =
                 results.flatMap(
-                    result => result.data || []
+                    r => r.data || []
                 );
 
 
             if (!allData.length) {
 
-                container.innerHTML = `
-                    <div style="
-                        opacity:0.3;
-                        text-align:center;
-                        padding:20px;
-                    ">
+                container.innerHTML =
+                    `
+                    <div
+                        style="
+                            opacity:0.3;
+                            text-align:center;
+                            padding:20px;
+                        ">
+
                         No activity data
+
                     </div>
-                `;
+                    `;
 
                 return;
 
@@ -2015,17 +2596,23 @@
             const dateCounts = {};
 
 
-            allData.forEach(item => {
+            allData.forEach(p => {
 
-                const date =
-                    (item.created_at || '')
-                        .split('T')[0];
+                const d =
+                    (
+                        p.created_at ||
+                        ''
+                    )
+                    .split('T')[0];
 
 
-                if (date) {
+                if (d) {
 
-                    dateCounts[date] =
-                        (dateCounts[date] || 0) + 1;
+                    dateCounts[d] =
+                        (
+                            dateCounts[d] ||
+                            0
+                        ) + 1;
 
                 }
 
@@ -2039,96 +2626,130 @@
 
 
             const svg =
-                d3.select('#heatmap-container')
-                    .append('svg')
-                    .attr('width', '100%')
-                    .attr('height', height)
-                    .append('g')
+                d3
+                    .select(
+                        "#heatmap-container"
+                    )
+                    .append("svg")
+                    .attr("width", "100%")
+                    .attr("height", height)
+                    .append("g")
                     .attr(
-                        'transform',
-                        'translate(5, 5)'
+                        "transform",
+                        "translate(5, 5)"
                     );
 
 
-            const now = new Date();
+            const now =
+                new Date();
 
-            const start = new Date();
+
+            const start =
+                new Date();
+
 
             start.setMonth(
                 now.getMonth() - 6
             );
 
+
             start.setDate(1);
 
 
             const colorScale =
-                d3.scaleThreshold()
-                    .domain([1, 2, 5])
+                d3
+                    .scaleThreshold()
+                    .domain([
+                        1,
+                        2,
+                        5
+                    ])
                     .range([
-                        'rgba(255,255,255,0.05)',
-                        '#4ade80',
-                        '#22c55e',
-                        '#16a34a'
+
+                        "rgba(255,255,255,0.05)",
+
+                        "#4ade80",
+
+                        "#22c55e",
+
+                        "#16a34a"
+
                     ]);
 
 
             const format =
-                d3.timeFormat('%Y-%m-%d');
+                d3.timeFormat(
+                    "%Y-%m-%d"
+                );
+
 
             const day =
-                d3.timeFormat('%w');
+                d3.timeFormat(
+                    "%w"
+                );
+
 
             const week =
-                d3.timeFormat('%U');
+                d3.timeFormat(
+                    "%U"
+                );
 
 
-            svg.selectAll('rect')
-
+            svg
+                .selectAll("rect")
                 .data(
                     d3.timeDays(
                         start,
                         now
                     )
                 )
-
                 .enter()
-
-                .append('rect')
+                .append("rect")
 
                 .attr(
-                    'width',
+                    "width",
                     cellSize - 2
                 )
 
                 .attr(
-                    'height',
+                    "height",
                     cellSize - 2
                 )
 
-                .attr('x', d => {
+                .attr(
+                    "x",
+                    d => {
 
-                    const w1 =
-                        parseInt(week(start));
+                        const w1 =
+                            parseInt(
+                                week(start)
+                            );
 
-                    const w2 =
-                        parseInt(week(d));
+                        const w2 =
+                            parseInt(
+                                week(d)
+                            );
 
-                    const diff =
-                        w2 >= w1
-                            ? w2 - w1
-                            : w2 + 52 - w1;
+                        const diff =
+                            w2 >= w1
 
-                    return diff * cellSize;
+                                ? w2 - w1
 
-                })
+                                : w2 + 52 - w1;
+
+
+                        return diff * cellSize;
+
+                    }
+                )
 
                 .attr(
-                    'y',
+                    "y",
                     d => day(d) * cellSize
                 )
 
                 .attr(
-                    'fill',
+                    "fill",
                     d =>
                         colorScale(
                             dateCounts[
@@ -2137,11 +2758,17 @@
                         )
                 )
 
-                .attr('rx', 2)
+                .attr(
+                    "rx",
+                    2
+                )
 
-                .attr('ry', 2)
+                .attr(
+                    "ry",
+                    2
+                )
 
-                .append('title')
+                .append("title")
 
                 .text(
                     d =>
@@ -2149,17 +2776,15 @@
                             dateCounts[
                                 format(d)
                             ] || 0
-                        } records`
+                        } placements`
                 );
 
         }
 
 
-        /*
-        ==========================================================
-        PAGE LOAD
-        ==========================================================
-        */
+        // ==========================================
+        // PAGE INITIALIZATION
+        // ==========================================
 
         document.addEventListener(
             'DOMContentLoaded',
@@ -2168,16 +2793,9 @@
                 loadDashboardData();
 
 
-                if (
-                    typeof subscribeAllChanges ===
-                    'function'
-                ) {
-
-                    subscribeAllChanges(
-                        loadDashboardData
-                    );
-
-                }
+                subscribeAllChanges(
+                    loadDashboardData
+                );
 
 
                 document
@@ -2186,10 +2804,10 @@
                     )
                     ?.addEventListener(
                         'change',
-                        event => {
+                        (e) => {
 
                             loadDashboardData(
-                                event.target.value
+                                e.target.value
                             );
 
                         }
