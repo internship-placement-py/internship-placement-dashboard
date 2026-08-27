@@ -1272,24 +1272,27 @@
                    FREE - NO API KEY
                 ================================================= */
 
-                L.tileLayer(
+                const darkTiles = L.tileLayer(
                     'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
                     {
-
                         subdomains: 'abcd',
-
+                        minZoom: 1,
                         maxZoom: 20,
-
-                        attribution:
-                            '&copy; OpenStreetMap contributors &copy; CARTO'
-
+                        maxNativeZoom: 19,
+                        crossOrigin: true,
+                        attribution: '&copy; OpenStreetMap contributors &copy; CARTO'
                     }
-                ).addTo(_map);
+                );
+
+                darkTiles.on('tileerror', function (error) {
+                    console.error('Dark map tile failed to load:', error);
+                    });
+
+                    darkTiles.addTo(_map);
 
 
                 /* =================================================
                    ADD MARKER LAYER TO MAP
-                   THIS WAS MISSING IN YOUR OLD CODE
                 ================================================= */
 
                 _markers.addTo(_map);
@@ -1310,34 +1313,31 @@
                 /* =================================================
                    FIX MAP SIZE AFTER PAGE RENDERS
                 ================================================= */
-
+                
                 setTimeout(() => {
-
+                
                     if (_map) {
-
+                
                         _map.invalidateSize();
-
+                
                         _map.fitBounds(
                             indiaBounds,
                             {
                                 padding: [10, 10]
                             }
                         );
-
                     }
-
+                
                 }, 300);
-
-
+                
+                
                 setTimeout(() => {
-
+                
                     if (_map) {
                         _map.invalidateSize();
                     }
-
+                
                 }, 1000);
-
-            }
 
 
             /* ================================================
@@ -7401,7 +7401,7 @@
                         attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
                         subdomains: 'abcd',
                         maxZoom: 20 }
-                    ).addTo(map);
+                    ).addTo(_map);
 
                     // FETCH AND RENDER CORRECT INDIA GEOJSON
                     fetch('in.json')
