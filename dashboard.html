@@ -101,11 +101,10 @@
     <script src="auth-guard.js"></script>
 </head>
 
+
 <body>
 
-    <!-- =====================================================
-         SIDEBAR
-    ===================================================== -->
+    <!-- SIDEBAR -->
     <aside class="sidebar">
 
         <div class="sidebar-header">
@@ -188,17 +187,13 @@
     </aside>
 
 
-    <!-- =====================================================
-         MAIN CONTENT
-    ===================================================== -->
+    <!-- MAIN CONTAINER -->
     <div class="container">
 
         <div class="main-content dashboard-layout-container">
 
 
-            <!-- =================================================
-                 HEADER
-            ================================================= -->
+            <!-- TOP HEADER -->
             <div class="top-header-row">
 
                 <div>
@@ -228,16 +223,13 @@
             </div>
 
 
-            <!-- =================================================
-                 STATISTICS
-            ================================================= -->
+            <!-- STATISTICS -->
             <div class="stats-grid-4">
 
                 <div class="stat-card">
-
                     <div class="stat-icon">
                         <i class="bi bi-people"
-                            style="color:white;"></i>
+                            style="color: white;"></i>
                     </div>
 
                     <div class="stat-label">
@@ -246,17 +238,16 @@
 
                     <div class="stat-value"
                         id="stat-total">-</div>
-
                 </div>
 
 
                 <div class="stat-card">
 
                     <div class="stat-icon"
-                        style="background:var(--accent-green);">
+                        style="background: var(--accent-green);">
 
                         <i class="bi bi-check-square"
-                            style="color:white;"></i>
+                            style="color: white;"></i>
 
                     </div>
 
@@ -268,8 +259,10 @@
                         id="stat-placed">-</div>
 
                     <div id="stat-placed-pct"
-                        style="font-size:10px;opacity:0.7;margin-top:2px;">
+                        style="font-size: 10px; opacity: 0.7; margin-top: 2px;">
+
                         Rate: -%
+
                     </div>
 
                 </div>
@@ -278,10 +271,10 @@
                 <div class="stat-card">
 
                     <div class="stat-icon"
-                        style="background:var(--accent-blue);">
+                        style="background: var(--accent-blue);">
 
                         <i class="bi bi-clipboard-pulse"
-                            style="color:white;"></i>
+                            style="color: white;"></i>
 
                     </div>
 
@@ -298,10 +291,10 @@
                 <div class="stat-card">
 
                     <div class="stat-icon"
-                        style="background:var(--accent-orange);">
+                        style="background: var(--accent-orange);">
 
                         <i class="bi bi-pin-map"
-                            style="color:white;"></i>
+                            style="color: white;"></i>
 
                     </div>
 
@@ -318,10 +311,10 @@
                 <div class="stat-card">
 
                     <div class="stat-icon"
-                        style="background:#f59e0b;">
+                        style="background: #f59e0b;">
 
                         <i class="bi bi-buildings"
-                            style="color:white;"></i>
+                            style="color: white;"></i>
 
                     </div>
 
@@ -337,25 +330,23 @@
             </div>
 
 
-            <!-- =================================================
-                 GEOGRAPHIC MAP
-            ================================================= -->
+            <!-- GEOGRAPHIC MAP -->
             <div class="widget-panel"
-                style="min-height:700px;">
+                style="min-height: 700px;">
 
                 <h3>Geographic Intelligence (India)</h3>
 
                 <div id="india-city-map"></div>
 
 
-                <!-- MAP LEGEND -->
+                <!-- LEGEND -->
                 <div style="
-                    display:flex;
-                    gap:20px;
-                    margin-top:20px;
-                    font-size:12px;
-                    color:var(--text-dim);
-                    flex-wrap:wrap;
+                    display: flex;
+                    gap: 20px;
+                    margin-top: 20px;
+                    font-size: 12px;
+                    color: var(--text-dim);
+                    flex-wrap: wrap;
                 ">
 
                     <div style="display:flex;align-items:center;gap:8px;">
@@ -387,9 +378,7 @@
             </div>
 
 
-            <!-- =================================================
-                 RECENT PLACEMENTS
-            ================================================= -->
+            <!-- RECENT PLACEMENTS -->
             <div class="widget-panel">
 
                 <h3>Recent Placements</h3>
@@ -416,7 +405,6 @@
 
                     </div>
 
-
                     <div id="recentPlacementsBody">
 
                         <div style="
@@ -434,9 +422,7 @@
             </div>
 
 
-            <!-- =================================================
-                 RECENT INTERNSHIPS
-            ================================================= -->
+            <!-- RECENT INTERNSHIPS -->
             <div class="widget-panel">
 
                 <h3>Recent Internships</h3>
@@ -445,24 +431,22 @@
 
                     <div class="recent-table-header"
                         style="
-                            display:grid;
-                            grid-template-columns:60px 2fr 2fr 1fr 1fr 1fr;
-                            padding:12px 16px;
-                            background:var(--bg-hover);
-                            border-bottom:1px solid var(--border);
-                            font-size:11px;
-                            text-transform:uppercase;
-                            color:var(--text-muted);
-                            border-radius:8px 8px 0 0;
-                        ">
+                        display:grid;
+                        grid-template-columns:60px 2fr 2fr 1fr 1fr 1fr;
+                        padding:12px 16px;
+                        background:var(--bg-hover);
+                        border-bottom:1px solid var(--border);
+                        font-size:11px;
+                        text-transform:uppercase;
+                        color:var(--text-muted);
+                        border-radius:8px 8px 0 0;
+                    ">
 
                         <div>S.NO.</div>
                         <div>STUDENT NAME</div>
-
                         <div style="color:var(--accent-blue);">
                             INTERNSHIP PLACE
                         </div>
-
                         <div>YEAR</div>
                         <div>BATCH</div>
                         <div>DURATION</div>
@@ -487,9 +471,7 @@
             </div>
 
 
-            <!-- =================================================
-                 FOOTER
-            ================================================= -->
+            <!-- FOOTER -->
             <footer class="app-footer"
                 style="
                     padding:40px 0;
@@ -571,7 +553,6 @@
                             font-size:12px;
                             color:var(--text-muted);
                         ">
-
                             <a href="https://www.instagram.com/rru.puducherrycampus/"
                                 target="_blank"
                                 style="
@@ -580,15 +561,12 @@
                                 ">
                                 Instagram
                             </a>
-
                         </p>
-
 
                         <p style="
                             font-size:12px;
                             color:var(--text-muted);
                         ">
-
                             <a href="https://www.linkedin.com/company/rashtriya-raksha-university-puducherry-campus/posts/?feedView=all"
                                 target="_blank"
                                 style="
@@ -597,7 +575,6 @@
                                 ">
                                 LinkedIn
                             </a>
-
                         </p>
 
                     </div>
@@ -611,10 +588,7 @@
     </div>
 
 
-    <!-- =====================================================
-         JAVASCRIPT LIBRARIES
-         LOAD EACH LIBRARY ONLY ONCE
-    ===================================================== -->
+    <!-- JAVASCRIPT LIBRARIES -->
 
     <!-- Leaflet -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -634,11 +608,7 @@
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-
-    <!-- =====================================================
-         PROJECT FILES
-    ===================================================== -->
-
+    <!-- YOUR PROJECT FILES -->
     <script src="device-tracker.js?v=101"></script>
     <script src="config.js"></script>
     <script src="supabase-client.js"></script>
@@ -646,42 +616,37 @@
     <script src="security.js?v=400"></script>
 
 
-    <!-- =====================================================
-         DASHBOARD SCRIPT
-    ===================================================== -->
+    <!-- MAIN DASHBOARD SCRIPT -->
     <script>
 
-        /* =====================================================
-           GLOBAL VARIABLES
-        ===================================================== */
+        let _deptChartInstance = null;
 
         let _map = null;
-        let _heatLayer = null;
 
         const _markers = L.layerGroup();
 
+        let _heatLayer = null;
 
-        /* =====================================================
-           HTML ESCAPE
-        ===================================================== */
 
-        const esc = (value) => {
-            return String(value ?? '')
+        // XSS PROTECTION
+        const esc = (s) =>
+            String(s || '')
                 .replace(/&/g, '&amp;')
                 .replace(/</g, '&lt;')
                 .replace(/>/g, '&gt;')
                 .replace(/"/g, '&quot;')
                 .replace(/'/g, '&#039;');
-        };
 
 
-        /* =====================================================
-           CITY COORDINATES
-        ===================================================== */
+        /*
+        ==========================================================
+        CITY COORDINATES
+        ==========================================================
+        */
 
         const CITY_COORDS = {
 
-            /* Gujarat */
+            // GUJARAT
             'Ahmedabad': [23.0225, 72.5714],
             'Gandhinagar': [23.2156, 72.6369],
             'Lavad': [23.1952, 72.9304],
@@ -710,7 +675,7 @@
             'Godhra': [22.7755, 73.6149],
             'Dahod': [22.8353, 74.2543],
             'Nadiad': [22.6916, 72.8634],
-            'Botad': [22.1702, 71.6637],
+            'Botad': [22.1705, 71.6637],
             'Vyara': [21.1147, 73.4005],
             'Ahwa': [20.7634, 73.6845],
             'Modasa': [23.4735, 73.3031],
@@ -720,7 +685,8 @@
             'Himmatnagar': [23.5979, 72.9649],
             'Gujarat': [22.2587, 71.1924],
 
-            /* Major Cities */
+
+            // MAJOR INDIAN CITIES
             'Mumbai': [19.0760, 72.8777],
             'Bengaluru': [12.9716, 77.5946],
             'Bangalore': [12.9716, 77.5946],
@@ -745,51 +711,55 @@
             'Srinagar': [34.0837, 74.7973],
             'Jammu': [32.7266, 74.8570],
             'Guwahati': [26.1445, 91.7362],
-
-            /* South India */
-            'Puducherry': [11.9416, 79.8083],
-            'Pondicherry': [11.9416, 79.8083],
-            'Chennai': [13.0827, 80.2707],
-            'Coimbatore': [11.0168, 76.9558],
-            'Madurai': [9.9252, 78.1198],
-            'Tiruchirappalli': [10.7905, 78.7047],
-            'Trichy': [10.7905, 78.7047],
-            'Salem': [11.6643, 78.1460],
-            'Erode': [11.3410, 77.7172],
-            'Vellore': [12.9165, 79.1325],
-            'Kanchipuram': [12.8342, 79.7036],
-            'Malaipattu': [12.9231, 80.0152],
-            'Thanjavur': [10.7870, 79.1378],
-            'Thoothukudi': [8.7642, 78.1348],
-            'Tuticorin': [8.7642, 78.1348],
-            'Tirunelveli': [8.7139, 77.7567],
-            'Kanyakumari': [8.0883, 77.5385],
-            'Hosur': [12.7409, 77.8253],
             'Thiruvananthapuram': [8.5241, 76.9366],
             'Trivandrum': [8.5241, 76.9366],
-            'Kochi': [9.9312, 76.2673],
-            'Cochin': [9.9312, 76.2673],
-            'Kozhikode': [11.2588, 75.7804],
-            'Mangalore': [12.9141, 74.8560],
-            'Mysore': [12.2958, 76.6394],
+            'Panaji': [15.4909, 73.8278],
+            'Agartala': [23.8315, 91.2868],
+            'Aizawl': [23.7271, 92.7176],
+            'Imphal': [24.8170, 93.9368],
+            'Kohima': [25.6747, 94.1100],
+            'Shillong': [25.5788, 91.8933],
+            'Itanagar': [27.0844, 93.6053],
+            'Gangtok': [27.3314, 88.6138],
+            'Leh': [34.1526, 77.5771],
 
-            /* Other locations */
+            'Puducherry': [11.9416, 79.8083],
+            'Pondicherry': [11.9416, 79.8083],
+            'Yanam': [16.7333, 82.2167],
+
+
+            // STATES
+            'Kerala': [10.8505, 76.2711],
+            'Maharashtra': [19.7515, 75.7139],
+            'Maharastra': [19.7515, 75.7139],
+            'Odisha': [20.9517, 85.0985],
+            'Odissa': [20.9517, 85.0985],
+
+
+            // INDUSTRIAL AND TECHNOLOGY HUBS
             'Gurgaon': [28.4595, 77.0266],
             'Gurugram': [28.4595, 77.0266],
             'Noida': [28.5355, 77.3910],
             'Nagpur': [21.1458, 79.0882],
             'Nashik': [19.9975, 73.7898],
+            'Kochi': [9.9312, 76.2673],
+            'Cochin': [9.9312, 76.2673],
             'Visakhapatnam': [17.6868, 83.2185],
             'Vizag': [17.6868, 83.2185],
+            'Coimbatore': [11.0168, 76.9558],
+            'Madurai': [9.9252, 78.1198],
             'Vijayawada': [16.5062, 80.6480],
+            'Mysore': [12.2958, 76.6394],
+            'Mangalore': [12.9141, 74.8560],
+            'Kozhikode': [11.2588, 75.7804],
             'Jamshedpur': [22.8046, 86.2029],
             'Dhanbad': [23.7957, 86.4304],
             'Jabalpur': [23.1815, 79.9864],
             'Gwalior': [26.2183, 78.1828],
             'Jodhpur': [26.2389, 73.0243],
             'Udaipur': [24.5854, 73.7125],
-            'Prayagraj': [25.4358, 81.8463],
             'Allahabad': [25.4358, 81.8463],
+            'Prayagraj': [25.4358, 81.8463],
             'Varanasi': [25.3176, 82.9739],
             'Kanpur': [26.4499, 80.3319],
             'Agra': [27.1767, 78.0081],
@@ -798,74 +768,110 @@
             'Amritsar': [31.6340, 74.8723],
             'Jalandhar': [31.3260, 75.5762],
 
-            /* States */
-            'Kerala': [10.8505, 76.2711],
-            'Maharashtra': [19.7515, 75.7139],
-            'Maharastra': [19.7515, 75.7139],
-            'Odisha': [20.9517, 85.0985],
-            'Odissa': [20.9517, 85.0985],
-            'Assam': [26.2006, 92.9376],
-            'Mizoram': [23.1645, 92.9376],
-            'Nagaland': [26.1584, 94.5624],
-            'Arunachal Pradesh': [28.2180, 94.7278],
-            'Tripura': [23.9408, 91.9882],
 
-            /* UT */
+            // TAMIL NADU
+            'Kanchipuram': [12.8342, 79.7036],
+            'Malaipattu': [12.9231, 80.0152],
+            'Tiruchirappalli': [10.7905, 78.7047],
+            'Trichy': [10.7905, 78.7047],
+            'Salem': [11.6643, 78.1460],
+            'Erode': [11.3410, 77.7172],
+            'Vellore': [12.9165, 79.1325],
+            'Thanjavur': [10.7870, 79.1378],
+            'Thoothukudi': [8.7642, 78.1348],
+            'Tuticorin': [8.7642, 78.1348],
+            'Tirunelveli': [8.7139, 77.7567],
+            'Kanyakumari': [8.0883, 77.5385],
+            'Hosur': [12.7409, 77.8253],
+
+
+            // UNION TERRITORIES
             'Port Blair': [11.6234, 92.7265],
             'Silvassa': [20.2765, 73.0083],
             'Daman': [20.3974, 72.8328],
             'Diu': [20.7144, 70.9822],
-            'Kavaratti': [10.5667, 72.6417]
+            'Kavaratti': [10.5667, 72.6417],
+
+            'Tripura': [23.9408, 91.9882],
+            'Assam': [26.2006, 92.9376],
+            'Mizoram': [23.1645, 92.9376],
+            'Nagaland': [26.1584, 94.5624],
+            'Arunachal Pradesh': [28.2180, 94.7278]
+
         };
 
 
-        /* =====================================================
-           NORMALIZE COORDINATES
-        ===================================================== */
+        /*
+        ==========================================================
+        NORMALIZE CITY NAMES
+        ==========================================================
+        */
 
         const COORDS_NORM = {};
 
-        Object.keys(CITY_COORDS).forEach(city => {
 
-            const normalized = city.toLowerCase().trim();
+        function prenormalizeCoords() {
 
-            COORDS_NORM[normalized] = CITY_COORDS[city];
+            Object.keys(CITY_COORDS).forEach(city => {
 
-            COORDS_NORM[
-                normalized.replace(/\s+/g, '')
-            ] = CITY_COORDS[city];
+                const normalized =
+                    city.toLowerCase().trim();
 
-        });
+                COORDS_NORM[normalized] =
+                    CITY_COORDS[city];
+
+                COORDS_NORM[
+                    normalized.replace(/\s+/g, '')
+                ] =
+                    CITY_COORDS[city];
+
+            });
+
+        }
 
 
-        /* =====================================================
-           DASHBOARD DATA
-        ===================================================== */
+        prenormalizeCoords();
+
+
+        /*
+        ==========================================================
+        LOAD DASHBOARD DATA
+        ==========================================================
+        */
 
         async function loadDashboardData(prog = '') {
 
             const dataTasks = [
 
-                typeof getStats === 'function'
-                    ? getStats(prog).catch(error => {
-                        console.warn('Stats failed:', error);
+                getStats(prog)
+                    .catch(e => {
+                        console.warn('Stats failed:', e);
                         return null;
-                    })
-                    : Promise.resolve(null),
+                    }),
 
-                typeof getPlacements === 'function'
-                    ? getPlacements(prog).catch(error => {
-                        console.warn('Placements failed:', error);
+                getPlacements(prog)
+                    .catch(e => {
+                        console.warn('Placements failed:', e);
+                        return [];
+                    }),
+
+                getInternships(prog)
+                    .catch(e => {
+                        console.warn('Internships failed:', e);
+                        return [];
+                    }),
+
+                getYearlyTrend(prog)
+                    .catch(e => {
+                        console.warn('Trend failed:', e);
+                        return null;
+                    }),
+
+                getDeptStats(prog)
+                    .catch(e => {
+                        console.warn('Department stats failed:', e);
                         return [];
                     })
-                    : Promise.resolve([]),
-
-                typeof getInternships === 'function'
-                    ? getInternships(prog).catch(error => {
-                        console.warn('Internships failed:', error);
-                        return [];
-                    })
-                    : Promise.resolve([])
 
             ];
 
@@ -873,39 +879,41 @@
             const [
                 stats,
                 placements,
-                internships
+                internships,
+                trend,
+                deptData
             ] = await Promise.all(dataTasks);
 
 
-            /* ==============================
-               UPDATE STATISTICS
-            ============================== */
+            /*
+            ======================================================
+            UPDATE STATISTICS
+            ======================================================
+            */
 
             if (stats) {
 
                 let totalStudents =
-                    Number(stats.total_students) || 0;
+                    stats.total_students || 0;
 
 
                 if (totalStudents === 0) {
 
                     const uniqueIds = new Set([
 
-                        ...(placements || []).map(item =>
-                            item.enrollment_number ||
-                            item.student_id ||
-                            item.id
-                        ),
+                        ...(placements || [])
+                            .map(x =>
+                                x.enrollment_number || x.id),
 
-                        ...(internships || []).map(item =>
-                            item.enrollment_number ||
-                            item.student_id ||
-                            item.id
-                        )
+                        ...(internships || [])
+                            .map(x =>
+                                x.enrollment_number || x.id)
 
                     ].filter(Boolean));
 
-                    totalStudents = uniqueIds.size;
+
+                    totalStudents =
+                        uniqueIds.size;
 
                 }
 
@@ -914,7 +922,8 @@
                     document.getElementById('stat-total');
 
                 if (totalElement) {
-                    totalElement.textContent = totalStudents;
+                    totalElement.textContent =
+                        totalStudents;
                 }
 
 
@@ -927,15 +936,43 @@
                 }
 
 
-                const rateElement =
+                const percentageElement =
                     document.getElementById('stat-placed-pct');
 
-                if (rateElement) {
+                if (percentageElement) {
 
-                    rateElement.textContent =
+                    percentageElement.textContent =
                         `Rate: ${stats.placement_rate || 0}% (${stats.placement_batch || '—'})`;
 
                 }
+
+
+                const groupedInternships =
+                    new Set();
+
+
+                (internships || []).forEach(item => {
+
+                    const key = [
+
+                        (item.internship_place || '').trim(),
+
+                        (item.year || '').trim(),
+
+                        (item.batch || '').trim(),
+
+                        (item.duration_of_intership || '').trim(),
+
+                        (item.city_of_intership || '').trim(),
+
+                        (item.type_of_organization || '').trim()
+
+                    ].join('||');
+
+
+                    groupedInternships.add(key);
+
+                });
 
 
                 const internshipElement =
@@ -944,7 +981,7 @@
                 if (internshipElement) {
 
                     internshipElement.textContent =
-                        (internships || []).length;
+                        groupedInternships.size || 0;
 
                 }
 
@@ -973,9 +1010,11 @@
             }
 
 
-            /* ==============================
-               RECENT PLACEMENTS
-            ============================== */
+            /*
+            ======================================================
+            RECENT PLACEMENTS
+            ======================================================
+            */
 
             const rpBody =
                 document.getElementById(
@@ -985,7 +1024,7 @@
 
             if (rpBody) {
 
-                if (!placements || placements.length === 0) {
+                if (!placements || !placements.length) {
 
                     rpBody.innerHTML = `
                         <div style="
@@ -1003,27 +1042,37 @@
                         [...placements]
                             .sort((a, b) => {
 
-                                const dateA =
-                                    new Date(a.created_at || 0);
+                                const da =
+                                    new Date(
+                                        b.created_at || 0
+                                    ) -
+                                    new Date(
+                                        a.created_at || 0
+                                    );
 
-                                const dateB =
-                                    new Date(b.created_at || 0);
+                                if (da !== 0)
+                                    return da;
 
-                                return dateB - dateA;
+                                return (
+                                    (b.id || 0) -
+                                    (a.id || 0)
+                                );
 
                             })
                             .slice(0, 5);
 
 
                     rpBody.innerHTML =
-                        recent.map((item, index) => `
+                        recent.map((p, index) => `
 
                         <div class="table-row"
                             style="
                                 display:grid;
-                                grid-template-columns:60px 2fr 1.5fr 1.5fr 1fr 1fr;
+                                grid-template-columns:
+                                60px 2fr 1.5fr 1.5fr 1fr 1fr;
                                 padding:12px 16px;
-                                border-bottom:1px solid var(--border-light);
+                                border-bottom:
+                                1px solid var(--border-light);
                                 align-items:center;
                                 font-size:13px;
                             ">
@@ -1037,24 +1086,28 @@
                                 color:var(--navy);
                             ">
                                 ${esc(
-                                    item.name ||
-                                    item.student_name ||
+                                    p.name ||
+                                    p.student_name ||
                                     '—'
                                 )}
                             </div>
 
-                            <div style="color:var(--accent-green);">
+                            <div style="
+                                color:var(--accent-green);
+                            ">
                                 ${esc(
-                                    item.company ||
-                                    item.company_name ||
+                                    p.company ||
+                                    p.company_name ||
                                     '—'
                                 )}
                             </div>
 
-                            <div style="color:var(--text-secondary);">
+                            <div style="
+                                color:var(--text-secondary);
+                            ">
                                 ${esc(
-                                    item.role ||
-                                    item.remarks ||
+                                    p.role ||
+                                    p.remarks ||
                                     '—'
                                 )}
                             </div>
@@ -1063,7 +1116,11 @@
                                 color:var(--text-muted);
                                 font-size:11px;
                             ">
-                                ${esc(item.batch || '—')}
+                                ${esc(
+                                    p.batch ||
+                                    (p.created_at || '').split('-')[0] ||
+                                    '—'
+                                )}
                             </div>
 
                             <div style="
@@ -1071,9 +1128,9 @@
                                 color:var(--accent-green);
                             ">
                                 ${esc(
-                                    item.salary ||
-                                    item.ctc ||
-                                    item.package ||
+                                    p.salary ||
+                                    p.ctc ||
+                                    p.package ||
                                     '—'
                                 )}
                             </div>
@@ -1087,9 +1144,11 @@
             }
 
 
-            /* ==============================
-               RECENT INTERNSHIPS
-            ============================== */
+            /*
+            ======================================================
+            RECENT INTERNSHIPS
+            ======================================================
+            */
 
             const riBody =
                 document.getElementById(
@@ -1099,7 +1158,7 @@
 
             if (riBody) {
 
-                if (!internships || internships.length === 0) {
+                if (!internships || !internships.length) {
 
                     riBody.innerHTML = `
                         <div style="
@@ -1117,18 +1176,19 @@
                         [...internships]
                             .sort((a, b) => {
 
-                                const yearA =
+                                const ya =
                                     parseInt(a.year || 0);
 
-                                const yearB =
+                                const yb =
                                     parseInt(b.year || 0);
 
-                                if (yearB !== yearA) {
-                                    return yearB - yearA;
-                                }
+                                if (yb !== ya)
+                                    return yb - ya;
 
-                                return (b.id || 0) -
-                                    (a.id || 0);
+                                return (
+                                    (b.id || 0) -
+                                    (a.id || 0)
+                                );
 
                             })
                             .slice(0, 5);
@@ -1140,14 +1200,18 @@
                         <div class="table-row"
                             style="
                                 display:grid;
-                                grid-template-columns:60px 2fr 2fr 1fr 1fr 1fr;
+                                grid-template-columns:
+                                60px 2fr 2fr 1fr 1fr 1fr;
                                 padding:12px 16px;
-                                border-bottom:1px solid var(--border-light);
+                                border-bottom:
+                                1px solid var(--border-light);
                                 align-items:center;
                                 font-size:13px;
                             ">
 
-                            <div style="color:var(--text-muted);">
+                            <div style="
+                                color:var(--text-muted);
+                            ">
                                 ${String(index + 1).padStart(2, '0')}
                             </div>
 
@@ -1176,7 +1240,7 @@
                                 color:var(--text-muted);
                                 font-size:11px;
                             ">
-                                ${esc(item.year || '—')}
+                                ${esc(String(item.year || '—'))}
                             </div>
 
                             <div style="
@@ -1207,19 +1271,39 @@
             }
 
 
-            /* ==============================
-               LOAD MAP
-            ============================== */
+            /*
+            ======================================================
+            INITIALIZE MAP
+            ======================================================
+            */
 
             initCityMap(prog);
+
+
+            /*
+            ======================================================
+            OPTIONAL HEATMAP CONTAINER
+            ======================================================
+            */
+
+            const heatContainer =
+                document.getElementById(
+                    'heatmap-container'
+                );
+
+            if (heatContainer) {
+                initPlacementHeatmap(prog);
+            }
 
         }
 
 
-        /* =====================================================
-           INDIA DARK MAP
-           NO API KEY REQUIRED
-        ===================================================== */
+        /*
+        ==========================================================
+        INDIA CITY MAP
+        NO API KEY REQUIRED
+        ==========================================================
+        */
 
         async function initCityMap(prog = '') {
 
@@ -1229,78 +1313,37 @@
             ];
 
 
-            /* ================================================
-               CREATE MAP ONLY ONCE
-            ================================================ */
+            /*
+            ======================================================
+            CREATE MAP
+            ======================================================
+            */
 
             if (!_map) {
-
-                const mapContainer =
-                    document.getElementById('india-city-map');
-
-
-                if (!mapContainer) {
-                    console.error(
-                        'Map container #india-city-map not found'
-                    );
-                    return;
-                }
-
 
                 _map = L.map(
                     'india-city-map',
                     {
 
                         zoomControl: true,
+
                         attributionControl: true,
 
                         maxBounds: indiaBounds,
+
                         maxBoundsViscosity: 1.0,
 
-                        minZoom: 3,
+                        minZoom: 3.5,
+
                         maxZoom: 19,
 
                         zoomSnap: 0.1,
+
                         zoomDelta: 0.5
 
                     }
                 );
 
-
-                /* =================================================
-                   DARK MAP TILES
-                   FREE - NO API KEY
-                ================================================= */
-
-                const darkTiles = L.tileLayer(
-                    'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
-                    {
-                        subdomains: 'abcd',
-                        minZoom: 1,
-                        maxZoom: 20,
-                        maxNativeZoom: 19,
-                        crossOrigin: true,
-                        attribution: '&copy; OpenStreetMap contributors &copy; CARTO'
-                    }
-                );
-
-                darkTiles.on('tileerror', function (error) {
-                    console.error('Dark map tile failed to load:', error);
-                    });
-
-                    darkTiles.addTo(_map);
-
-
-                /* =================================================
-                   ADD MARKER LAYER TO MAP
-                ================================================= */
-
-                _markers.addTo(_map);
-
-
-                /* =================================================
-                   INITIAL INDIA VIEW
-                ================================================= */
 
                 _map.fitBounds(
                     indiaBounds,
@@ -1310,39 +1353,98 @@
                 );
 
 
-                /* =================================================
-                   FIX MAP SIZE AFTER PAGE RENDERS
-                ================================================= */
-                
-                setTimeout(() => {
-                
-                    if (_map) {
-                
-                        _map.invalidateSize();
-                
-                        _map.fitBounds(
-                            indiaBounds,
+                /*
+                ==================================================
+                FREE OPENSTREETMAP TILES
+                NO API KEY
+                ==================================================
+                */
+
+                L.tileLayer(
+                    'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                    {
+
+                        maxZoom: 19,
+
+                        attribution:
+                            '&copy; OpenStreetMap contributors'
+
+                    }
+                ).addTo(_map);
+
+
+                /*
+                ==================================================
+                LOAD INDIA GEOJSON BOUNDARY
+                ==================================================
+                */
+
+                fetch('in.json')
+
+                    .then(response => {
+
+                        if (!response.ok) {
+                            throw new Error(
+                                'Unable to load in.json'
+                            );
+                        }
+
+                        return response.json();
+
+                    })
+
+                    .then(geo => {
+
+                        L.geoJSON(
+                            geo,
                             {
-                                padding: [10, 10]
+
+                                style: {
+                                    color: '#60a5fa',
+                                    weight: 1.2,
+                                    opacity: 0.65,
+                                    fillColor: 'transparent',
+                                    fillOpacity: 0
+                                },
+
+                                interactive: false
+
                             }
+                        ).addTo(_map);
+
+                    })
+
+                    .catch(err => {
+
+                        console.error(
+                            'India GeoJSON Error:',
+                            err
                         );
-                    }
-                
-                }, 300);
-                
-                
+
+                    });
+
+
                 setTimeout(() => {
-                
-                    if (_map) {
-                        _map.invalidateSize();
-                    }
-                
-                }, 1000);
+
+                    _map.invalidateSize();
+
+                    _map.fitBounds(
+                        indiaBounds,
+                        {
+                            padding: [10, 10]
+                        }
+                    );
+
+                }, 500);
+
+            }
 
 
-            /* ================================================
-               CLEAR OLD MAP DATA
-            ================================================ */
+            /*
+            ======================================================
+            CLEAR OLD DATA
+            ======================================================
+            */
 
             _markers.clearLayers();
 
@@ -1356,64 +1458,34 @@
             }
 
 
-            /* ================================================
-               CHECK SUPABASE
-            ================================================ */
-
-            if (typeof _sb === 'undefined' || !_sb) {
-
-                console.error(
-                    'Supabase client (_sb) is not available.'
-                );
-
-                return;
-
-            }
-
-
             try {
 
-                /* =============================================
-                   FETCH ALL DATA
-                ============================================= */
+                /*
+                ==================================================
+                GET DATA FROM SUPABASE
+                ==================================================
+                */
 
-                const results = await Promise.all([
+                const results =
+                    await Promise.all([
 
-                    _sb
-                        .from('placements')
-                        .select('*'),
+                        _sb
+                            .from('placements')
+                            .select('*'),
 
-                    _sb
-                        .from('internships')
-                        .select('*'),
+                        _sb
+                            .from('internships')
+                            .select('*'),
 
-                    _sb
-                        .from('field_visits')
-                        .select('*'),
+                        _sb
+                            .from('field_visits')
+                            .select('*'),
 
-                    _sb
-                        .from('industrial_visits')
-                        .select('*')
+                        _sb
+                            .from('industrial_visits')
+                            .select('*')
 
-                ]);
-
-
-                /* =============================================
-                   CHECK ERRORS
-                ============================================= */
-
-                results.forEach((result, index) => {
-
-                    if (result.error) {
-
-                        console.error(
-                            `Supabase query ${index} error:`,
-                            result.error
-                        );
-
-                    }
-
-                });
+                    ]);
 
 
                 let placements =
@@ -1429,32 +1501,33 @@
                     results[3].data || [];
 
 
-                /* =============================================
-                   PROGRAMME FILTER
-                ============================================= */
+                /*
+                ==================================================
+                FILTER BY PROGRAMME
+                ==================================================
+                */
 
-                if (prog && prog.trim()) {
+                if (prog) {
 
-                    const selectedProgramme =
+                    const programme =
                         prog.trim().toLowerCase();
 
 
                     const filterProgramme =
-                        (list) => {
+                        list => {
 
                             return list.filter(item => {
 
-                                const programme =
+                                const value =
                                     item.programme ||
                                     item.programme_name ||
                                     item.course ||
                                     item.program_name ||
                                     '';
 
-                                return programme
-                                    .toString()
+                                return value
                                     .toLowerCase()
-                                    .includes(selectedProgramme);
+                                    .includes(programme);
 
                             });
 
@@ -1476,349 +1549,336 @@
                 }
 
 
-                /* =============================================
-                   PROCESS RECORDS
-                ============================================= */
-
                 const allPoints = [];
 
 
-                function processList(
-                    list,
-                    color,
-                    type
-                ) {
+                /*
+                ==================================================
+                PROCESS EACH DATA CATEGORY
+                ==================================================
+                */
 
-                    const groups = {};
+                const processList =
+                    (list, color, type) => {
 
-
-                    list.forEach(item => {
-
-                        let rawCity =
-
-                            item.city ||
-
-                            item.city_of_intership ||
-
-                            item.city_of_intership_01 ||
-
-                            item.city_of_internship ||
-
-                            item.city_of_internship_01 ||
-
-                            item.location ||
-
-                            item.place ||
-
-                            '';
+                        const groups = {};
 
 
-                        rawCity =
-                            String(rawCity)
+                        /*
+                        GROUP RECORDS BY CITY
+                        */
+
+                        list.forEach(item => {
+
+                            let rawCity =
+                                (
+                                    item.city ||
+                                    item.city_of_intership ||
+                                    item.city_of_intership_01 ||
+                                    item.location ||
+                                    ''
+                                )
                                 .split(',')[0]
                                 .trim();
 
 
-                        if (!rawCity) {
-                            return;
-                        }
+                            if (!rawCity) return;
 
 
-                        const normalized =
-                            rawCity.toLowerCase();
-
-
-                        const compact =
-                            normalized.replace(/\s+/g, '');
-
-
-                        const coords =
-                            COORDS_NORM[normalized] ||
-                            COORDS_NORM[compact];
-
-
-                        if (!coords) {
-
-                            console.warn(
-                                'Coordinates not found for:',
+                            const normalized =
                                 rawCity
-                            );
-
-                            return;
-
-                        }
+                                    .toLowerCase()
+                                    .trim();
 
 
-                        if (!groups[normalized]) {
-
-                            groups[normalized] = {
-
-                                rawCity: rawCity,
-
-                                coords: coords,
-
-                                items: []
-
-                            };
-
-                        }
+                            const coords =
+                                COORDS_NORM[normalized] ||
+                                COORDS_NORM[
+                                    normalized.replace(
+                                        /\s+/g,
+                                        ''
+                                    )
+                                ];
 
 
-                        groups[normalized].items.push(item);
+                            if (!coords) {
 
-                    });
+                                console.warn(
+                                    'Coordinates not found:',
+                                    rawCity
+                                );
 
+                                return;
 
-                    /* =========================================
-                       CREATE MARKERS
-                    ========================================= */
-
-                    Object.values(groups).forEach(group => {
-
-                        let lat = group.coords[0];
-
-                        let lng = group.coords[1];
+                            }
 
 
-                        /*
-                         Small offset so multiple categories
-                         in the same city do not completely overlap.
-                        */
+                            if (!groups[normalized]) {
 
-                        if (type === 'Placement') {
+                                groups[normalized] = {
 
-                            lat += 0.025;
-                            lng += 0.025;
+                                    rawCity: rawCity,
 
-                        }
+                                    coords: coords,
 
-                        else if (type === 'Internship') {
+                                    items: []
 
-                            lat -= 0.025;
-                            lng -= 0.025;
+                                };
 
-                        }
-
-                        else if (type === 'Field Visit') {
-
-                            lat += 0.025;
-                            lng -= 0.025;
-
-                        }
-
-                        else if (type === 'Industrial Visit') {
-
-                            lat -= 0.025;
-                            lng += 0.025;
-
-                        }
+                            }
 
 
-                        /* Heatmap intensity */
-
-                        group.items.forEach(() => {
-
-                            allPoints.push([
-                                lat,
-                                lng,
-                                0.45
-                            ]);
+                            groups[normalized]
+                                .items
+                                .push(item);
 
                         });
 
 
-                        /* Marker size */
-
-                        const radius =
-                            Math.min(
-                                7 + Math.log2(
-                                    group.items.length + 1
-                                ) * 2,
-                                16
-                            );
-
-
-                        /* Labels */
-
-                        const labels =
-                            [...new Set(
-
-                                group.items.map(item => {
-
-                                    if (
-                                        type === 'Internship'
-                                    ) {
-
-                                        return (
-
-                                            item.internship_place_01 ||
-
-                                            item.internship_place ||
-
-                                            item.company ||
-
-                                            'Record'
-
-                                        );
-
-                                    }
-
-
-                                    if (
-                                        type === 'Field Visit'
-                                    ) {
-
-                                        return (
-
-                                            item.field_visited ||
-
-                                            item.location ||
-
-                                            item.organization_name ||
-
-                                            'Record'
-
-                                        );
-
-                                    }
-
-
-                                    if (
-                                        type === 'Industrial Visit'
-                                    ) {
-
-                                        return (
-
-                                            item.organization_name ||
-
-                                            item.industry_name ||
-
-                                            item.location ||
-
-                                            'Record'
-
-                                        );
-
-                                    }
-
-
-                                    return (
-
-                                        item.student_name ||
-
-                                        item.name ||
-
-                                        item.name_of_student ||
-
-                                        item.company ||
-
-                                        'Record'
-
-                                    );
-
-                                })
-
-                            )];
-
-
-                        const labelsHtml =
-                            labels.map(label => {
-
-                                return `
-                                    <div style="
-                                        margin-bottom:4px;
-                                        padding-bottom:4px;
-                                        border-bottom:
-                                            1px solid rgba(255,255,255,0.06);
-                                    ">
-                                        • ${esc(label)}
-                                    </div>
-                                `;
-
-                            }).join('');
-
-
-                        const marker =
-                            L.circleMarker(
-                                [lat, lng],
-                                {
-
-                                    radius: radius,
-
-                                    fillColor: color,
-
-                                    color: '#ffffff',
-
-                                    weight: 1.5,
-
-                                    fillOpacity: 0.95
-
-                                }
-                            );
-
-
-                        marker.bindPopup(
-                            `
-                            <div style="
-                                font-family:Inter,sans-serif;
-                                min-width:180px;
-                                max-width:280px;
-                            ">
-
-                                <div style="
-                                    font-size:10px;
-                                    text-transform:uppercase;
-                                    letter-spacing:.7px;
-                                    color:#94a3b8;
-                                    font-weight:700;
-                                    margin-bottom:5px;
-                                ">
-                                    ${esc(type)} (${group.items.length})
-                                </div>
-
-                                <div style="
-                                    font-size:16px;
-                                    font-weight:700;
-                                    color:${color};
-                                    margin-bottom:10px;
-                                ">
-                                    ${esc(group.rawCity)}
-                                </div>
-
-                                <div style="
-                                    max-height:150px;
-                                    overflow-y:auto;
-                                    font-size:12px;
-                                    color:#f8fafc;
-                                    line-height:1.45;
-                                ">
-                                    ${labelsHtml}
-                                </div>
-
-                            </div>
-                            `,
-                            {
-                                maxWidth: 320
-                            }
-                        );
-
-
                         /*
-                         IMPORTANT:
-                         Add marker to _markers,
-                         and _markers is already added to _map.
+                        CREATE MARKERS
                         */
 
-                        marker.addTo(_markers);
+                        Object.keys(groups)
+                            .forEach(key => {
 
-                    });
+                                const group =
+                                    groups[key];
 
-                }
+                                const rawCity =
+                                    group.rawCity;
+
+                                const coords =
+                                    group.coords;
+
+                                const items =
+                                    group.items;
 
 
-                /* =============================================
-                   PROCESS ALL CATEGORIES
-                ============================================= */
+                                let lat =
+                                    coords[0];
+
+                                let lng =
+                                    coords[1];
+
+
+                                /*
+                                OFFSET DIFFERENT TYPES
+                                SO THEY DON'T OVERLAP
+                                */
+
+                                if (
+                                    type === 'Placement'
+                                ) {
+
+                                    lat += 0.03;
+                                    lng += 0.03;
+
+                                }
+
+                                else if (
+                                    type === 'Internship'
+                                ) {
+
+                                    lat -= 0.03;
+                                    lng -= 0.03;
+
+                                }
+
+                                else if (
+                                    type === 'Field Visit'
+                                ) {
+
+                                    lat += 0.03;
+                                    lng -= 0.03;
+
+                                }
+
+                                else if (
+                                    type === 'Industrial Visit'
+                                ) {
+
+                                    lat -= 0.03;
+                                    lng += 0.03;
+
+                                }
+
+
+                                /*
+                                HEATMAP POINTS
+                                */
+
+                                items.forEach(() => {
+
+                                    allPoints.push([
+                                        lat,
+                                        lng,
+                                        0.5
+                                    ]);
+
+                                });
+
+
+                                /*
+                                GET UNIQUE LABELS
+                                */
+
+                                const labels =
+                                    [
+                                        ...new Set(
+
+                                            items.map(item => {
+
+                                                if (
+                                                    type ===
+                                                    'Internship'
+                                                ) {
+
+                                                    return (
+                                                        item.internship_place_01 ||
+                                                        item.internship_place ||
+                                                        item.company ||
+                                                        'Record'
+                                                    );
+
+                                                }
+
+
+                                                return (
+                                                    item.student_name ||
+                                                    item.name ||
+                                                    item.name_of_student ||
+                                                    item.field_visited ||
+                                                    item.organization_name ||
+                                                    item.company ||
+                                                    'Record'
+                                                );
+
+                                            })
+
+                                        )
+                                    ];
+
+
+                                const labelTitle =
+                                    type === 'Internship'
+                                        ? 'Companies'
+                                        : 'Records';
+
+
+                                const labelsHtml =
+                                    labels.map(label => `
+
+                                        <div style="
+                                            margin-bottom:4px;
+                                            padding-bottom:4px;
+                                            border-bottom:
+                                            1px solid rgba(255,255,255,0.1);
+                                        ">
+                                            • ${esc(label)}
+                                        </div>
+
+                                    `).join('');
+
+
+                                /*
+                                CREATE MARKER
+                                */
+
+                                L.circleMarker(
+                                    [lat, lng],
+                                    {
+
+                                        radius:
+                                            Math.min(
+                                                5 +
+                                                Math.log(
+                                                    items.length + 1
+                                                ) * 3,
+                                                15
+                                            ),
+
+                                        fillColor: color,
+
+                                        color: '#ffffff',
+
+                                        weight: 1.5,
+
+                                        fillOpacity: 0.95
+
+                                    }
+                                )
+
+                                    .bindPopup(
+
+                                        `
+                                        <div style="
+                                            font-family:
+                                            Inter, sans-serif;
+                                            min-width:180px;
+                                        ">
+
+                                            <div style="
+                                                font-size:10px;
+                                                text-transform:uppercase;
+                                                letter-spacing:1px;
+                                                color:#94a3b8;
+                                                font-weight:600;
+                                                margin-bottom:5px;
+                                            ">
+                                                ${type}s (${items.length})
+                                            </div>
+
+                                            <div style="
+                                                font-size:16px;
+                                                font-weight:700;
+                                                color:${color};
+                                                margin-bottom:10px;
+                                            ">
+                                                ${esc(rawCity)}
+                                            </div>
+
+                                            <div style="
+                                                font-size:10px;
+                                                text-transform:uppercase;
+                                                color:#94a3b8;
+                                                font-weight:600;
+                                                margin-bottom:6px;
+                                            ">
+                                                ${labelTitle}
+                                            </div>
+
+                                            <div style="
+                                                max-height:150px;
+                                                overflow-y:auto;
+                                                font-size:12px;
+                                                color:#f8fafc;
+                                                line-height:1.5;
+                                            ">
+                                                ${labelsHtml}
+                                            </div>
+
+                                        </div>
+                                        `,
+
+                                        {
+                                            maxWidth: 350
+                                        }
+
+                                    )
+
+                                    .addTo(_markers);
+
+                            });
+
+                    };
+
+
+                /*
+                ==================================================
+                ADD ALL FOUR TYPES
+                ==================================================
+                */
 
                 processList(
                     placements,
@@ -1845,9 +1905,20 @@
                 );
 
 
-                /* =============================================
-                   ADD HEATMAP
-                ============================================= */
+                /*
+                ==================================================
+                ADD MARKERS
+                ==================================================
+                */
+
+                _markers.addTo(_map);
+
+
+                /*
+                ==================================================
+                ADD HEATMAP
+                ==================================================
+                */
 
                 if (
                     allPoints.length > 0 &&
@@ -1868,49 +1939,33 @@
                                 minOpacity: 0.25,
 
                                 gradient: {
-                                    0.2: '#2563eb',
-                                    0.4: '#06b6d4',
-                                    0.6: '#22c55e',
-                                    0.8: '#facc15',
-                                    1.0: '#ef4444'
+                                    0.2: 'blue',
+                                    0.4: 'cyan',
+                                    0.6: 'lime',
+                                    0.8: 'yellow',
+                                    1.0: 'red'
                                 }
 
                             }
-                        ).addTo(_map);
+                        )
+                        .addTo(_map);
 
                 }
 
 
-                /* =============================================
-                   ENSURE MAP DISPLAYS CORRECTLY
-                ============================================= */
-
                 setTimeout(() => {
 
-                    if (_map) {
-                        _map.invalidateSize();
-                    }
+                    _map.invalidateSize();
 
-                }, 100);
+                }, 200);
 
-
-                console.log(
-                    'Map loaded successfully:',
-                    {
-                        placements: placements.length,
-                        internships: internships.length,
-                        fieldVisits: fieldVisits.length,
-                        industrialVisits: industrialVisits.length
-                    }
-                );
 
             }
-
-            catch (error) {
+            catch (err) {
 
                 console.error(
                     'initCityMap Error:',
-                    error
+                    err
                 );
 
             }
@@ -1918,62 +1973,260 @@
         }
 
 
-        /* =====================================================
-           PAGE LOAD
-        ===================================================== */
+        /*
+        ==========================================================
+        OPTIONAL ACTIVITY HEATMAP
+        ==========================================================
+        */
+
+        async function initPlacementHeatmap(prog = '') {
+
+            const container =
+                document.getElementById(
+                    'heatmap-container'
+                );
+
+
+            if (!container) return;
+
+
+            container.innerHTML = '';
+
+
+            const results =
+                await Promise.all([
+
+                    _sb
+                        .from('placements')
+                        .select('created_at')
+                        .ilike(
+                            'programme',
+                            `%${prog}%`
+                        ),
+
+                    _sb
+                        .from('internships')
+                        .select('created_at')
+                        .ilike(
+                            'programme',
+                            `%${prog}%`
+                        ),
+
+                    _sb
+                        .from('field_visits')
+                        .select('created_at')
+                        .ilike(
+                            'program_name',
+                            `%${prog}%`
+                        ),
+
+                    _sb
+                        .from('industrial_visits')
+                        .select('created_at')
+                        .ilike(
+                            'program_name',
+                            `%${prog}%`
+                        )
+
+                ]);
+
+
+            const allData =
+                results.flatMap(
+                    result => result.data || []
+                );
+
+
+            if (!allData.length) {
+
+                container.innerHTML = `
+                    <div style="
+                        opacity:0.3;
+                        text-align:center;
+                        padding:20px;
+                    ">
+                        No activity data
+                    </div>
+                `;
+
+                return;
+
+            }
+
+
+            const dateCounts = {};
+
+
+            allData.forEach(item => {
+
+                const date =
+                    (item.created_at || '')
+                        .split('T')[0];
+
+
+                if (date) {
+
+                    dateCounts[date] =
+                        (dateCounts[date] || 0) + 1;
+
+                }
+
+            });
+
+
+            const cellSize = 12;
+
+            const height =
+                cellSize * 7 + 10;
+
+
+            const svg =
+                d3.select('#heatmap-container')
+                    .append('svg')
+                    .attr('width', '100%')
+                    .attr('height', height)
+                    .append('g')
+                    .attr(
+                        'transform',
+                        'translate(5, 5)'
+                    );
+
+
+            const now = new Date();
+
+            const start = new Date();
+
+            start.setMonth(
+                now.getMonth() - 6
+            );
+
+            start.setDate(1);
+
+
+            const colorScale =
+                d3.scaleThreshold()
+                    .domain([1, 2, 5])
+                    .range([
+                        'rgba(255,255,255,0.05)',
+                        '#4ade80',
+                        '#22c55e',
+                        '#16a34a'
+                    ]);
+
+
+            const format =
+                d3.timeFormat('%Y-%m-%d');
+
+            const day =
+                d3.timeFormat('%w');
+
+            const week =
+                d3.timeFormat('%U');
+
+
+            svg.selectAll('rect')
+
+                .data(
+                    d3.timeDays(
+                        start,
+                        now
+                    )
+                )
+
+                .enter()
+
+                .append('rect')
+
+                .attr(
+                    'width',
+                    cellSize - 2
+                )
+
+                .attr(
+                    'height',
+                    cellSize - 2
+                )
+
+                .attr('x', d => {
+
+                    const w1 =
+                        parseInt(week(start));
+
+                    const w2 =
+                        parseInt(week(d));
+
+                    const diff =
+                        w2 >= w1
+                            ? w2 - w1
+                            : w2 + 52 - w1;
+
+                    return diff * cellSize;
+
+                })
+
+                .attr(
+                    'y',
+                    d => day(d) * cellSize
+                )
+
+                .attr(
+                    'fill',
+                    d =>
+                        colorScale(
+                            dateCounts[
+                                format(d)
+                            ] || 0
+                        )
+                )
+
+                .attr('rx', 2)
+
+                .attr('ry', 2)
+
+                .append('title')
+
+                .text(
+                    d =>
+                        `${format(d)}: ${
+                            dateCounts[
+                                format(d)
+                            ] || 0
+                        } records`
+                );
+
+        }
+
+
+        /*
+        ==========================================================
+        PAGE LOAD
+        ==========================================================
+        */
 
         document.addEventListener(
             'DOMContentLoaded',
             () => {
 
-                console.log(
-                    'Dashboard loading...'
-                );
-
-
-                /* Load dashboard */
-
                 loadDashboardData();
 
-
-                /* Realtime updates */
 
                 if (
                     typeof subscribeAllChanges ===
                     'function'
                 ) {
 
-                    try {
-
-                        subscribeAllChanges(
-                            loadDashboardData
-                        );
-
-                    }
-
-                    catch (error) {
-
-                        console.warn(
-                            'Realtime subscription failed:',
-                            error
-                        );
-
-                    }
+                    subscribeAllChanges(
+                        loadDashboardData
+                    );
 
                 }
 
 
-                /* Programme filter */
-
-                const programmeFilter =
-                    document.getElementById(
+                document
+                    .getElementById(
                         'dashboardProgrammeFilter'
-                    );
-
-
-                if (programmeFilter) {
-
-                    programmeFilter.addEventListener(
+                    )
+                    ?.addEventListener(
                         'change',
                         event => {
 
@@ -1983,8 +2236,6 @@
 
                         }
                     );
-
-                }
 
             }
         );
