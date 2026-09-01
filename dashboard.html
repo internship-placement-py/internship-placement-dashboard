@@ -2655,7 +2655,7 @@
                     .attr("y", d => day(d) * cellSize)
                     .attr("fill", d => colorScale(dateCounts[format(d)] || 0)).attr("rx", 2).attr("ry", 2)
                     .append("title").text(d => `${format(d)}: ${dateCounts[format(d)] || 0} placements`);
-            }
+            } 
 
             document.addEventListener('DOMContentLoaded', () => {
                 loadDashboardData();
