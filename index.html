@@ -274,14 +274,7 @@
             errorMsg.classList.remove('show');
 
             // Rate limit check
-            if (typeof isLoginLockedOut === 'function') {
-                const lockout = isLoginLockedOut();
-                if (lockout.locked) {
-                    errorMsg.textContent = `Too many failed attempts. Locked out for ${Math.ceil(lockout.remainingMs / 60000)} more minutes.`;
-                    errorMsg.classList.add('show');
-                    return;
-                }
-            }
+            
 
             if (currentTab === 'password') {
                 // ── Username + Password Login ───────────────────
@@ -300,18 +293,16 @@
 
                 try {
                     await apiLoginWithPassword(username, password);
-                    if (typeof clearLoginAttempts === 'function') clearLoginAttempts();
+                
                     window.location.href = 'dashboard.html';
+                
                 } catch (err) {
-                    if (typeof recordLoginAttempt === 'function') {
-                        const r = recordLoginAttempt();
-                        errorMsg.textContent = r.locked
-                            ? 'Too many failed attempts. Locked out for 15 minutes.'
-                            : `${err.message || 'Login failed.'} (${r.attemptsLeft} attempts left)`;
-                    } else {
-                        errorMsg.textContent = err.message || 'Login failed.';
-                    }
+                
+                    errorMsg.textContent =
+                        err.message || 'Login failed.';
+                
                     errorMsg.classList.add('show');
+                
                     btn.disabled = false;
                     btn.textContent = 'Login';
                 }
