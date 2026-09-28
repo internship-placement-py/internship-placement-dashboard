@@ -261,42 +261,6 @@ async function apiResetStudentPassword(enrollmentNumber, body) {
     return { message: 'Password reset successfully.' };
 }
 
-// ─── COMPANIES ────────────────────────────────────────────────────────────────
-async function getCompanies() {
-    let { data, error } = await _sb.from('companies').select('*').order('company_name');
-    sbCheck(error, 'getCompanies');
-    return data || [];
-}
-
-async function createCompany(payload) {
-    const { data, error } = await _sb.from('companies').insert(payload).select().single();
-    sbCheck(error, 'createCompany');
-    return data;
-}
-
-async function updateCompany(id, payload) {
-    const { data, error } = await _sb.from('companies').update(payload).eq('id', id).select().single();
-    sbCheck(error, 'updateCompany');
-    return data;
-}
-
-async function deleteCompany(id) {
-    const { error } = await _sb.from('companies').delete().eq('id', id);
-    sbCheck(error, 'deleteCompany');
-    return { success: true };
-}
-
-async function importCompanies(fileOrFormData) {
-    const file = fileOrFormData instanceof File ? fileOrFormData
-        : (fileOrFormData instanceof FormData ? fileOrFormData.get('file') : null);
-    if (!file) throw new Error('No file provided.');
-    const rows = await parseCsvFile(file, 'companies');
-    if (!rows.length) throw new Error('No valid rows found.');
-    const { data, error } = await _sb.from('companies').upsert(rows, { onConflict: 'id' }).select();
-    sbCheck(error, 'importCompanies');
-    return { imported: data.length, message: `Imported ${data.length} companies.` };
-}
-
 // ─── PLACEMENTS ───────────────────────────────────────────────────────────────
 async function getPlacements(prog = '') {
     try {
