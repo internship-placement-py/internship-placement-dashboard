@@ -50,106 +50,110 @@ async function sha256(str) {
 // ── Username + Password login (for role accounts: CD PY, PI PY, etc.) ─────────
 // ── Username + Password login (via Supabase Auth) ─────────────────────────────
 async function apiLoginWithPassword(username, password) {
-    // Resolve username → email first, since Supabase Auth signs in by email.
-    let email = username;
-    if (!username.includes('@')) {
-    const { data: lookup, error: lookupError } = await _sb
-        .rpc('resolve_login_email', {
-            p_username: username
-        });
-
-    if (lookupError || !lookup) {
-        throw new Error('Invalid username or password.');
+    if (!username || !password) {
+        throw new Error('Username and password are required.');
     }
 
-    email = lookup.trim().toLowerCase();
-}
+    // ---------------------------------------------------------
+    // STEP 1: Server-side account lockout and credential check
+    // ---------------------------------------------------------
+    const { data: loginResult, error: loginError } = await _sb
+        .rpc('attempt_login', {
+            p_identifier: username,
+            p_password: password
+        });
 
-    // Real Supabase Auth sign-in — establishes the actual JWT session
-    // that every RLS policy in the database checks against.
+    if (loginError) {
+        console.error('[AUTH] Server-side login check failed.');
+        throw new Error('Login could not be completed. Please try again.');
+    }
+
+    const result = loginResult;
+
+    // ---------------------------------------------------------
+    // STEP 2: Reject locked/invalid login
+    // ---------------------------------------------------------
+    if (!result || result.success !== true) {
+        throw new Error(
+            result?.message ||
+            'Invalid username or password.'
+        );
+    }
+
+    // ---------------------------------------------------------
+    // STEP 3: Get email for Supabase Auth
+    // ---------------------------------------------------------
+    let email = result.email || username;
+
+    if (!email.includes('@')) {
+        const { data: lookup, error: lookupError } = await _sb
+            .rpc('resolve_login_email', {
+                p_username: username
+            });
+
+        if (lookupError || !lookup) {
+            throw new Error('Invalid username or password.');
+        }
+
+        email = lookup.trim().toLowerCase();
+    } else {
+        email = email.trim().toLowerCase();
+    }
+
+    // ---------------------------------------------------------
+    // STEP 4: Establish the real Supabase Auth session
+    // ---------------------------------------------------------
     const { data, error } = await _sb.auth.signInWithPassword({
         email: email,
         password: password
     });
 
-    if (error) {
-        throw new Error('Invalid username or password.');
+    if (error || !data.session) {
+        console.error('[AUTH] Supabase Auth session creation failed.');
+        throw new Error('Login could not be completed. Please try again.');
     }
 
-    if (!data.session) {
-        throw new Error('Login failed: no session established.');
-    }
-
-    // Pull the profile now that we have a real authenticated session.
-    const { data: profile } = await _sb
+    // ---------------------------------------------------------
+    // STEP 5: Load authenticated user profile
+    // ---------------------------------------------------------
+    const { data: profile, error: profileError } = await _sb
         .from('user_profiles')
         .select('id, username, email, mobile, role')
         .eq('email', email)
         .single();
 
-    const user = profile
-        ? {
-            id: profile.id,
-            username: profile.username,
-            email: profile.email,
-            mobile: profile.mobile,
-            role: profile.role
-          }
-        : {
-            id: data.user.id,
-            username: email.split('@')[0],
-            email: data.user.email,
-            role: (data.user.app_metadata && data.user.app_metadata.role) || 'admin'
-          };
+    if (profileError || !profile) {
+        console.error('[AUTH] User profile could not be loaded.');
+
+        await _sb.auth.signOut();
+
+        throw new Error('Login could not be completed. Please try again.');
+    }
+
+    // ---------------------------------------------------------
+    // STEP 6: Save application session
+    // ---------------------------------------------------------
+    const user = {
+        id: profile.id,
+        username: profile.username,
+        email: profile.email,
+        mobile: profile.mobile,
+        role: profile.role
+    };
 
     saveUser(user);
-    localStorage.setItem('pd_token', data.session.access_token);
-    return { success: true, user };
+
+    localStorage.setItem(
+        'pd_token',
+        data.session.access_token
+    );
+
+    return {
+        success: true,
+        user,
+        session: data.session
+    };
 }
-
-async function apiSendOtp(email) {
-    // 1. Verify the user exists in the users table
-    const { data: user, error: userError } = await _sb
-        .from('users')
-        .select('id, email')
-        .eq('email', email)
-        .single();
-        
-    if (userError || !user) {
-        throw new Error('Unauthorized email address or user not found.');
-    }
-
-    // 2. Generate a 6-digit OTP
-    const otp = Math.floor(100000 + Math.random() * 900000).toString();
-    const expiry_time = Math.floor(Date.now() / 1000) + 300; // 5 minutes in seconds (matches int8 usually)
-
-    // 3. Upsert into otps table
-    // Since there's no native "upsert by user_id" without knowing the constraint, 
-    // we try to update first, if no rows updated, we insert.
-    // Or if user_id is the primary key/unique, .upsert works. Assuming user_id is unique:
-    const { error: otpError } = await _sb
-        .from('otps')
-        .upsert({ 
-            user_id: user.id, 
-            email_otp: otp, 
-            expiry_time: expiry_time 
-        }, { onConflict: 'user_id' });
-
-    if (otpError) {
-        console.error("OTP Insert Error:", otpError);
-        throw new Error('Failed to generate OTP.');
-    }
-
-    // 4. Store the email temporarily for the verification step
-    localStorage.setItem('mfa_pending_email', email);
-    
-    // TEMPORARY: Log the OTP to the console so the user can test locally
-    // since the frontend cannot send the email without an edge function.
-    console.log("%c[DEV] Generated OTP: " + otp, "color: yellow; font-size: 16px; background: #222; padding: 5px;");
-    
-    return { success: true };
-}
-
 async function apiVerifyRealOtp(otp) {
     const email = localStorage.getItem('mfa_pending_email');
     if (!email) throw new Error('No pending login session.');
