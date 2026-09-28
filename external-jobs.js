@@ -277,16 +277,3 @@ function formatDate(isoString) {
     const date = new Date(isoString);
     return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
 }
-
-
-    });
-}
-
-// UTILITIES
-function formatDate(isoString) {
-    if (!isoString) return 'Recently';
-    const date = new Date(isoString);
-    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-}
-
-
