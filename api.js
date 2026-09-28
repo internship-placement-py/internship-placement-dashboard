@@ -53,14 +53,17 @@ async function apiLoginWithPassword(username, password) {
     // Resolve username → email first, since Supabase Auth signs in by email.
     let email = username;
     if (!username.includes('@')) {
-        const { data: lookup } = await _sb
-            .from('user_profiles')   // safe view — never exposes password_hash
-            .select('email')
-            .eq('username', username)
-            .single();
-        if (!lookup) throw new Error('Invalid username or password.');
-        email = lookup.email;
+    const { data: lookup, error: lookupError } = await _sb
+        .rpc('resolve_login_email', {
+            p_username: username
+        });
+
+    if (lookupError || !lookup) {
+        throw new Error('Invalid username or password.');
     }
+
+    email = lookup.trim().toLowerCase();
+}
 
     // Real Supabase Auth sign-in — establishes the actual JWT session
     // that every RLS policy in the database checks against.
