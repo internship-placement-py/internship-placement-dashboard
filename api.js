@@ -48,29 +48,59 @@ async function sha256(str) {
 }
 
 // ── Username + Password login (for role accounts: CD PY, PI PY, etc.) ─────────
+// ── Username + Password login (via Supabase Auth) ─────────────────────────────
 async function apiLoginWithPassword(username, password) {
-    const hash = await sha256(password);
+    // Resolve username → email first, since Supabase Auth signs in by email.
+    let email = username;
+    if (!username.includes('@')) {
+        const { data: lookup } = await _sb
+            .from('user_profiles')   // safe view — never exposes password_hash
+            .select('email')
+            .eq('username', username)
+            .single();
+        if (!lookup) throw new Error('Invalid username or password.');
+        email = lookup.email;
+    }
 
-    // Match by username OR email (case-insensitive username)
-    const { data, error } = await _sb
-        .from('users')
-        .select('id, username, email, mobile, role, password_hash')
-        .or(`username.eq.${username},email.eq.${username}`)
+    // Real Supabase Auth sign-in — establishes the actual JWT session
+    // that every RLS policy in the database checks against.
+    const { data, error } = await _sb.auth.signInWithPassword({
+        email: email,
+        password: password
+    });
+
+    if (error) {
+        throw new Error('Invalid username or password.');
+    }
+
+    if (!data.session) {
+        throw new Error('Login failed: no session established.');
+    }
+
+    // Pull the profile now that we have a real authenticated session.
+    const { data: profile } = await _sb
+        .from('user_profiles')
+        .select('id, username, email, mobile, role')
+        .eq('email', email)
         .single();
 
-    if (error || !data) throw new Error('Invalid username or password.');
-    if (data.password_hash !== hash) throw new Error('Invalid username or password.');
-
-    const user = {
-        id:       data.id,
-        username: data.username,
-        email:    data.email,
-        mobile:   data.mobile,
-        role:     data.role
-    };
+    const user = profile
+        ? {
+            id: profile.id,
+            username: profile.username,
+            email: profile.email,
+            mobile: profile.mobile,
+            role: profile.role
+          }
+        : {
+            id: data.user.id,
+            username: email.split('@')[0],
+            email: data.user.email,
+            role: (data.user.app_metadata && data.user.app_metadata.role) || 'admin'
+          };
 
     saveUser(user);
-    localStorage.setItem('pd_token', 'pwd_session_' + Date.now());
+    localStorage.setItem('pd_token', data.session.access_token);
     return { success: true, user };
 }
 
