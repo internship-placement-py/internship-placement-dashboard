@@ -410,7 +410,7 @@
                 }
             }
 
-            function esc(s) { return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+            function esc(s) {return String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');}
 
             // Group internship records by internship_place+year+batch+duration+city+org
             function groupInternships(list) {

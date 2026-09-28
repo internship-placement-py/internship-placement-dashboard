@@ -876,10 +876,21 @@ async function exportData(type) {
 
         // Remove internal fields
         const cleaned = rows.map(r => {
-            const obj = { ...r };
-            delete obj.created_at;
-            return obj;
-        });
+    const obj = { ...r };
+    delete obj.created_at;
+
+    for (const key of Object.keys(obj)) {
+        if (typeof obj[key] === 'string') {
+            const value = obj[key].trim();
+
+            if (/^[=+\-@]/.test(value)) {
+                obj[key] = "'" + obj[key];
+            }
+        }
+    }
+
+    return obj;
+});
 
         const ws = XLSX.utils.json_to_sheet(cleaned);
         const wb = XLSX.utils.book_new();
