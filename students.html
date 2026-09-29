@@ -686,8 +686,19 @@
             e.preventDefault();
             const errEl = document.getElementById('pfError');
             const btn = document.getElementById('pfSubmitBtn');
-            errEl.style.display = 'none'; btn.disabled = true; btn.textContent = 'Saving...';
+            errEl.style.display = 'none';
 
+            const validationError = validateStudentFields('ms');
+            
+            if (validationError) {
+                errEl.textContent = validationError;
+                errEl.style.display = 'block';
+                return;
+            }
+            
+            btn.disabled = true;
+            btn.textContent = 'Adding…';
+            
             try {
                 const studentId = document.getElementById('pf-student-id').value;
                 const company = document.getElementById('pf-company').value;
@@ -716,6 +727,46 @@
 
         function escHtml(str) {
             return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        }
+
+        function validateStudentFields(prefix) {
+            const name = document.getElementById(`${prefix}-name`).value.trim();
+            const enrollment = document.getElementById(`${prefix}-enrollment`).value.trim();
+            const studentEmail = document.getElementById(`${prefix}-student-email`).value.trim();
+            const mobile = document.getElementById(`${prefix}-phone`).value.trim();
+            const personalEmail = document.getElementById(`${prefix}-personal-email`).value.trim();
+            const year = document.getElementById(`${prefix}-year`).value.trim();
+        
+            const nameRegex = /^[A-Za-z][A-Za-z .'-]{1,99}$/;
+            const enrollmentRegex = /^[A-Za-z0-9_-]{5,30}$/;
+            const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+            const mobileRegex = /^\+?[0-9]{10,15}$/;
+        
+            if (!nameRegex.test(name)) {
+                return 'Student name must contain only letters, spaces, periods, apostrophes, or hyphens.';
+            }
+        
+            if (!enrollmentRegex.test(enrollment)) {
+                return 'Enrollment number must contain 5–30 letters, numbers, underscores, or hyphens.';
+            }
+        
+            if (!emailRegex.test(studentEmail)) {
+                return 'Please enter a valid student email address.';
+            }
+        
+            if (mobile && !mobileRegex.test(mobile)) {
+                return 'Mobile number must contain 10–15 digits, with an optional + prefix.';
+            }
+        
+            if (personalEmail && !emailRegex.test(personalEmail)) {
+                return 'Please enter a valid personal email address.';
+            }
+        
+            if (!/^\d{4}$/.test(year) || Number(year) < 2000 || Number(year) > 2100) {
+                return 'Admitted year must be a 4-digit year between 2000 and 2100.';
+            }
+        
+            return null;
         }
 
         // Search
@@ -776,10 +827,17 @@
             const errEl = document.getElementById('editModalError');
             const btn = document.getElementById('editStudentSubmitBtn');
             errEl.style.display = 'none';
+
+            const validationError = validateStudentFields('es');
+            
+            if (validationError) {
+                errEl.textContent = validationError;
+                errEl.style.display = 'block';
+                return;
+            }
+            
             btn.disabled = true;
             btn.textContent = 'Saving…';
-
-            const id = document.getElementById('es-original-enrollment').value;
             try {
                 const fd = new FormData();
                 fd.append('student_name', document.getElementById('es-name').value.trim());
