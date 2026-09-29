@@ -981,6 +981,7 @@ async function exportData(type) {
         console.error('[EXPORT] Export operation failed.', err);
         alert('Unable to export the data. Please try again.');
     }
+}
 
 // ─── CSV/EXCEL PARSER (client-side via SheetJS) ───────────────────────────────────
 async function parseCsvFile(file, type) {
