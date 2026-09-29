@@ -211,10 +211,49 @@ function apiLogout() {
 }
 
 // ─── HELPER: throw on Supabase error ─────────────────────────────────────────
-function sbCheck(error, context) {
-    if (error) throw new Error(`[${context}] ${error.message}`);
-}
+const SAFE_API_MESSAGES = {
+    getStudents: 'Unable to load student records. Please try again.',
+    createStudent: 'Unable to save student details. Please check the entered information and try again.',
+    updateStudent: 'Unable to update student details. Please try again.',
+    deleteStudent: 'Unable to delete the student record. Please try again.',
+    importStudents: 'Unable to import student records. Please check the file and try again.',
+    resetStudentPassword: 'Unable to reset the student password. Please try again.',
 
+    getPlacements: 'Unable to load placement records. Please try again.',
+    createPlacement: 'Unable to save placement details. Please try again.',
+    updatePlacement: 'Unable to update the placement record. Please try again.',
+    deletePlacement: 'Unable to delete the placement record. Please try again.',
+
+    getInternships: 'Unable to load internship records. Please try again.',
+    createInternship: 'Unable to save internship records. Please try again.',
+    updateInternship: 'Unable to update the internship record. Please try again.',
+    deleteInternship: 'Unable to delete the internship record. Please try again.',
+
+    getFieldVisits: 'Unable to load field visit records. Please try again.',
+    createFieldVisit: 'Unable to save field visit details. Please try again.',
+    updateFieldVisit: 'Unable to update field visit details. Please try again.',
+    deleteFieldVisit: 'Unable to delete the field visit record. Please try again.',
+    importFieldVisits: 'Unable to import field visit records. Please check the file and try again.',
+
+    getIndustrialVisits: 'Unable to load industrial visit records. Please try again.',
+    createIndustrialVisit: 'Unable to save the industrial visit record. Please try again.',
+    updateIndustrialVisit: 'Unable to update industrial visit details. Please try again.',
+    deleteIndustrialVisit: 'Unable to delete the industrial visit record. Please try again.',
+    importIndustrialVisits: 'Unable to import industrial visit records. Please check the file and try again.'
+};
+
+function sbCheck(error, context) {
+    if (!error) return;
+
+    // Keep technical details available for debugging,
+    // but do not expose them to the application user.
+    console.error(`[API] ${context} operation failed.`, error);
+
+    throw new Error(
+        SAFE_API_MESSAGES[context] ||
+        'The requested operation could not be completed. Please try again.'
+    );
+}
 // ─── STUDENTS ─────────────────────────────────────────────────────────────────
 async function getStudents() {
     let { data, error } = await _sb.from('students').select('*').order('created_at', { ascending: false });
@@ -238,9 +277,17 @@ async function updateStudent(id, payload) {
 }
 
 async function deleteStudent(id) {
-    const { error, count } = await _sb.from('students').delete({ count: 'exact' }).eq('enrollment_number', id);
-    if (error) throw new Error(`[deleteStudent] ${error.message}`);
-    if (count === 0) throw new Error('Delete blocked or record not found.');
+    const { error, count } = await _sb
+        .from('students')
+        .delete({ count: 'exact' })
+        .eq('enrollment_number', id);
+
+    sbCheck(error, 'deleteStudent');
+
+    if (count === 0) {
+        throw new Error('Delete blocked or record not found.');
+    }
+
     return { success: true, deleted: count };
 }
 
@@ -295,9 +342,17 @@ async function updatePlacement(id, payload) {
 }
 
 async function deletePlacement(id) {
-    const { error, count } = await _sb.from('placements').delete({ count: 'exact' }).eq('id', id);
-    if (error) throw new Error(`[deletePlacement] ${error.message}`);
-    if (count === 0) throw new Error('Delete blocked or record not found.');
+    const { error, count } = await _sb
+        .from('placements')
+        .delete({ count: 'exact' })
+        .eq('id', id);
+
+    sbCheck(error, 'deletePlacement');
+
+    if (count === 0) {
+        throw new Error('Delete blocked or record not found.');
+    }
+
     return { success: true, deleted: count };
 }
 
@@ -459,9 +514,17 @@ async function updateInternship(id, payload) {
 }
 
 async function deleteInternship(id) {
-    const { error, count } = await _sb.from('internships').delete({ count: 'exact' }).eq('id', id);
-    if (error) throw new Error(`[deleteInternship] ${error.message}`);
-    if (count === 0) throw new Error('Delete blocked or record not found.');
+    const { error, count } = await _sb
+        .from('internships')
+        .delete({ count: 'exact' })
+        .eq('id', id);
+
+    sbCheck(error, 'deleteInternship');
+
+    if (count === 0) {
+        throw new Error('Delete blocked or record not found.');
+    }
+
     return { success: true, deleted: count };
 }
 
@@ -505,9 +568,17 @@ async function updateFieldVisit(id, payload) {
 }
 
 async function deleteFieldVisit(id) {
-    const { error, count } = await _sb.from('field_visits').delete({ count: 'exact' }).eq('id', id);
-    if (error) throw new Error(`[deleteFieldVisit] ${error.message}`);
-    if (count === 0) throw new Error('Delete blocked or record not found.');
+    const { error, count } = await _sb
+        .from('field_visits')
+        .delete({ count: 'exact' })
+        .eq('id', id);
+
+    sbCheck(error, 'deleteFieldVisit');
+
+    if (count === 0) {
+        throw new Error('Delete blocked or record not found.');
+    }
+
     return { success: true, deleted: count };
 }
 
@@ -546,9 +617,17 @@ async function updateIndustrialVisit(id, payload) {
 }
 
 async function deleteIndustrialVisit(id) {
-    const { error, count } = await _sb.from('industrial_visits').delete({ count: 'exact' }).eq('id', id);
-    if (error) throw new Error(`[deleteIndustrialVisit] ${error.message}`);
-    if (count === 0) throw new Error('Delete blocked or record not found.');
+    const { error, count } = await _sb
+        .from('industrial_visits')
+        .delete({ count: 'exact' })
+        .eq('id', id);
+
+    sbCheck(error, 'deleteIndustrialVisit');
+
+    if (count === 0) {
+        throw new Error('Delete blocked or record not found.');
+    }
+
     return { success: true, deleted: count };
 }
 
