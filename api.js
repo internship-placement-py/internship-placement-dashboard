@@ -166,7 +166,8 @@ async function apiVerifyRealOtp(otp) {
     });
 
     if (error) {
-        throw new Error(error.message || 'Invalid or expired OTP.');
+        console.error('[AUTH] OTP verification failed.');
+        throw new Error('Invalid or expired OTP. Please try again.');
     }
 
     if (!data.session) {
@@ -977,9 +978,9 @@ async function exportData(type) {
         const filename = `${type}_export_${new Date().toISOString().slice(0, 10)}.xlsx`;
         XLSX.writeFile(wb, filename);
     } catch (err) {
-        alert('Export Error: ' + err.message);
+        console.error('[EXPORT] Export operation failed.', err);
+        alert('Unable to export the data. Please try again.');
     }
-}
 
 // ─── CSV/EXCEL PARSER (client-side via SheetJS) ───────────────────────────────────
 async function parseCsvFile(file, type) {
@@ -1121,7 +1122,8 @@ async function parseCsvFile(file, type) {
                 }
                 resolve(rows);
             } catch (err) {
-                reject(new Error('Failed to parse Excel file: ' + err.message));
+                console.error('[IMPORT] Excel/CSV parsing failed.', err);
+                reject(new Error('Failed to parse the file. Please check the file format and try again.'));
             }
         };
         reader.onerror = () => reject(new Error('Failed to read file.'));
